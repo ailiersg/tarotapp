@@ -6,7 +6,7 @@
   "compilationOptions": {
     "defines": [
       "TRACE",
-      "RELEASE",
+      "DEBUG",
       "NETCOREAPP",
       "NETCOREAPP2_2"
     ],
@@ -14,7 +14,7 @@
     "platform": "",
     "allowUnsafe": false,
     "warningsAsErrors": false,
-    "optimize": true,
+    "optimize": false,
     "keyFile": "",
     "emitEntryPoint": true,
     "xmlDoc": false,
@@ -27,6 +27,7 @@
           "Alipay": "2.0.0",
           "Fleck": "1.1.0",
           "Microsoft.AspNetCore.App": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "MySqlClient": "5.4.2",
           "System.Drawing.Common": "4.5.1"
