@@ -7978,8 +7978,11 @@ namespace TodoApi
                 {
                       Console.Write("--------------------------------3");
                     System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms);
+                     Console.Write("--------------------------------3.1");
                     ms.Close();
+                     Console.Write("--------------------------------3.2");
                     Bitmap bmp2 = new Bitmap(bmp);
+                     Console.Write("--------------------------------3.3");
                     bmp.Dispose();
   Console.Write("--------------------------------4");
                     string savePath = (@"/img/user/" + DateTime.Now.ToString("yyyy") + "/" + DateTime.Now.ToString("MM") + "/");
