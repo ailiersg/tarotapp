@@ -12,8 +12,10 @@
 
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="MySqlClient" Version="5.4.2" />
+    <PackageReference Include="runtime.linux.CoreCompat.System.Drawing" Version="1.0.0-beta001" />
     <PackageReference Include="system.drawing.common" Version="4.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
   </ItemGroup>
 
 </Project>

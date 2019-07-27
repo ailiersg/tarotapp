@@ -36,6 +36,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Cryptography;
 using System.Drawing;
+// ZKWeb.System.Drawing
 
 
 
@@ -7969,22 +7970,18 @@ namespace TodoApi
             {
                 //base64转图像并保存 返回保存路径
                 string imgPath = "";
-              Console.Write("--------------------------------1");
+        
                 // bace64 = bace64.Substring(0, bace64.IndexOf("bace64,")+7);
                 bace64 = bace64.Replace("data:image/jpeg;base64,", "");
                 byte[] arr = Convert.FromBase64String(bace64);
-  Console.Write("--------------------------------2");
                 using (MemoryStream ms = new MemoryStream(arr))
                 {
                       Console.Write("--------------------------------3");
                     System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms);
                      Console.Write("--------------------------------3.1");
                     ms.Close();
-                     Console.Write("--------------------------------3.2");
                     Bitmap bmp2 = new Bitmap(bmp);
-                     Console.Write("--------------------------------3.3");
                     bmp.Dispose();
-  Console.Write("--------------------------------4");
                     string savePath = (@"/img/user/" + DateTime.Now.ToString("yyyy") + "/" + DateTime.Now.ToString("MM") + "/");
                     string 文件名 = DateTime.Now.ToString("ddhhmmss") + ".jpg";
 
