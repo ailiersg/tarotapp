@@ -35,7 +35,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Cryptography;
-using System.Drawing;
+using System.DrawingCore;
 // ZKWeb.System.Drawing
 
 
@@ -7977,7 +7977,7 @@ namespace TodoApi
                 using (MemoryStream ms = new MemoryStream(arr))
                 {
                       Console.Write("--------------------------------3");
-                    System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(ms);
+                    System.DrawingCore.Bitmap bmp = new System.DrawingCore.Bitmap(ms);
                      Console.Write("--------------------------------3.1");
                     ms.Close();
                     Bitmap bmp2 = new Bitmap(bmp);
@@ -8002,7 +8002,7 @@ namespace TodoApi
 
                     }
   Console.Write("--------------------------------5");
-                    bmp2.Save(保存绝对路径 + 文件名, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    bmp2.Save(保存绝对路径 + 文件名, System.DrawingCore.Imaging.ImageFormat.Jpeg);
                       Console.Write("--------------------------------6");
                     //bmp2.Save(filePath + ".jpg", System.Drawing.Imaging.ImageFort.Jpeg);
                     //bmp2.Save(filePath + ".bmp", System.Drawing.Imaging.ImageFoat.Bmp);
