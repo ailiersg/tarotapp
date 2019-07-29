@@ -61,15 +61,13 @@ namespace TodoApi
 
         //订单状态 说明 0=未付款(过期会被清楚) 1=已付款 咨询中(过期会被设置成2) 2=已过期 没评价 但是正常打款 3=正常评价 打款
         //Boolean 测试模式 = true;
-        // static string 连接字符串 = "server=39.105.198.109;database=tarotapp;uid=atlas_master;pwd=5jq]sS-j;port=1234;CharSet=utf8";
         static string 连接字符串 = "server=39.105.198.109;database=tarotapp;uid=feiye;pwd=5jq]sS-j;CharSet=utf8";
-        //static string 连接字符串 = "server=127.0.0.1;database=tarotapp;uid=root;pwd=x5";
         static JSONObject tou;
         static Hashtable xint_ = new Hashtable();//保存心跳线， 键为userId,key为datatime
 
         //  static string 图片服务器ip = "https://taluoguan.com";
-       static string 图片服务器ip = "http://39.105.198.109:5000"; //192.168.0.121
-      //  static string 图片服务器ip = "http://192.168.0.121:5000";
+        static string 图片服务器ip = "http://192.168.0.121:5000"; //192.168.0.121
+                                                             //  static string 图片服务器ip = "http://192.168.0.121:5000";
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;
 
@@ -860,6 +858,11 @@ namespace TodoApi
                 {
                     return admin.admin_exRefund(tou);
                 }
+                else if (type == "getCheckApplicationStep")
+                {
+                    return admin.getCheckApplicationStep(tou);
+                }
+
 
 
 
@@ -1224,7 +1227,7 @@ namespace TodoApi
 
                 int sum = 0;//统计行数
 
-                string sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 order by userbusiness.最后接单日期 desc LIMIT " + 当前行数 + ",10;";
+                string sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' order by userbusiness.最后接单日期 desc LIMIT " + 当前行数 + ",10;";
 
                 if (addType == "tuijian")
                 {
@@ -1233,13 +1236,13 @@ namespace TodoApi
                 else if (addType == "koubei")
                 {
                     //口碑
-                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 order by userbusiness.咨询评分 desc LIMIT " + 当前行数 + ",10;";
+                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' order by userbusiness.咨询评分 desc LIMIT " + 当前行数 + ",10;";
 
                 }
                 else if (addType == "youhui")
                 {
                     //优惠
-                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 order by userbusiness.minMoney asc LIMIT " + 当前行数 + ",10;";
+                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' order by userbusiness.minMoney asc LIMIT " + 当前行数 + ",10;";
                 }
 
                 MySqlConnection con = new MySqlConnection();
@@ -3909,7 +3912,7 @@ namespace TodoApi
                 }
                 else
                 {
-                    sql = "select `user`.`name`,`user`.UserImgUrl from user where `user`.id=@toUserId;";
+                    sql = "select `user`.`CName` as name,`user`.UserImgUrl from user where `user`.id=@toUserId;";
                 }
 
 
@@ -5532,6 +5535,7 @@ namespace TodoApi
                 JArray rows = new JArray();
                 string userId = 请求参数["userId"].ToString();
                 string toUserId = 请求参数["toUserId"].ToString();
+                string last_consultationId = "";
                 //string orderId = 请求参数["orderId"].ToString();
                 string nexus = "";
                 if (Convert.ToInt16(userId) < Convert.ToInt16(toUserId))
@@ -5572,17 +5576,32 @@ namespace TodoApi
 
                     if (PageTo == "top")
                     {
+                        last_consultationId = 请求参数["last_consultationId"].ToString();
                         ret.Add("PageTo", PageTo);
                         //向上加载  加载以前的历史数据
                         sql = @"select  a.consultationId,a.audioUrl,a.isAudio,a.text,a.userId,a.toUserId,a.timeLength,
         a.date,a.isImg,a.imgUrl,a.isTxt from
           (select consultation.consultationId, consultation.audioUrl, consultation.isAudio, consultation.text, consultation.userId, consultation.toUserId, consultation.timeLength, consultation.date, consultation.isImg, consultation.imgUrl, consultation.isTxt  from
-                      consultation where consultation.nexus = @nexus  order by date desc LIMIT @startPage,10) as a order by a.date asc;
+                      consultation where consultation.nexus = @nexus and consultation.consultationId<@consultationId order by date desc LIMIT 0,10) as a order by a.date asc;
                             ";
+                    }
+                    else if (PageTo == "next")
+                    {
+
+                        //加载最新
+                        last_consultationId = 请求参数["last_consultationId"].ToString();
+                        sql = @"select  a.consultationId,a.audioUrl,a.isAudio,a.text,a.userId,a.toUserId,a.timeLength,
+        a.date,a.isImg,a.imgUrl,a.isTxt from
+          (select consultation.consultationId, consultation.audioUrl, consultation.isAudio, consultation.text, consultation.userId, consultation.toUserId, consultation.timeLength, consultation.date, consultation.isImg, consultation.imgUrl, consultation.isTxt  from
+                      consultation where consultation.nexus = @nexus and  consultation.consultationId >@consultationId order by date desc  ) as a order by a.date asc; ; ";
+
+
+
+                        ret.Add("PageTo", PageTo);
                     }
                     else
                     {
-                        //向下加载
+                        //首次加载
                         ret.Add("PageTo", PageTo);
                     }
 
@@ -5604,10 +5623,11 @@ namespace TodoApi
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
-
+                //consultationId
                 //cmd.Parameters.AddWithValue("@orderId", orderId);
                 cmd.Parameters.AddWithValue("@startPage", startPage);
                 cmd.Parameters.AddWithValue("@nexus", nexus);
+                cmd.Parameters.AddWithValue("@consultationId", last_consultationId);
                 // cmd.Parameters.AddWithValue("@touserid", toUserId);
 
 
@@ -7970,15 +7990,15 @@ namespace TodoApi
             {
                 //base64转图像并保存 返回保存路径
                 string imgPath = "";
-        
+
                 // bace64 = bace64.Substring(0, bace64.IndexOf("bace64,")+7);
                 bace64 = bace64.Replace("data:image/jpeg;base64,", "");
                 byte[] arr = Convert.FromBase64String(bace64);
                 using (MemoryStream ms = new MemoryStream(arr))
                 {
-                      Console.Write("--------------------------------3");
+                    Console.Write("--------------------------------3");
                     System.DrawingCore.Bitmap bmp = new System.DrawingCore.Bitmap(ms);
-                     Console.Write("--------------------------------3.1");
+                    Console.Write("--------------------------------3.1");
                     ms.Close();
                     Bitmap bmp2 = new Bitmap(bmp);
                     bmp.Dispose();
@@ -8001,9 +8021,9 @@ namespace TodoApi
                         Directory.CreateDirectory(保存绝对路径);
 
                     }
-  Console.Write("--------------------------------5");
+                    Console.Write("--------------------------------5");
                     bmp2.Save(保存绝对路径 + 文件名, System.DrawingCore.Imaging.ImageFormat.Jpeg);
-                      Console.Write("--------------------------------6");
+                    Console.Write("--------------------------------6");
                     //bmp2.Save(filePath + ".jpg", System.Drawing.Imaging.ImageFort.Jpeg);
                     //bmp2.Save(filePath + ".bmp", System.Drawing.Imaging.ImageFoat.Bmp);
                     //bmp2.Save(filePath + ".gif", System.Drawing.Imaging.ImageFoat.Gif);
@@ -8216,6 +8236,48 @@ namespace TodoApi
 
         public class admin
         {
+            public static JSONObject getCheckApplicationStep(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                ret.Add("type", "getCheckApplicationStep_ret");
+                string userId = h["userId"].ToString();
+                string sql = @"select  applicationconsultant.Handle from applicationconsultant  where applicationconsultant.userId=@userId;";
+
+
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        if (sdr["Handle"] != DBNull.Value)
+                        {
+                            ret.Add("Handle", sdr["Handle"].ToString());
+                        }
+                        else
+                        {
+                            ret.Add("Handle", -1);
+                        }
+                    }
+
+                }
+                con.Close();
+
+
+
+                return ret;
+            }
             public static JSONObject admin_exRefund(JSONObject h)
             {
                 JSONObject ret = new JSONObject();

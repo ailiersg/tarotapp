@@ -120,7 +120,7 @@ namespace TodoApi.Controllers
                     try
                     {
                         tou = JSONObject.Parse(data);
-                        return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
+                      
                     }
                     catch (Exception)
                     {
@@ -128,6 +128,8 @@ namespace TodoApi.Controllers
                         a1 = a1.Replace("\'", "\"");
                         return a1;
                     }
+
+                      return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
 
                 }
                 else
