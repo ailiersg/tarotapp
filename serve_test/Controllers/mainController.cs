@@ -26,6 +26,7 @@ namespace TodoApi.Controllers
 
             //     //  HttpContext.Session.SetString("token",Program.tool.Get32MD5One(mw));
 
+            Console.Write("get data=" + data);
 
             try
             {
@@ -120,7 +121,7 @@ namespace TodoApi.Controllers
                     try
                     {
                         tou = JSONObject.Parse(data);
-                      
+
                     }
                     catch (Exception)
                     {
@@ -129,7 +130,7 @@ namespace TodoApi.Controllers
                         return a1;
                     }
 
-                      return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
+                    return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
 
                 }
                 else
