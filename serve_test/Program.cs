@@ -66,8 +66,8 @@ namespace TodoApi
         static Hashtable xint_ = new Hashtable();//保存心跳线， 键为userId,key为datatime
 
         //  static string 图片服务器ip = "https://taluoguan.com";
-        static string 图片服务器ip = "39.105.198.109:5000"; //192.168.0.121
-                                                            
+        static string 图片服务器ip = "http://192.168.0.121:5001"; //192.168.0.121
+
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;
 
@@ -81,6 +81,8 @@ namespace TodoApi
             }
 
             Console.WriteLine("basePath2" + basePath2);
+            定时维护.startTime处理掉线();
+            定时维护.startTime处理超时订单();
 
             //  请求接口.启动websoket();
 
@@ -119,7 +121,7 @@ namespace TodoApi
 
 
                 Console.Write("图片服务器ip=" + 图片服务器ip);
-                定时维护.startTime处理掉线();
+
 
 
                 return;
@@ -393,11 +395,7 @@ namespace TodoApi
 
 
             }
-            public static void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-            {
-                tool.输出log记录("Timer1_Elapsed()! 开始处理超时订单");
-                transaction.处理超时订单();
-            }
+
             public static JSONObject 请求处理(string 请求参数)
             {
 
@@ -635,6 +633,10 @@ namespace TodoApi
                 {
                     return letter.分页加载咨询对话内容(tou);
                 }
+                else if (type == "admin_addConsultTime")
+                {
+                    return admin.admin_分页加载咨询对话内容(tou);
+                }
                 else if (type == "sendConsultImg")
                 {
                     return letter.发送咨询对话图片(tou);
@@ -862,6 +864,47 @@ namespace TodoApi
                 {
                     return admin.getCheckApplicationStep(tou);
                 }
+                else if (type == "admin_fulfil_jubao")
+                {
+                    return admin.admin_fulfil_jubao(tou);
+                }
+                else if (type == "getUserNote")
+                {
+                    return letter.getUserNote(tou);
+                }
+                else if (type == "admin_add_zhuanti_list")
+                {
+                    return admin.addzhuantiList(tou);
+                }
+                else if (type == "admin_del_zhuanti")
+                {
+                    return admin.delzhuanti(tou);
+                }
+                else if (type == "admin_modify_title")
+                {
+                    return admin.admin_modify_title(tou);
+                }
+                else if (type == "admin_modify_banner")
+                {
+                    return admin.admin_modify_banner(tou);
+                }
+                else if (type == "admin_modify_contentImg")
+                {
+                    return admin.admin_modify_contentImg(tou);
+                }
+                else if (type == "admin_add_zhuanti")
+                {
+                    return admin.admin_add_zhuanti(tou);
+                }
+                else if (type == "admin_get_drawMoney_record")
+                {
+                    return admin.admin_get_drawMoney_record(tou);
+                }
+                else if (type == "admin_SetWithdrawMoneySuccess")
+                {
+                    return admin.admin_SetWithdrawMoneySuccess(tou);
+                }
+                //admin_SetWithdrawMoneySuccess
 
 
 
@@ -1227,7 +1270,7 @@ namespace TodoApi
 
                 int sum = 0;//统计行数
 
-                string sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' and userbusiness.isDisabled =0 order by userbusiness.最后接单日期 desc LIMIT " + 当前行数 + ",10;";
+                string sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1  and userbusiness.isDisabled =0 order by userbusiness.最后接单日期 desc LIMIT " + 当前行数 + ",10;";
 
                 if (addType == "tuijian")
                 {
@@ -1236,13 +1279,13 @@ namespace TodoApi
                 else if (addType == "koubei")
                 {
                     //口碑
-                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' and userbusiness.isDisabled =0 order by userbusiness.咨询评分 desc LIMIT " + 当前行数 + ",10;";
+                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1  and userbusiness.isDisabled =0 order by userbusiness.咨询评分 desc LIMIT " + 当前行数 + ",10;";
 
                 }
                 else if (addType == "youhui")
                 {
                     //优惠
-                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1 and 行业='tarot' and userbusiness.isDisabled =0 order by userbusiness.minMoney asc LIMIT " + 当前行数 + ",10;";
+                    sql = "select  user.id, user.CName,user.UserImgUrl,userbusiness.总订单量, userbusiness.封面图片,userbusiness.咨询评分,userbusiness.咨询介绍  from user,userbusiness where user.id=userbusiness.userid  and userbusiness.营业状态=1  and userbusiness.isDisabled =0 order by userbusiness.minMoney asc LIMIT " + 当前行数 + ",10;";
                 }
 
                 MySqlConnection con = new MySqlConnection();
@@ -1277,7 +1320,6 @@ namespace TodoApi
                         }
 
 
-
                         row.Add("CName", sdr["CName"].ToString());
 
                         //row.Add("GoodTyoe", sdr["GoodTyoe"].ToString());
@@ -1285,13 +1327,11 @@ namespace TodoApi
                         row.Add("danjia", tool.查询价格最低的服务(userid));
                         if (sdr["封面图片"] == System.DBNull.Value)
                         {
-
                             row.Add("fnengmianurl", "");
                         }
                         else
                         {
                             row.Add("fnengmianurl", 图片服务器ip + sdr["封面图片"].ToString().Trim());
-
                         }
 
                         Double zixunpingfen = Convert.ToDouble(sdr["咨询评分"]);
@@ -1308,7 +1348,6 @@ namespace TodoApi
                         }
 
 
-
                         rows.Add(row);
                         sum++;
                     }
@@ -1322,8 +1361,6 @@ namespace TodoApi
 
                 return ret;
             }
-
-
 
 
             public static JSONObject 视频通话video_offer(JSONObject 请求参数)
@@ -3610,7 +3647,16 @@ namespace TodoApi
                 ret.Add("badgeRows", personalData.加载咨询师标签(userid));
                 ret.Add("badgeRows_", personalData.加载所有咨询师标签());
                 ret.Add("city", 查找用户所在地(userid));
-                ret.Add("userImg", 图片服务器ip + personalData.查找用户头像URL(userid));
+                string userImg = personalData.查找用户头像URL(userid);
+                if (userImg == "")
+                {
+                    ret.Add("userImg", userImg);
+                }
+                else
+                {
+                    ret.Add("userImg", 图片服务器ip + userImg);
+                }
+
                 return ret;
             }
             public static string 查找用户所在地(string userid)
@@ -3825,31 +3871,44 @@ namespace TodoApi
                 string 图片保持路径 = tool.base64ChangeImgSave(imgBase64);
                 //string 现有图片 = "";
                 //ArrayList 现有图片数组 = new ArrayList();
-                string sql = "update  userbusiness set userbusiness.封面图片=@图片保持路径 where userid=@userid;";
+                string sql = "update  userbusiness set userbusiness.封面图片=@imgUrl where userid=@userid;";
+                // MySqlConnection con = new MySqlConnection();
+                // con.ConnectionString = 连接字符串;
+                // MySqlCommand cmd = new MySqlCommand();
+
+                // cmd.Parameters.AddWithValue("@userid", userid);
+                // cmd.Parameters.AddWithValue("@图片保持路径",图片保持路径);
+
+                // cmd.CommandText = sql;
+
+                // cmd.Connection = con;
+                // con.Open();
+                // int count=0;
+                // count=cmd.ExecuteNonQuery();
+
+                // con.Close();
+
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
 
                 cmd.Parameters.AddWithValue("@userid", userid);
-                cmd.Parameters.AddWithValue("@图片保持路径", 图片保持路径);
+                cmd.Parameters.AddWithValue("@imgUrl", 图片保持路径);
 
                 cmd.CommandText = sql;
-                MySqlDataReader sdr = null;
+
                 cmd.Connection = con;
                 con.Open();
-
+                cmd.ExecuteNonQuery();
                 if (con.State == System.Data.ConnectionState.Open)
                 {
-                    sdr = cmd.ExecuteReader();
-
-                    ret.Add("msg", "upuserimg_ok");
 
                 }
                 con.Close();
 
 
 
-
+                ret.Add("msg", "upuserimg_ok");
 
 
                 return ret;
@@ -4450,8 +4509,17 @@ namespace TodoApi
                 ret.Add("type", "withdrawalsMoney_ret");
                 string userId = 请求参数["userId"].ToString();
                 string money = 请求参数["money"].ToString();
+                string code = 请求参数["code"].ToString();
+                string phone = 请求参数["phone"].ToString();
+                if (!login.核对验证码(phone, code))
+                {
+                    ret.Add("code", 999);
+                    ret.Add("msg", "验证码错误");
+                    return ret;
+                }
 
-                string sql = "SELECT  CASE  exists(SELECT *  FROM  withdrawalsrecord WHERE  withdrawalsrecord.userId=@userId and withdrawalsrecord.state=0) when 1  then 1 ELSE 0 end as a;";
+
+                string sql = "SELECT *  FROM  withdrawalsrecord WHERE  withdrawalsrecord.userId=@userId and withdrawalsrecord.state=0;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -4459,16 +4527,12 @@ namespace TodoApi
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.Parameters.AddWithValue("@money", money);
 
-
-
-
                 cmd.CommandText = sql;
                 MySqlDataReader sdr = null;
                 cmd.Connection = con;
                 con.Open();
 
-                int a = 0;
-
+                int count = 0;
 
 
                 if (con.State == System.Data.ConnectionState.Open)
@@ -4477,11 +4541,7 @@ namespace TodoApi
                     while (sdr.Read())
                     {
 
-                        a = Convert.ToInt16(sdr["a"]);
-
-
-
-
+                        count++;
 
                     }
 
@@ -4490,13 +4550,13 @@ namespace TodoApi
                 con.Close();
 
 
-                if (a == 1)
+                if (count > 0)
                 {
                     //已经存在记录
 
                     ret.Add("meg", "1");
-
-
+                    ret.Add("msg", "上一次提现申请尚未完成");
+                    ret.Add("code", "999");
 
                 }
                 else
@@ -4507,6 +4567,7 @@ namespace TodoApi
 
 
                     ret.Add("meg", "ok");
+                    ret.Add("code", "200");
 
                 }
 
@@ -4526,7 +4587,7 @@ namespace TodoApi
 
                 string sql = @"SELECT withdrawalsrecord.money,withdrawalsrecord.date,withdrawalsrecord.state
         from withdrawalsrecord
-        where withdrawalsrecord.userId = @userId; ";
+        where withdrawalsrecord.userId = @userId order by date desc; ";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -4838,7 +4899,7 @@ namespace TodoApi
                 }
 
 
-                return "";
+                return ret;
 
             }
             public static JSONObject addBuyOrderData(JSONObject 请求参数)
@@ -5429,6 +5490,49 @@ namespace TodoApi
                 con.Close();
 
                 return a;
+            }
+            public static JSONObject getUserNote(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                string userId = h["toUserId"].ToString();
+                ret.Add("type", "getUserNote_ret");
+                string sql = "select  * from messages where  messages.toUserId=@userId;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                JArray rows = new JArray();
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+
+
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        JSONObject row = new JSONObject();
+                        row.Add("id", sdr["id"].ToString());
+                        row.Add("toUserId", sdr["toUserId"].ToString());
+                        row.Add("msg", sdr["msg"].ToString());
+                        row.Add("date", sdr["date"].ToString());
+                        row.Add("isred", sdr["isred"].ToString());
+
+                        rows.Add(row);
+                    }
+
+                }
+                con.Close();
+
+                ret.Add("rows", rows);
+
+                return ret;
             }
             //public static JSONObject 分页加载私信对话内容(JSONObject 请求参数)
             //{
@@ -6408,7 +6512,7 @@ namespace TodoApi
                 ret.Add("type", "addSpeciallist_ret");
                 // string specialId = 请求参数["specialId"].ToString();
 
-                string sql = "SELECT  专题.title ,专题.imgUrl,专题.专题id,专题.creat_date from 专题 ORDER BY 专题.creat_date DESC;";
+                string sql = "SELECT  专题.title ,专题.imgUrl,contentImg,专题.专题id,专题.creat_date from 专题 ORDER BY 专题.creat_date DESC;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -6430,6 +6534,8 @@ namespace TodoApi
                         row.Add("id", sdr["专题id"].ToString());
                         row.Add("title", sdr["title"].ToString());
                         row.Add("url", 图片服务器ip + sdr["imgUrl"].ToString());
+                        row.Add("contentImg", 图片服务器ip + sdr["contentImg"].ToString());
+
 
                         row.Add("creat_date", DateTime.Parse(sdr["creat_date"].ToString()).ToString("MM月dd日"));
 
@@ -6474,12 +6580,13 @@ namespace TodoApi
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
-                        // JSONObject row = new JSONObject();
+                        // contentImg row = new JSONObject();
                         ret.Add("title", sdr["title"].ToString());
                         ret.Add("id", sdr["专题id"].ToString());
                         ret.Add("imgUrl", 图片服务器ip + sdr["imgUrl"].ToString());
-                        ret.Add("txt", sdr["txt"].ToString());
+                        // ret.Add("txt", sdr["txt"].ToString());
                         ret.Add("creat_date", DateTime.Parse(sdr["creat_date"].ToString()).ToString("MM月dd日"));
+                        ret.Add("contentImg", 图片服务器ip + sdr["contentImg"].ToString());
 
                     }
 
@@ -6654,10 +6761,7 @@ namespace TodoApi
             {
                 //1、查找出超时订单ID列表 
 
-                string sql = @"SELECT 订单.订单号,订单.咨询师id from 订单 WHERE  订单.订单状态 =1  AND  (DATE_ADD(订单.付款日期,INTERVAL 7 DAY))<now();";
-
-
-
+                string sql = @"SELECT 订单.订单号,订单.咨询师id from 订单 WHERE  订单.订单状态 =1  AND  (DATE_ADD(订单.付款日期,INTERVAL 10 DAY))<now();";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -6673,7 +6777,14 @@ namespace TodoApi
                     {
                         //2、遍历 改变订单状态并交换金额
 
-                        transaction.提交评价(sdr["订单号"].ToString(), sdr["咨询师id"].ToString());
+                        if (tool.checkOrderExistTousu(sdr["订单号"].ToString()))
+                        {
+                            //该订单存在未处理的投诉
+                        }
+                        else
+                        {
+                            transaction.提交评价(sdr["订单号"].ToString(), sdr["咨询师id"].ToString());
+                        }
 
                     }
 
@@ -6757,6 +6868,14 @@ namespace TodoApi
                     }
                 }
                 //处理印象标签变量 结束
+
+                //删除该未处理的投诉
+                if (tool.checkOrderExistTousu(orderId))
+                {
+                    //存在 ex删除
+                    tool.deltousu(orderId);
+
+                }
 
 
                 bool isTransactionOk = false;
@@ -7513,6 +7632,30 @@ namespace TodoApi
 
 
 
+            public static void WriteNote(string userid, string msg)
+            {
+                string sql = "insert  messages(toUserId, msg, date) VALUES(@userid,@msg,now());";
+
+
+
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@userid", userid);
+                cmd.Parameters.AddWithValue("@msg", msg);
+
+
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+            }
             public static string Base64Encode(string content)
             {
 
@@ -7753,6 +7896,39 @@ namespace TodoApi
                 return ret;
             }
 
+            public static bool checkOrderExistTousu(string orderid)
+            {
+                bool ret = false;
+                string sql = "select  count(*) as sum from  举报 where 举报.handleState=0 and 举报.orderId=@orderId;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@orderId", orderid);
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+
+                    while (sdr.Read())
+                    {
+
+                        if (Convert.ToInt16(sdr["sum"]) > 0)
+                        {
+                            ret = true;
+                        }
+
+                    }
+
+                }
+                con.Close();
+
+
+                return ret;
+            }
             public static int 查询订单总数()
             {
                 int ret = 0;
@@ -8037,18 +8213,23 @@ namespace TodoApi
                 MySqlDataReader sdr = null;
                 cmd.Connection = con;
                 con.Open();
-
+                int count = 0;
                 if (con.State == System.Data.ConnectionState.Open)
                 {
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
                         imgurl = sdr["UserImgUrl"].ToString();
-
+                        count++;
                     }
 
                 }
                 con.Close();
+
+                if (imgurl == "")
+                {
+                    return "ok";
+                }
 
 
                 string 当前服务路径 = basePath1;
@@ -8067,6 +8248,31 @@ namespace TodoApi
 
                 return "ok";
             }
+            public static void deltousu(string orderId)
+            {
+                //评价订单前 删除未处理的投诉
+
+
+
+                string sql = "delete from 举报 where  举报.orderId=@orderId;";
+                string imgurl = "";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@orderId", orderId);
+
+
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+
+
+
+            }
             public static string base64ChangeImgSave(string bace64)
             {
                 //base64转图像并保存 返回保存路径
@@ -8074,6 +8280,8 @@ namespace TodoApi
 
                 // bace64 = bace64.Substring(0, bace64.IndexOf("bace64,")+7);
                 bace64 = bace64.Replace("data:image/jpeg;base64,", "");
+                bace64 = bace64.Replace("data:image/png;base64,", "");
+                bace64 = bace64.Replace("data:image/jpg;base64,", "");
                 byte[] arr = Convert.FromBase64String(bace64);
                 using (MemoryStream ms = new MemoryStream(arr))
                 {
@@ -8273,9 +8481,6 @@ namespace TodoApi
                 }
 
 
-
-
-
                 string sql = "select  评价.评价内容,userId,ObjUserId,BuyserviceName,serviceId,评价.评价日期 from 评价 where  评价.评价内容 is not  null  and 评价.评价内容 !=''  order by 评价.评价日期 desc limit " + addSum + ",10;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
@@ -8315,6 +8520,8 @@ namespace TodoApi
                 con.Close();
 
                 ret.Add("rows", rows);
+
+
                 return ret;
 
             }
@@ -8323,12 +8530,124 @@ namespace TodoApi
 
         public class admin
         {
+            public static JSONObject admin_分页加载咨询对话内容(JSONObject 请求参数)
+            {
+                JSONObject ret = new JSONObject();
+                ret.Add("type", "admin_addConsultTime_ret");
+                JArray rows = new JArray();
+                string userId = 请求参数["userId"].ToString();
+                string toUserId = 请求参数["toUserId"].ToString();
+                int page = (Convert.ToInt16(请求参数["page"]) - 1) * 10;
+                ret.Add("carrpage", 请求参数["page"].ToString());
+                //string orderId = 请求参数["orderId"].ToString();
+                string nexus = "";
+                if (Convert.ToInt16(userId) < Convert.ToInt16(toUserId))
+                {
+
+                    nexus = userId + "-" + toUserId;
+                }
+                else
+                {
+                    nexus = toUserId + "-" + userId;
+                }
+
+
+                string addMaxDate = "";
+
+
+
+                string sql = @"select  a.consultationId,a.audioUrl,a.isAudio,a.text,a.userId,a.toUserId,a.timeLength,
+        a.date,a.isImg,a.imgUrl,a.isTxt,b.countpage from 
+        (select  count(*) as countpage from consultation where consultation.nexus = '1-8475') as b,
+          (select consultation.consultationId, consultation.audioUrl, consultation.isAudio, consultation.text, consultation.userId, consultation.toUserId, consultation.timeLength, consultation.date, consultation.isImg, consultation.imgUrl, consultation.isTxt  from
+                      consultation where consultation.nexus = @nexus  order by date desc LIMIT @page,10) as a order by a.date desc;
+                            ";
+
+
+
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                //consultationId
+                //cmd.Parameters.AddWithValue("@orderId", orderId);
+                // cmd.Parameters.AddWithValue("@startPage", startPage);
+                cmd.Parameters.AddWithValue("@nexus", nexus);
+                cmd.Parameters.AddWithValue("@page", page);
+                // cmd.Parameters.AddWithValue("@touserid", toUserId);
+
+
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+
+                int count = 0;
+                ArrayList LetterList = new ArrayList();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        JSONObject row = new JSONObject();
+
+                        row.Add("userId", sdr["userid"].ToString());
+                        row.Add("timeLength", sdr["timeLength"].ToString());
+                        row.Add("toUserId", sdr["toUserId"].ToString());
+                        row.Add("audioUrl", 图片服务器ip + sdr["audioUrl"].ToString());
+                        row.Add("isAudio", sdr["isAudio"].ToString());
+                        //row.Add("UserImgUrl", 图片服务器ip + sdr["UserImgUrl"].ToString());
+                        row.Add("text", sdr["text"].ToString());
+                        row.Add("consultationId", sdr["consultationId"].ToString());
+                        //row.Add("date", tool.日期时间处理(Convert.ToDateTime(sdr["date"].ToString())));
+                        row.Add("date", sdr["date"].ToString());
+                        LetterList.Add(sdr["userid"].ToString());
+                        row.Add("isImg", sdr["isImg"].ToString());
+                        row.Add("isTxt", sdr["isTxt"].ToString());
+                        row.Add("imgUrl", 图片服务器ip + sdr["imgUrl"].ToString());
+                        if (row["isImg"].ToString() == "1")
+                        {
+                            //是图片
+                            row["isAudio"] = "";
+
+                            row["audioUrl"] = "";
+
+                            row["timeLength"] = "";
+                        }
+
+                        if (count == 0)
+                        {
+                            ret.Add("countpage", sdr["countpage"].ToString());
+                        }
+
+                        addMaxDate = sdr["date"].ToString();
+                        rows.Add(row);
+                        count++;
+
+                    }
+
+                }
+                con.Close();
+                ret.Add("leList", string.Join(",", (string[])LetterList.ToArray(typeof(string))));
+                ret.Add("userImgUrl", personalData.查询用户头像(toUserId));
+                ret.Add("tousercname", personalData.查找用户昵称(toUserId));
+                ret.Add("addMaxDate", addMaxDate);
+                ret.Add("count", count);
+                ret.Add("rows", rows);
+
+
+
+
+                return ret;
+            }
             public static JSONObject getCheckApplicationStep(JSONObject h)
             {
                 JSONObject ret = new JSONObject();
                 ret.Add("type", "getCheckApplicationStep_ret");
                 string userId = h["userId"].ToString();
-                string sql = @"select  applicationconsultant.Handle from applicationconsultant  where applicationconsultant.userId=@userId and applicationconsultant.Handle !=2;";
+                string sql = @"select  applicationconsultant.Handle from applicationconsultant  where applicationconsultant.userId=@userId and applicationconsultant.Handle !=2 limit 0,1;";
 
 
                 MySqlConnection con = new MySqlConnection();
@@ -8382,20 +8701,71 @@ namespace TodoApi
                 string objUserId = c["objUserId"].ToString();
                 string isok = money.repund(fund, orderId); //
 
+
+
                 if (isok == "Y")
                 {
                     ret.Add("msg", "Y");
+                    ret.Add("code", 200);
                     transaction.提交评价(orderId, objUserId);
+                    //发送通知
+                    tool.WriteNote(h["userid"].ToString(), "你有一个投诉订单已经退款，请在已完成的订单列表中查看。(订单号：" + orderId + ")");
+                    tool.WriteNote(h["touserid"].ToString(), "你有一个被投诉订单已经退款，请在已完成订单列表中查看，如有疑问请联系客服。(订单号：" + orderId + ")");
+
                 }
                 else
                 {
                     ret.Add("msg", "N");
                     ret.Add("info", "退款失败 未修改订单！");
+                    ret.Add("code", 999);
                 }
 
                 return ret;
             }
 
+            public static JSONObject admin_fulfil_jubao(JSONObject h)
+            {
+                //撤销投诉
+
+                JSONObject ret = new JSONObject();
+                ret.Add("type", "admin_fulfil_jubao_ret");
+                string jubId = h["jubId"].ToString();
+                //1、执行退款api 返回成功值 执行数据库操作
+
+                string sql = "update   举报 set 举报.handleState=1 where  举报.id=@jubId;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@jubId", jubId);
+
+                cmd.CommandText = sql;
+
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+
+                    count = cmd.ExecuteNonQuery();
+                }
+                con.Close();
+
+                if (count == 1)
+                {
+                    ret.Add("code", 200);
+                    //发送通知
+                    tool.WriteNote(h["userid"].ToString(), "你有一个投诉订单已经被撤销，详情请联系客服。");
+                    tool.WriteNote(h["touserid"].ToString(), "你有一个被投诉订单已经已经被撤销。");
+
+                }
+                else
+                {
+                    ret.Add("code", 999);
+                }
+
+                return ret;
+            }
 
             public static JSONObject admin_jubInfo(JSONObject h)
             {
@@ -8404,18 +8774,16 @@ namespace TodoApi
                 string jubId = h["jubId"].ToString();
 
                 string sql = @"
-        select  订单.用户姓名,订单.用户性别,订单.订单号,
-        (select user.手机号 from user,举报 where  举报.userid=user.id and 举报.id=9) as 客户手机号,
-          (select user.手机号 from user,举报 where  举报.toUserId=user.id and 举报.id=9) as 咨询师手机号,
-          (select user.CName from user,举报 where  举报.toUserId=user.id and 举报.id=9) as 咨询师昵称,
-        (select user.性别 from user,举报 where  举报.toUserId=user.id and 举报.id=9) as 咨询师性别,
-          订单.已缴金额,
+      select  订单.订单号,user.手机号 as 咨询师手机号,user.CName as 咨询师昵称,user.性别 as 咨询师性别, 订单.已缴金额,
           userservice.服务名称,
           举报.date as 投诉日期,
+          举报.handleState,
           订单.付款日期,
           订单.订单状态,
-          举报.txt
-        from ((user inner join  举报 on 举报.userid=user.id) inner join 订单 on 订单.订单号=举报.orderId) inner join userservice on  userservice.serviceId = 订单.serviceId where  举报.id=9
+          举报.txt,
+          订单.咨询师id,
+          订单.下单用户id
+from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join userservice on userservice.serviceId = 订单.serviceId)  inner join user on user.ID=订单.咨询师id where  举报.id=@jubId
 
         ";
                 MySqlConnection con = new MySqlConnection();
@@ -8435,9 +8803,9 @@ namespace TodoApi
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
-                        ret.Add("userName", sdr["用户姓名"].ToString());
-                        ret.Add("userSex", sdr["用户性别"].ToString());
-                        ret.Add("userPhone", sdr["客户手机号"].ToString());
+                        // ret.Add("userName", sdr["用户姓名"].ToString());
+                        // ret.Add("userSex", sdr["用户性别"].ToString());
+                        // ret.Add("userPhone", sdr["客户手机号"].ToString());
                         ret.Add("objPhone", sdr["咨询师手机号"].ToString());
                         ret.Add("objCName", sdr["咨询师昵称"].ToString());
                         ret.Add("objSex", sdr["咨询师性别"].ToString());
@@ -8448,12 +8816,60 @@ namespace TodoApi
                         ret.Add("orderId", sdr["订单号"].ToString());
                         ret.Add("orderState", sdr["订单状态"].ToString());
                         ret.Add("jubText", sdr["txt"].ToString());
+                        ret.Add("咨询师id", sdr["咨询师id"].ToString());
+                        ret.Add("下单用户id", sdr["下单用户id"].ToString());
+                        ret.Add("handleState", Convert.ToInt16(sdr["handleState"]));
 
                     }
 
 
                 }
                 con.Close();
+                JSONObject userdata = new JSONObject();
+                userdata = admin_jubInfo_userData(jubId);
+                ret.Add("userName", userdata["userName"].ToString());
+                ret.Add("userSex", userdata["userSex"].ToString());
+                ret.Add("userPhone", userdata["userPhone"].ToString());
+
+
+
+                return ret;
+            }
+            public static JSONObject admin_jubInfo_userData(string jubId)
+            {
+
+                JSONObject ret = new JSONObject();
+                string sql = @"select user.手机号 as 客户手机号,订单.用户性别,订单.用户姓名 from (user inner join 订单 on user.ID=订单.下单用户id) inner join 举报 on 举报.orderId=订单.订单号 where 举报.id=@jubId;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@jubId", jubId);
+
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+
+                        ret.Add("userName", sdr["用户姓名"].ToString());
+                        ret.Add("userSex", sdr["用户性别"].ToString());
+                        ret.Add("userPhone", sdr["客户手机号"].ToString());
+
+
+                    }
+
+
+                }
+                con.Close();
+
+
 
                 return ret;
             }
@@ -8484,7 +8900,7 @@ namespace TodoApi
                     cmd.ExecuteReader();
                 }
                 con.Close();
-
+                tool.WriteNote(h["userId"].ToString(), "你的咨询师入驻申请失败，详情请咨询客服。");
 
                 return ret;
             }
@@ -8532,6 +8948,8 @@ namespace TodoApi
 
                 return ret;
             }
+
+
             public static JSONObject admin_set_Disabled(JSONObject h)
             {
                 //冻结用户和取消
@@ -8596,6 +9014,8 @@ namespace TodoApi
                 }
                 con.Close();
                 admin_objtongguo(applicationconsultantId);
+                tool.WriteNote(h["userId"].ToString(), "你的咨询四入驻申请已经通过，请自行完善个人资料的相关设置，进行营业。");
+
 
 
                 return ret;
@@ -8642,9 +9062,12 @@ namespace TodoApi
                 string title = 请求参数["title"].ToString();
                 string html = 请求参数["html"].ToString();
                 string img = 请求参数["img"].ToString();
-                img = tool.base64ChangeImgSave(img);
+                string contentImg = 请求参数["contentImg"].ToString();
 
-                string sql = "insert into 专题(title, txt, creat_date, imgUrl) values (@title,@html,now(),@img)";
+                img = tool.base64ChangeImgSave(img);
+                contentImg = tool.base64ChangeImgSave(contentImg);
+
+                string sql = "insert into 专题(title, txt, creat_date, imgUrl,contentImg) values (@title,@html,now(),@img,@contentImg)";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -8652,6 +9075,7 @@ namespace TodoApi
                 cmd.Parameters.AddWithValue("@title", title);
                 cmd.Parameters.AddWithValue("@html", html);
                 cmd.Parameters.AddWithValue("@img", img);
+                cmd.Parameters.AddWithValue("@contentImg", contentImg);
 
                 cmd.CommandText = sql;
                 MySqlDataReader sdr = null;
@@ -8661,12 +9085,224 @@ namespace TodoApi
                 {
                     sdr = cmd.ExecuteReader();
 
+                }
+                con.Close();
 
+                return ret;
+            }
+
+            public static JSONObject addzhuantiList(JSONObject 请求参数)
+            {
+                JSONObject ret = new JSONObject();
+                JArray rows = new JArray();
+                ret.Add("type", "admin_add_zhuanti_list_ret");
+                string sql = @"select * from 专题 order by 专题id desc;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        JSONObject row = new JSONObject();
+                        row.Add("title", sdr["title"].ToString());
+                        row.Add("creat_date", sdr["creat_date"].ToString());
+                        row.Add("专题id", sdr["专题id"].ToString());
+                        row.Add("imgUrl", 图片服务器ip + sdr["imgUrl"].ToString());
+                        row.Add("contentImg", 图片服务器ip + sdr["contentImg"].ToString());
+                        rows.Add(row);
+
+                    }
+
+                }
+                con.Close();
+                ret.Add("rows", rows);
+                return ret;
+            }
+            public static JSONObject delzhuanti(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                string id = h["id"].ToString();
+                ret.Add("type", "admin_del_zhuanti_ret");
+                string sql = @"delete from 专题 where 专题id=@id;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
 
                 }
                 con.Close();
 
+                if (count >= 1)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "删除成功");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
 
+                return ret;
+            }
+            public static JSONObject admin_modify_title(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                string id = h["id"].ToString();
+                string title = h["title"].ToString();
+                ret.Add("type", "admin_modify_title_ret");
+                string sql = @"update 专题 set 专题.title=@title where 专题.专题id=@id;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@title", title);
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+
+                if (count >= 1)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "修改成功");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
+
+                return ret;
+            }
+            public static JSONObject admin_modify_banner(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                string id = h["id"].ToString();
+                string banner = h["base64"].ToString();
+                banner = tool.base64ChangeImgSave(banner);
+                ret.Add("type", "admin_modify_banner_ret");
+                string sql = @"update 专题 set 专题.imgUrl=@banner where 专题.专题id=@id;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@banner", banner);
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+
+                if (count >= 1)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "修改成功");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
+
+                return ret;
+            }
+            //admin_modify_title
+            public static JSONObject admin_modify_contentImg(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                string id = h["id"].ToString();
+                string contentImg = h["contentImg"].ToString();
+                contentImg = tool.base64ChangeImgSave(contentImg);
+                ret.Add("type", "admin_modify_contentImg_ret");
+                string sql = @"update 专题 set 专题.contentImg=@contentImg where 专题.专题id=@id;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@contentImg", contentImg);
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+
+                if (count >= 1)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "修改成功");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
+
+                return ret;
+            }
+            public static JSONObject admin_add_zhuanti(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+
+                string title = h["title"].ToString();
+
+                ret.Add("type", "admin_add_zhuanti_ret");
+                string sql = @"insert 专题(title, creat_date) values(@title,now());";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@title", title);
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+
+                if (count >= 1)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "修改成功");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
 
                 return ret;
             }
@@ -8825,36 +9461,12 @@ namespace TodoApi
             public static JSONObject addjubList(JSONObject 请求参数)
             {
 
-                //   type:"admin_add_order_list",
-                //   pages:0
-
 
                 JSONObject ret = new JSONObject();
                 JArray rows = new JArray();
                 ret.Add("type", "admin_add_jub_list_ret");
-                // string pages = 请求参数["pages"].ToString();
-                // ret.Add("page1", pages);//返回当前页
-                // int counti = tool.查询订单总数();
-                // ret.Add("counti", counti);//返回订单总数
-                // int itemCount = counti / 10;
-                // ret.Add("itemCount", itemCount);//返回总记录数
 
-
-                // int i = Convert.ToInt16(pages);
-                // int page = 0;
-                // if (i == 0)
-                // {
-                //     page = 0;
-
-                // }
-                // else
-                // {
-                //     page = i * 10;
-                // }
-
-
-
-                string sql = @"select  订单.咨询师id,订单.下单用户id,订单.订单状态,订单.已缴金额,订单.订单号,订单.serviceId,订单.用户姓名,订单.付款日期,服务名称,举报.txt as jubinfo,举报.id as jubId  from (订单 inner join userservice on 订单.serviceId =userservice.serviceId) inner join  举报 on  举报.orderId = 订单.订单号 order by 举报.id desc;";
+                string sql = @"select  订单.咨询师id,订单.下单用户id,订单.订单状态,订单.已缴金额,订单.订单号,订单.serviceId,订单.用户姓名,举报.handleState,订单.付款日期,服务名称,举报.txt as jubinfo,举报.id as jubId  from (订单 inner join userservice on 订单.serviceId =userservice.serviceId) inner join  举报 on  举报.orderId = 订单.订单号 order by 举报.id desc;";
 
 
                 MySqlConnection con = new MySqlConnection();
@@ -8895,6 +9507,8 @@ namespace TodoApi
                         row.Add("serviceName", sdr["服务名称"].ToString());
                         row.Add("money", sdr["已缴金额"].ToString());
                         row.Add("orderState", sdr["订单状态"].ToString());
+                        row.Add("handleState", sdr["handleState"].ToString());
+                        //handleState
                         string orderState = sdr["订单状态"].ToString();
                         string orderStateTxt = "";
                         if (orderState.Trim() == "0")
@@ -9048,13 +9662,134 @@ namespace TodoApi
                 return ret;
 
             }
+            public static JSONObject admin_get_drawMoney_record(JSONObject 请求参数)
+            {
+
+
+                JSONObject ret = new JSONObject();
+                JArray rows = new JArray();
+                ret.Add("type", "admin_get_drawMoney_record_ret");
+                string pages = 请求参数["pages"].ToString();
+                ret.Add("carr_page", pages);//返回当前页
+
+                ret.Add("itemCount", get_withdrawalsrecord_count());//返回总记录数
+
+
+                int i = Convert.ToInt16(pages);
+                int page = 0;
+                page = (i - 1) * 10;
+
+
+
+                string sql = @"select  user.ID,user.CName,user.存款,withdrawalsrecord.id as withdrawalsrecord_id,withdrawalsrecord.money as withdrawalsrecord_money,withdrawalsrecord.date,withdrawalsrecord.state from user inner join withdrawalsrecord on user.ID=withdrawalsrecord.userId  order by withdrawalsrecord.id desc limit @page,10;";
+
+
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+
+                cmd.Parameters.AddWithValue("@page", page);
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        JSONObject row = new JSONObject();
+                        row.Add("userid", sdr["ID"].ToString());
+                        row.Add("CName", sdr["CName"].ToString());
+                        row.Add("carrMoney", sdr["存款"].ToString());
+                        row.Add("withdrawalsrecord_id", sdr["withdrawalsrecord_id"].ToString());
+                        row.Add("withdrawalsrecord_money", sdr["withdrawalsrecord_money"].ToString());
+                        row.Add("date", sdr["date"].ToString());
+                        row.Add("state", sdr["state"].ToString());
+                        rows.Add(row);
+                        count++;
+                    }
+
+                }
+                con.Close();
+
+                ret.Add("rows", rows);
+                ret.Add("count", count);
+
+
+                return ret;
+            }
+            public static int get_withdrawalsrecord_count()
+            {
+                int ret = 0;
+                string sql = @"select  count(*) as count from withdrawalsrecord ;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        ret = Convert.ToInt16(sdr["count"]);
+                    }
+                }
+                con.Close();
+
+                return ret;
+            }
+            public static JSONObject admin_SetWithdrawMoneySuccess(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                ret.Add("type", "admin_SetWithdrawMoneySuccess_ret");
+                string userId = h["userId"].ToString();
+                string withdrawalsrecord_id = h["withdrawalsrecord_id"].ToString();
+                string sql = @"update  withdrawalsrecord set withdrawalsrecord.state=1 , withdrawalsrecord.handleDate=now() where withdrawalsrecord.id=@withdrawalsrecord_id;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@withdrawalsrecord_id", withdrawalsrecord_id);
+
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    count = cmd.ExecuteNonQuery();
+
+                }
+                con.Close();
+
+                if (count != 0)
+                {
+                    ret.Add("code", 200);
+                    ret.Add("msg", "修改成功");
+                    tool.WriteNote(userId, "你有一个提现申请已经完成。");
+                }
+                else
+                {
+                    ret.Add("code", 404);
+                    ret.Add("msg", "未找到对应id");
+                }
+
+                return ret;
+            }
 
         }
 
 
         public class weixin
         {
-
 
             public static async void access_token()
             {
@@ -9206,12 +9941,26 @@ namespace TodoApi
                 timer.Interval = 60000;//执行间隔时间,单位为毫秒   1分钟
                 timer.Start();
                 timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer2_Elapsed);
-                tool.输出log记录("startTime处理掉线()!");
+                // tool.输出log记录("startTime处理掉线()!");
             }
             public static void Timer2_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                tool.输出log记录("Timer2_Elapsed()! 开始处理掉线");
+                // tool.输出log记录("Timer2_Elapsed()! 开始处理掉线");
                 tool.定时遍历清除掉线();
+            }
+            public static void startTime处理超时订单()
+            {
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.Enabled = true;
+                timer.Interval = 30000;//执行间隔时间,单位为毫秒   10分钟
+                timer.Start();
+                timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
+                // tool.输出log记录("Application_Start()!");
+            }
+            public static void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                tool.输出log记录("Timer1_Elapsed()! 开始处理超时订单");
+                transaction.处理超时订单();
             }
         }
 
