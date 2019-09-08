@@ -59,7 +59,7 @@ namespace TodoApi
         static DirectoryInfo Dir = Directory.GetParent(rootdir);
         static string root = Dir.Parent.Parent.FullName;
 
-        //订单状态 说明 0=未付款(过期会被清楚) 1=已付款 咨询中(过期会被设置成2) 2=已过期 没评价 但是正常打款 3=正常评价 打款
+        //订单状态 说明 0=未付款(过期会被清楚) 1=已付款 咨询中(过期会被设置成2) 2=已过期 没评价 但是正常打款 3=正常评价 打款 4已退款
         //Boolean 测试模式 = true;
         static string 连接字符串 = "server=39.105.198.109;database=tarotapp;uid=feiye;pwd=5jq]sS-j;CharSet=utf8";
         static JSONObject tou;
@@ -4684,6 +4684,42 @@ namespace TodoApi
 
                 tool.向对端推送数据(sendData);
 
+
+                return ok;
+
+
+
+
+            }
+            public static bool 退款后更新订单(string 订单号)
+            {
+                bool ok = false;
+
+
+                string sql = "update 订单 set  订单状态=4   where 订单号=@ordernab;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Parameters.AddWithValue("@ordernab", 订单号);
+
+                cmd.CommandText = sql;
+
+                cmd.Connection = con;
+                con.Open();
+
+                int i = cmd.ExecuteNonQuery();
+
+
+
+                con.Close();
+
+                if (i >= 1)
+                {
+                    ok = true;
+                }
+
+
+                //1 查询要发生的数据 咨询师id，买方用户名 购买的服务名 
 
                 return ok;
 

@@ -51,6 +51,10 @@ namespace TodoApi.Controllers
                 Program.tool.输出log记录("refund_fee=" + refund_fee);
                 string gmt_refund_pay = Request.Form["gmt_refund_pay"]; //退款支付时间
                 Program.tool.输出log记录("gmt_refund_pay=" + gmt_refund_pay);
+
+
+                Program.money.退款后更新订单(out_trade_no);
+
                 return ("success");
 
             }
