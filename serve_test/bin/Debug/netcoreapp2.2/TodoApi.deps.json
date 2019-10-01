@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "a1119fd16bac27f344be693e870ba73f43b8dccf"
+    "signature": "df8f01b85226fb2b16398e396f8f1bbc1796bc82"
   },
   "compilationOptions": {
     "defines": [
@@ -25,6 +25,8 @@
       "TodoApi/1.0.0": {
         "dependencies": {
           "Alipay": "2.0.0",
+          "Alipay.AopSdk.AspnetCore": "2.4.3",
+          "Alipay.AopSdk.Core": "2.4.3",
           "Fleck": "1.1.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
@@ -51,6 +53,38 @@
         },
         "compile": {
           "lib/net35/Alipay.dll": {}
+        }
+      },
+      "Alipay.AopSdk.AspnetCore/2.4.3": {
+        "dependencies": {
+          "Alipay.AopSdk.Core": "2.4.3",
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.Extensions.Configuration.Binder": "2.2.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Alipay.AopSdk.AspnetCore.dll": {
+            "assemblyVersion": "2.4.3.0",
+            "fileVersion": "2.4.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Alipay.AopSdk.AspnetCore.dll": {}
+        }
+      },
+      "Alipay.AopSdk.Core/2.4.3": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "Nito.AsyncEx": "5.0.0-pre-05"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Alipay.AopSdk.Core.dll": {
+            "assemblyVersion": "2.4.3.0",
+            "fileVersion": "2.4.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Alipay.AopSdk.Core.dll": {}
         }
       },
       "Fleck/1.1.0": {
@@ -294,6 +328,127 @@
       "NETStandard.Library/2.0.3": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0"
+        }
+      },
+      "Nito.AsyncEx/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.AsyncEx.Context": "5.0.0-pre-05",
+          "Nito.AsyncEx.Coordination": "5.0.0-pre-05",
+          "Nito.AsyncEx.Interop.WaitHandles": "5.0.0-pre-05",
+          "Nito.AsyncEx.Oop": "5.0.0-pre-05",
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-05",
+          "Nito.Cancellation": "1.0.4"
+        }
+      },
+      "Nito.AsyncEx.Context/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-05"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.AsyncEx.Context.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Coordination/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-05",
+          "Nito.Collections.Deque": "1.0.4",
+          "Nito.Disposables": "1.2.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.AsyncEx.Coordination.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Interop.WaitHandles/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.AsyncEx.Tasks": "5.0.0-pre-05"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.AsyncEx.Interop.WaitHandles.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.AsyncEx.Interop.WaitHandles.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Oop/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.AsyncEx.Coordination": "5.0.0-pre-05"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.AsyncEx.Oop.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.AsyncEx.Oop.dll": {}
+        }
+      },
+      "Nito.AsyncEx.Tasks/5.0.0-pre-05": {
+        "dependencies": {
+          "Nito.Disposables": "1.2.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.AsyncEx.Tasks.dll": {}
+        }
+      },
+      "Nito.Cancellation/1.0.4": {
+        "dependencies": {
+          "Nito.Disposables": "1.2.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.Cancellation.dll": {
+            "assemblyVersion": "1.0.4.0",
+            "fileVersion": "1.0.4.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.Cancellation.dll": {}
+        }
+      },
+      "Nito.Collections.Deque/1.0.4": {
+        "runtime": {
+          "lib/netstandard2.0/Nito.Collections.Deque.dll": {
+            "assemblyVersion": "1.0.4.0",
+            "fileVersion": "1.0.4.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.Collections.Deque.dll": {}
+        }
+      },
+      "Nito.Disposables/1.2.3": {
+        "dependencies": {
+          "System.Collections.Immutable": "1.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Nito.Disposables.dll": {
+            "assemblyVersion": "1.2.3.0",
+            "fileVersion": "1.2.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Nito.Disposables.dll": {}
         }
       },
       "OptimizedDataReader/1.1.0": {
@@ -3570,6 +3725,20 @@
       "path": "alipay/2.0.0",
       "hashPath": "alipay.2.0.0.nupkg.sha512"
     },
+    "Alipay.AopSdk.AspnetCore/2.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pS/hpnNgg4dDekY43SiD6bx7gu3w0YeCxDdxJ0fQupbIFRGt1S8c9Gqc7CqQI3ydVCd3YzXq0XJw48YrnTD+qw==",
+      "path": "alipay.aopsdk.aspnetcore/2.4.3",
+      "hashPath": "alipay.aopsdk.aspnetcore.2.4.3.nupkg.sha512"
+    },
+    "Alipay.AopSdk.Core/2.4.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JA+k4zDyiooFq7Y9/u67i42Ct2C8LydIY1QLOSME/CMCOH4VTpBZDakZ5sKplLH4NqKFVV9DT6mEsrIkLbxKnQ==",
+      "path": "alipay.aopsdk.core/2.4.3",
+      "hashPath": "alipay.aopsdk.core.2.4.3.nupkg.sha512"
+    },
     "Fleck/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -3653,6 +3822,69 @@
       "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
+    },
+    "Nito.AsyncEx/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n10w8lEheouX4mJGESOX1+Lfg0aJkgI2m9EmAcLUKdtQb79Cm5eeSqxQczGM7MFShYr8F1DJHmVCvFfWNTN6yg==",
+      "path": "nito.asyncex/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Context/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sndH2gzkLJAH/L8Br9vAnLSCDLImpygaDMZDRsuvAyItruuRHZhl9YDwiUJ+RLqx1stUuQKOE9KzI8iGAfea+w==",
+      "path": "nito.asyncex.context/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.context.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Coordination/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3xYbIgfqItnlDjg+DwHyV6w5Cbne1BOINHKRwYdGvmlyuQFZRNPB0VgEjSha7O8/58FiP5JpGgLAH6ij7FAXdA==",
+      "path": "nito.asyncex.coordination/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.coordination.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Interop.WaitHandles/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-c4dF32ojafTo/7qGEVI2VvGx0pC/CUtU70oC4+nAoq/sKfr2qmgRDej5APFB1qdFsbToBawgtZwxyvClptToZQ==",
+      "path": "nito.asyncex.interop.waithandles/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.interop.waithandles.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Oop/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4ZN4NJEpG28lyo7rDR9WS9ZW9XXVh5VLsGRTL1jFk/FS+bxguaMnySU45MKY7TycLryhiqNDPrzAyKQrbTPp1g==",
+      "path": "nito.asyncex.oop/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.oop.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.AsyncEx.Tasks/5.0.0-pre-05": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8qgDXbE44Dl8Z0jahYrIVuFCnV/WO9LGDaOG+iu6dqnTRGP8ppcgpE8CpPiYVrOlsj5nruESa+rBbZzSvXAxog==",
+      "path": "nito.asyncex.tasks/5.0.0-pre-05",
+      "hashPath": "nito.asyncex.tasks.5.0.0-pre-05.nupkg.sha512"
+    },
+    "Nito.Cancellation/1.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8bpLiLDvBf/zPjwLW5CQllUhMBrrG7A5uDKdre/Y2rHRmIea7+CiNztsa4Hp0/2JHIfyIBWWeGYnX/5TgAY2ww==",
+      "path": "nito.cancellation/1.0.4",
+      "hashPath": "nito.cancellation.1.0.4.nupkg.sha512"
+    },
+    "Nito.Collections.Deque/1.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9Ek7LWxWuM1l6DRchMqeoJXMOz+6lHu8OTDO0yMGIYfiN2kvoPjfXHDTxJTd2B+HOUay0yQVUVAwPgoHMO72vQ==",
+      "path": "nito.collections.deque/1.0.4",
+      "hashPath": "nito.collections.deque.1.0.4.nupkg.sha512"
+    },
+    "Nito.Disposables/1.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KgoP61QsQz5ZBUvVggTivYqvauhA8NGAcL8PQuharHI5Er41tVfdDwZdVmiUdakuoD+oQfYriCcyQtHfdVkKfQ==",
+      "path": "nito.disposables/1.2.3",
+      "hashPath": "nito.disposables.1.2.3.nupkg.sha512"
     },
     "OptimizedDataReader/1.1.0": {
       "type": "package",
