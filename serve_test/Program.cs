@@ -3,37 +3,30 @@ using System.Web;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using MySql;
-using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Collections;
 using JSONObject = Newtonsoft.Json.Linq.JObject;
-using System.Data;
 using Fleck;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 //using System.Web.Caching;
-using System.Net.Mail;
-using System.Net.Sockets;
-using System.Text.RegularExpressions;
-using Aop;
-using Aop.Api;
-using Aop.Api.Request;
-using Aop.Api.Domain;
-using Aop.Api.Response;
+// using Aop;
+// using Aop.Api;
+// using Aop.Api.Request;
+// using Aop.Api.Domain;
+// using Aop.Api.Response;
+using Alipay.AopSdk.Core;
+using Alipay.AopSdk.Core.Response;
+using Alipay.AopSdk.Core.Request;
+using Alipay.AopSdk.Core.Domain;
 using System.Net.Http;
 using System.Net;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using System.Security.Cryptography;
 using System.DrawingCore;
 // ZKWeb.System.Drawing
@@ -103,7 +96,15 @@ namespace TodoApi
 
             var host = WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseConfiguration(config)
+            //     .UseKestrel(options =>//设置Kestrel服务器
+            //  {
+            //      options.Listen(IPAddress.Parse("172.16.0.10"), 5002, listenOptions =>
+            //      {
+            //          //填入之前iis中生成的pfx文件路径和指定的密码　　　　　　　　　　　　
+            //         listenOptions.UseHttps("test.pfx","");
+            //      });
+            //  })
+             .UseConfiguration(config)
                 ;
 
             return host;
@@ -4737,7 +4738,7 @@ namespace TodoApi
                 string userName = 请求参数["userName"].ToString();
                 string userSex = 请求参数["userSex"].ToString();
                 string userAge = 请求参数["userAge"].ToString();
-                string orderTxt = 请求参数["orderTxt"].ToString();//订单留言
+                string orderTxt = 请求参数["orderText"].ToString();//订单留言
 
                 string 订单号 = new tool.RandomNumber().GetRandom1();//生成订单号
                 string title = "";
@@ -4864,6 +4865,9 @@ namespace TodoApi
                 IAopClient client = new DefaultAopClient("https://openapi.alipay.com/gateway.do", APPID, APP_PRIVATE_KEY, "json", "1.0", "RSA2", ALIPAY_PUBLIC_KEY, CHARSET, false);
                 AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
                 AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+
+
+                
                 model.Body = txt;//对一笔交易的具体描述信息
                 model.Subject = title;//商品的标题/交易标题/订单标题/订单关键字等。
                 model.TotalAmount = money.ToString();
@@ -4873,9 +4877,9 @@ namespace TodoApi
                 model.TimeoutExpress = "30m";//交易最晚时间 
 
                 request.SetBizModel(model);
-                request.SetNotifyUrl("http://app.xn--omsu12gtnr.com/pay.aspx");
+                request.SetNotifyUrl("http://taluoguan.com/api/Alipay");
                 //这里和普通的接口调用不同，使用的是sdkExecute
-                AlipayTradeAppPayResponse response = client.SdkExecute(request);
+                Alipay.AopSdk.Core.Response.AlipayTradeAppPayResponse response = client.SdkExecute(request);
                 //HttpUtility.HtmlEncode是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
                 // HttpUtility.HtmlEncode(response.Body);
                 string orderString = response.Body;
@@ -4907,7 +4911,7 @@ namespace TodoApi
 
 
                 request.BizContent = obj.ToString();  //将请求json对象转为字符串
-                request.SetNotifyUrl("http://app.xn--omsu12gtnr.com/al_refund.aspx");
+                request.SetNotifyUrl("http://taluoguan.com/api/AliRefund");
                 AlipayTradeRefundResponse response = client.Execute(request);
                 Console.WriteLine(response.Body);
                 string ret = "";
