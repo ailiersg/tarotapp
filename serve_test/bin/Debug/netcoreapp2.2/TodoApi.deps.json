@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "df8f01b85226fb2b16398e396f8f1bbc1796bc82"
+    "signature": "27eb3cc282cf74907e157a5373c3ce9eab77174b"
   },
   "compilationOptions": {
     "defines": [
@@ -24,7 +24,6 @@
     ".NETCoreApp,Version=v2.2": {
       "TodoApi/1.0.0": {
         "dependencies": {
-          "Alipay": "2.0.0",
           "Alipay.AopSdk.AspnetCore": "2.4.3",
           "Alipay.AopSdk.Core": "2.4.3",
           "Fleck": "1.1.0",
@@ -42,17 +41,6 @@
         },
         "compile": {
           "TodoApi.dll": {}
-        }
-      },
-      "Alipay/2.0.0": {
-        "runtime": {
-          "lib/net35/Alipay.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
-          }
-        },
-        "compile": {
-          "lib/net35/Alipay.dll": {}
         }
       },
       "Alipay.AopSdk.AspnetCore/2.4.3": {
@@ -3717,13 +3705,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "Alipay/2.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dPsgkUlJtKbet8XHgvQecMMl0CKbwieKl2IGj6HX8fSj4kzkdoIc9eVIa7jqZezyQTwuNtexkkYj0QxmHO3wUA==",
-      "path": "alipay/2.0.0",
-      "hashPath": "alipay.2.0.0.nupkg.sha512"
     },
     "Alipay.AopSdk.AspnetCore/2.4.3": {
       "type": "package",
