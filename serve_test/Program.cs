@@ -13,12 +13,6 @@ using JSONObject = Newtonsoft.Json.Linq.JObject;
 using Fleck;
 using Newtonsoft.Json.Linq;
 using System.Text;
-//using System.Web.Caching;
-// using Aop;
-// using Aop.Api;
-// using Aop.Api.Request;
-// using Aop.Api.Domain;
-// using Aop.Api.Response;
 using Alipay.AopSdk.Core;
 using Alipay.AopSdk.Core.Response;
 using Alipay.AopSdk.Core.Request;
@@ -4867,7 +4861,7 @@ namespace TodoApi
                 AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 
 
-                
+
                 model.Body = txt;//对一笔交易的具体描述信息
                 model.Subject = title;//商品的标题/交易标题/订单标题/订单关键字等。
                 model.TotalAmount = money.ToString();
@@ -4877,7 +4871,7 @@ namespace TodoApi
                 model.TimeoutExpress = "30m";//交易最晚时间 
 
                 request.SetBizModel(model);
-                request.SetNotifyUrl("http://taluoguan.com/api/Alipay");
+                request.SetNotifyUrl("http://taluoguan.com/api/alipay");
                 //这里和普通的接口调用不同，使用的是sdkExecute
                 Alipay.AopSdk.Core.Response.AlipayTradeAppPayResponse response = client.SdkExecute(request);
                 //HttpUtility.HtmlEncode是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
@@ -4895,48 +4889,112 @@ namespace TodoApi
             /// <param name="money">money参数支持2位小数</param>
             /// <param name="orderid">orderid 订单号 </param>
             /// <returns></returns>
-            public static string repund(decimal money, string orderid)
+            public static string repund(string userId, string orderid)
             {
-                string APPID = "2017071307744801";//2017071307744801
-                string APP_PRIVATE_KEY = "MIIEowIBAAKCAQEAxxqW2ymVRHrDVDmWbYEdlhasv81NMhaIMQgrFa/5BNFw0nhjQTi7tZ51lBjkm+sq32vDLIi9V3sP9GJb0bDigvg7FBUIBhY2Mf5KPFA/BMDOmZJa2dQlEv5yIslwtmEOxDRjhLTOCQVMTNuqVEzFfSAHFi0+gEv0VCPgVA8Vjva0goFscu59D+rE6f6hSNh9c2rldJqHo4byvblCLNUp7rxQWsbH1AzUOniiDrjX4x061fyAryTlurmo+0t/etQ0z4UD4ldOsqL57+9EWdjFtVexSlO7Mv46259OTtR9kfiGF0OJVSw52Ip5UwqLM90dtg5gWwdJaYpLZ6kbIl2CBQIDAQABAoIBAHxHsJqk3jOcnYhZWfiIe7tP9AzVTbZSMjjI7HvhGANV6KK32ty/WQwJGUOUNj7NEDndvjpyMB4HBvJ44u+FBh7Sa64hYpzKCJI0NIppXKzO3ScnH+aQcYPlp8DnFKAC/YCjYutXILSoxfPDuhJcyXlNIJ9LJpRW1PAgZMqTj9VoN3ITzkqn/ZD9gMbKl1zlf4L1hrHC/uXd9BNbLgHwT3Gr3LDq5SYhUgDijmK3RvkHtBm/VwBmuXY9hbD4G037bJB/PFkf3kfehr6z7HuhknRgHA78waiucHuQDnhK++TQ9mX6+zdr2alW8Nmd9InhG3ee5TqRR7h+GLYK2aJk2AECgYEA4vO3CEV4sHoFs881ilxMMr548rpV5kKpUNEQUxJEXjbssnmgHg0FW/lUGaCT87FQDP4OL7Ajeh8+kBHPiSeSYCKtMFTP8QVAt3nrPJL3fbKTXacwDL5+UvRIYLAPkmNMbeet7pZhV4LtRgXC3ISIt+/tgCcWAv/3GF7ihXUnM4UCgYEA4JZnqeaUtkaszzGxi9NcVBDa9WkUVwdSXlsBMAERmcRoBTsXwaBW8d69QaHmQFWnv96rAFIACCzSW8gH0COBJS2IXscAGREa+k/M8MaERnJXr6J7w6Xi/9i3tp+JPeN4ryJVfZffupOWx0+wxv3k5cgqjspXvacXfBnmc8AyHIECgYEAsZ1/D1AfZi35LIHsKv6U+9mpmn1OIMjm7cLQfdL8AqgFkqAxOZODMDnvIadUYxHPzns96wB0o2y0b9ggjfyUR/ybggm+O6iav30BJwT2AD+zqUXhCvhCsPVRd6oSZcSk2hbJPsIeKHjk7ToxCJgIz7tMKlFsnqhoX4BS05OePGkCgYBcRo/bJ+ksJ0ezbbiEOdhyleZQ9Natl02JhRysy5OeuSsAEzKElMuEXz8la06+WjMtS2C5JffrY/ceTMahByV10Ap63oq0welytT0AJKCOjUZn3Hu7fDoTYsjA2TW7Xu3kD1hO3QrIjwFhbOW2LPVST/bkalC4lKG6lK2yG2K7gQKBgDdZ8T2pcS0oC3QklmqKJnFm38/ugMuT1k1x2V0juuX1Bawlh+iiJgDKAAnhx8uiBE99iTq7l+zD8PQ5jz72RQUDlaZM5AE209SFpknZDXIuF801qlFlWkc30L559Pf+GrbA51+D9KWYHEBokCyFJ6Mw1BlF2/SXiZfXtNj9sLp2";   //开发者应用私钥，由开发者自己生成
-                string ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApEdd7cyctmuuuiXrerHQTt6Qng0swOgP7+BzZxik3cHdEYvDmApFkTs95/HYuvOdM2rIFKJJ1jV/6ZnLO6PqReHbczQ/zwlJh7ytxNA63Uy9+eELTdxRhF7d3ZbljBO/jzwkIFLoGjDU/VVmw5BSi4RVrfvR4l6B1bJ9yFlKu7W3YfjJ0W+D5vntvo7KlUCIaZ13OsC71Fwy/4HcMkUQy4aUIr21tCb+o8gLVKuBFAN1kO2SIwscJmVlSgzJshO+nL2dpOUNQcYfJqLmxJBMo92EjAYqwxP+1th06k4n/W5jSS1mM5AMXevWKzzvGCt7gflk9dmPyT9STHJocQa75wIDAQAB"; //支付宝公钥
-                string CHARSET = "UTF-8";//请求和签名使用的字符编码格式，支持GBK和UTF-8  //https://openapi.alipay.com/gateway.do
-                IAopClient client = new DefaultAopClient("https://openapi.alipay.com/gateway.do", APPID, APP_PRIVATE_KEY, "json", "1.0", "RSA2", ALIPAY_PUBLIC_KEY, CHARSET, false);
-                AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+                // string APPID = "2017071307744801";//2017071307744801
+                // string APP_PRIVATE_KEY = "MIIEowIBAAKCAQEAxxqW2ymVRHrDVDmWbYEdlhasv81NMhaIMQgrFa/5BNFw0nhjQTi7tZ51lBjkm+sq32vDLIi9V3sP9GJb0bDigvg7FBUIBhY2Mf5KPFA/BMDOmZJa2dQlEv5yIslwtmEOxDRjhLTOCQVMTNuqVEzFfSAHFi0+gEv0VCPgVA8Vjva0goFscu59D+rE6f6hSNh9c2rldJqHo4byvblCLNUp7rxQWsbH1AzUOniiDrjX4x061fyAryTlurmo+0t/etQ0z4UD4ldOsqL57+9EWdjFtVexSlO7Mv46259OTtR9kfiGF0OJVSw52Ip5UwqLM90dtg5gWwdJaYpLZ6kbIl2CBQIDAQABAoIBAHxHsJqk3jOcnYhZWfiIe7tP9AzVTbZSMjjI7HvhGANV6KK32ty/WQwJGUOUNj7NEDndvjpyMB4HBvJ44u+FBh7Sa64hYpzKCJI0NIppXKzO3ScnH+aQcYPlp8DnFKAC/YCjYutXILSoxfPDuhJcyXlNIJ9LJpRW1PAgZMqTj9VoN3ITzkqn/ZD9gMbKl1zlf4L1hrHC/uXd9BNbLgHwT3Gr3LDq5SYhUgDijmK3RvkHtBm/VwBmuXY9hbD4G037bJB/PFkf3kfehr6z7HuhknRgHA78waiucHuQDnhK++TQ9mX6+zdr2alW8Nmd9InhG3ee5TqRR7h+GLYK2aJk2AECgYEA4vO3CEV4sHoFs881ilxMMr548rpV5kKpUNEQUxJEXjbssnmgHg0FW/lUGaCT87FQDP4OL7Ajeh8+kBHPiSeSYCKtMFTP8QVAt3nrPJL3fbKTXacwDL5+UvRIYLAPkmNMbeet7pZhV4LtRgXC3ISIt+/tgCcWAv/3GF7ihXUnM4UCgYEA4JZnqeaUtkaszzGxi9NcVBDa9WkUVwdSXlsBMAERmcRoBTsXwaBW8d69QaHmQFWnv96rAFIACCzSW8gH0COBJS2IXscAGREa+k/M8MaERnJXr6J7w6Xi/9i3tp+JPeN4ryJVfZffupOWx0+wxv3k5cgqjspXvacXfBnmc8AyHIECgYEAsZ1/D1AfZi35LIHsKv6U+9mpmn1OIMjm7cLQfdL8AqgFkqAxOZODMDnvIadUYxHPzns96wB0o2y0b9ggjfyUR/ybggm+O6iav30BJwT2AD+zqUXhCvhCsPVRd6oSZcSk2hbJPsIeKHjk7ToxCJgIz7tMKlFsnqhoX4BS05OePGkCgYBcRo/bJ+ksJ0ezbbiEOdhyleZQ9Natl02JhRysy5OeuSsAEzKElMuEXz8la06+WjMtS2C5JffrY/ceTMahByV10Ap63oq0welytT0AJKCOjUZn3Hu7fDoTYsjA2TW7Xu3kD1hO3QrIjwFhbOW2LPVST/bkalC4lKG6lK2yG2K7gQKBgDdZ8T2pcS0oC3QklmqKJnFm38/ugMuT1k1x2V0juuX1Bawlh+iiJgDKAAnhx8uiBE99iTq7l+zD8PQ5jz72RQUDlaZM5AE209SFpknZDXIuF801qlFlWkc30L559Pf+GrbA51+D9KWYHEBokCyFJ6Mw1BlF2/SXiZfXtNj9sLp2";   //开发者应用私钥，由开发者自己生成
+                // string ALIPAY_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApEdd7cyctmuuuiXrerHQTt6Qng0swOgP7+BzZxik3cHdEYvDmApFkTs95/HYuvOdM2rIFKJJ1jV/6ZnLO6PqReHbczQ/zwlJh7ytxNA63Uy9+eELTdxRhF7d3ZbljBO/jzwkIFLoGjDU/VVmw5BSi4RVrfvR4l6B1bJ9yFlKu7W3YfjJ0W+D5vntvo7KlUCIaZ13OsC71Fwy/4HcMkUQy4aUIr21tCb+o8gLVKuBFAN1kO2SIwscJmVlSgzJshO+nL2dpOUNQcYfJqLmxJBMo92EjAYqwxP+1th06k4n/W5jSS1mM5AMXevWKzzvGCt7gflk9dmPyT9STHJocQa75wIDAQAB"; //支付宝公钥
+                // string CHARSET = "UTF-8";//请求和签名使用的字符编码格式，支持GBK和UTF-8  //https://openapi.alipay.com/gateway.do
+                // IAopClient client = new DefaultAopClient("https://openapi.alipay.com/gateway.do", APPID, APP_PRIVATE_KEY, "json", "1.0", "RSA2", ALIPAY_PUBLIC_KEY, CHARSET, false);
+                // AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
 
-                JSONObject obj = new JSONObject();
-                obj.Add("out_trade_no", orderid);//商户订单号 
-                obj.Add("refund_amount", money);//退款金额 支持2位小数
-                obj.Add("refund_reason", "塔罗馆退款");//退款说明
+                // JSONObject obj = new JSONObject();
+                // obj.Add("out_trade_no", orderid);//商户订单号 
+                // obj.Add("refund_amount", money);//退款金额 支持2位小数
+                // obj.Add("refund_reason", "塔罗馆退款");//退款说明
 
 
-                request.BizContent = obj.ToString();  //将请求json对象转为字符串
-                request.SetNotifyUrl("http://taluoguan.com/api/AliRefund");
-                AlipayTradeRefundResponse response = client.Execute(request);
-                Console.WriteLine(response.Body);
-                string ret = "";
+                // request.BizContent = obj.ToString();  //将请求json对象转为字符串
+                // request.SetNotifyUrl("http://taluoguan.com/api/AliRefund");
+                // AlipayTradeRefundResponse response = client.Execute(request);
+                // Console.WriteLine(response.Body);
+                // string ret = "";
+                // try
+                // {
+                //     JSONObject data;
+                //     data = JSONObject.Parse(response.Body);
+
+                //     string isok = data["alipay_trade_refund_response"]["code"].ToString();
+                //     if (isok == "10000")
+                //     {
+                //         Console.WriteLine("response.Body fund_change == y");
+                //         ret = "Y";
+                //     }
+                //     else
+                //     {
+                //         Console.WriteLine("response.Body fund_change  != y");
+                //         ret = "N";
+                //     }
+                // }
+                // catch (Exception)
+                // {
+                //     Console.WriteLine("response.Body 解析失败");
+                //     throw;
+                // }
+
+
+                // return ret;
+
+
+
+                // 1、设置订单为非正常结束(4) 2、将已付款金额加到用户存款 3、设置投诉状态为已处理
+
+                string ret = "N";
+
+
+
+
+                bool isTransactionOk = false;
+
+
+                MySqlConnection conn = new MySqlConnection();
+                conn.ConnectionString = 连接字符串;
+
+
+
+
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@orderId", orderid); //money
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+
+                cmd.Connection = conn;
+
+
+                conn.Open();
+                MySqlTransaction transaction = conn.BeginTransaction();
+                cmd.Transaction = transaction;
                 try
                 {
-                    JSONObject data;
-                    data = JSONObject.Parse(response.Body);
+                    //已经处理交易 只是没评价
+                    cmd.CommandText = "update 订单 set 订单.订单状态=4 , 完结日期=now()  where 订单.订单号=@orderId;";
+                    cmd.ExecuteNonQuery();
 
-                    string isok = data["alipay_trade_refund_response"]["code"].ToString();
-                    if (isok == "10000")
-                    {
-                        Console.WriteLine("response.Body fund_change == y");
-                        ret = "Y";
-                    }
-                    else
-                    {
-                        Console.WriteLine("response.Body fund_change  != y");
-                        ret = "N";
-                    }
+                    cmd.CommandText = "update user set user.存款=user.存款+(select 订单.已缴金额   from 订单 where 订单.订单号=@orderId) where user.id=@userId;";
+                    cmd.ExecuteNonQuery();
+
+                  
+                    transaction.Commit();
+
+                    isTransactionOk = true;
+
+                    conn.Close();
+                    ret="Y";
+
+
+
+
                 }
-                catch (Exception)
+                catch
                 {
-                    Console.WriteLine("response.Body 解析失败");
-                    throw;
+                    transaction.Rollback();
+                    conn.Close();
+                    isTransactionOk = false;
+                    ret="N";
                 }
+             
+
 
 
                 return ret;
@@ -5164,7 +5222,7 @@ namespace TodoApi
                 ret.Add("type", "addMywalletPage_ret");
 
 
-                string sql = "select 存款 from user where id=@userid;";
+                string sql = "select 存款,支付宝账户 from user where id=@userid;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -5196,6 +5254,8 @@ namespace TodoApi
                         {
                             ret.Add("money", "");
                         }
+
+                        ret.Add("ali", sdr["支付宝账户"].ToString());
 
                     }
 
@@ -6756,47 +6816,7 @@ namespace TodoApi
 
                 return serviceId;
             }
-            public static bool executeTransaction(List<string> strSQL)
-            {
 
-
-                MySqlConnection conn = new MySqlConnection();
-                conn.ConnectionString = 连接字符串;
-
-
-                conn.Open();
-                MySqlTransaction transaction = conn.BeginTransaction();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.Transaction = transaction;
-                try
-                {
-                    for (int n = 0; n < strSQL.Count; n++)
-                    {
-                        string strsql = strSQL[n];
-                        if (strsql.Trim().Length > 1)
-                        {
-                            cmd.CommandText = strsql;
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                    cmd.ExecuteNonQuery();
-                    transaction.Commit();
-                    conn.Close();
-
-                    return true;
-                }
-                catch
-                {
-                    transaction.Rollback();
-                    conn.Close();
-                    return false;
-                }
-
-
-
-
-            }
             public static void 处理超时订单()
             {
                 //1、查找出超时订单ID列表 
@@ -7320,6 +7340,10 @@ namespace TodoApi
                         {
                             orderStateTxt = "已完成";
                         }
+                           else if (orderState.Trim() == "4")
+                        {
+                            orderStateTxt = "已退款";
+                        }
                         row.Add("orderStateTxt", orderStateTxt);
                         rows.Add(row);
                         count++;
@@ -7426,6 +7450,10 @@ namespace TodoApi
                         else if (orderState.Trim() == "3")
                         {
                             orderStateTxt = "已完成";
+                        }
+                           else if (orderState.Trim() == "4")
+                        {
+                            orderStateTxt = "已退款";
                         }
                         row.Add("orderStateTxt", orderStateTxt);
                         rows.Add(row);
@@ -8734,12 +8762,15 @@ namespace TodoApi
                 JSONObject ret = new JSONObject();
                 ret.Add("type", "admin_exRefund_ret");
                 string orderId = h["orderId"].ToString();
+                string userId = h["userId"].ToString();
+                string jubId = h["jubId"].ToString();
                 //1、执行退款api 返回成功值 执行数据库操作
                 decimal fund = money.查询用户付款金额(orderId);
                 JSONObject c = tool.select_服务名和咨询师ID(orderId);
+                
 
                 string objUserId = c["objUserId"].ToString();
-                string isok = money.repund(fund, orderId); //
+                string isok = money.repund(userId, orderId); //
 
 
 
@@ -8747,9 +8778,30 @@ namespace TodoApi
                 {
                     ret.Add("msg", "Y");
                     ret.Add("code", 200);
-                    transaction.提交评价(orderId, objUserId);
+                    // transaction.提交评价(orderId, objUserId);
+
+
+                       string sql = "update   举报 set 举报.handleState=2 where  举报.id=@jubId;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@jubId", jubId);
+
+                cmd.CommandText = sql;
+
+                cmd.Connection = con;
+                con.Open();
+                int count = 0;
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+
+                    count = cmd.ExecuteNonQuery();
+                }
+                con.Close();
+
                     //发送通知
-                    tool.WriteNote(h["userid"].ToString(), "你有一个投诉订单已经退款，请在已完成的订单列表中查看。(订单号：" + orderId + ")");
+                    tool.WriteNote(h["userId"].ToString(), "你有一个投诉订单已经退款，请在已完成的订单列表中查看。(订单号：" + orderId + ")");
                     tool.WriteNote(h["touserid"].ToString(), "你有一个被投诉订单已经退款，请在已完成订单列表中查看，如有疑问请联系客服。(订单号：" + orderId + ")");
 
                 }
@@ -8817,6 +8869,7 @@ namespace TodoApi
       select  订单.订单号,user.手机号 as 咨询师手机号,user.CName as 咨询师昵称,user.性别 as 咨询师性别, 订单.已缴金额,
           userservice.服务名称,
           举报.date as 投诉日期,
+          举报.id as jubId,
           举报.handleState,
           订单.付款日期,
           订单.订单状态,
@@ -8846,6 +8899,7 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                         // ret.Add("userName", sdr["用户姓名"].ToString());
                         // ret.Add("userSex", sdr["用户性别"].ToString());
                         // ret.Add("userPhone", sdr["客户手机号"].ToString());
+                        ret.Add("jubId", sdr["jubId"].ToString());
                         ret.Add("objPhone", sdr["咨询师手机号"].ToString());
                         ret.Add("objCName", sdr["咨询师昵称"].ToString());
                         ret.Add("objSex", sdr["咨询师性别"].ToString());
@@ -9434,6 +9488,10 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                         {
                             orderStateTxt = "已完成";
                         }
+                         else if (orderState.Trim() == "4")
+                        {
+                            orderStateTxt = "已退款";
+                        }
                         row.Add("orderStateTxt", orderStateTxt);
                         rows.Add(row);
                         count++;
@@ -9566,6 +9624,10 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                         else if (orderState.Trim() == "3")
                         {
                             orderStateTxt = "已完成";
+                        }
+                           else if (orderState.Trim() == "4")
+                        {
+                            orderStateTxt = "已退款";
                         }
                         row.Add("orderStateTxt", orderStateTxt);
                         rows.Add(row);
