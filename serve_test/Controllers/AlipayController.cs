@@ -25,7 +25,7 @@ namespace TodoApi.Controllers
             string a = Request.Form["d"].ToString();
 
 
-            return "{d:" + a + "}";
+
 
             Program.tool.输出log记录("pay.aspx页面 Page_Load被执行");
             //支付宝的公钥
@@ -101,7 +101,22 @@ namespace TodoApi.Controllers
                         {
                             //交易支付成功 or 交易结束，不可退款
                             //更新订单
-                            if (TodoApi.Program.money.付款后更新订单(total_amount.ToString(), out_trade_no))
+                            bool check付款后更新订单 = true;
+                            try
+                            {
+                                check付款后更新订单 = TodoApi.Program.money.付款后更新订单(total_amount.ToString(), out_trade_no);
+
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                TodoApi.Program.tool.输出log记录("TodoApi.Program.money.付款后更新订单 失败= "+ ex);
+                                return ("failure");
+
+                                throw;
+                            }
+                            if (check付款后更新订单)
                             {
 
                                 TodoApi.Program.tool.输出log记录("付款后更新订单 ok 输出 success 程序执行完成");
