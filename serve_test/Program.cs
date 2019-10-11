@@ -7613,21 +7613,21 @@ namespace TodoApi
             public static bool 向对端推送数据(JSONObject data)
             {
                 bool sendOk = false;
-                string countxt = "";
-                int count = 0;
-                string touserid = data["touser"].ToString();
-                allSockets1.ToList().ForEach(s =>
-                {
-                    countxt += s.ConnectionInfo.Id.ToString() + "=" + MemoryCache.Get(touserid).ToString();
-                    if (s.ConnectionInfo.Id.ToString() == MemoryCache.Get(touserid).ToString())
-                    {
-                        count++;
-                        s.Send(data.ToString());
-                        sendOk = true;
+                // string countxt = "";
+                // int count = 0;
+                // string touserid = data["touser"].ToString();
+                // allSockets1.ToList().ForEach(s =>
+                // {
+                //     countxt += s.ConnectionInfo.Id.ToString() + "=" + MemoryCache.Get(touserid).ToString();
+                //     if (s.ConnectionInfo.Id.ToString() == MemoryCache.Get(touserid).ToString())
+                //     {
+                //         count++;
+                //         s.Send(data.ToString());
+                //         sendOk = true;
 
-                    }
+                //     }
 
-                });
+                // });
 
                 return sendOk;
             }
