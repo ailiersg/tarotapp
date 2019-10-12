@@ -6593,6 +6593,7 @@ namespace TodoApi
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
+                        tool.输出log记录("处理超时订单 取得超时列表循环次数 1");
                         //2、遍历 改变订单状态并交换金额
 
                         if (tool.checkOrderExistTousu(sdr["订单号"].ToString()))
@@ -9847,8 +9848,8 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
             }
             public static void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                tool.输出log记录("Timer1_Elapsed()! 开始处理超时订单");
-                transaction.处理超时订单();
+                // tool.输出log记录("Timer1_Elapsed()! 开始处理超时订单");
+                // transaction.处理超时订单();
             }
         }
 
