@@ -30,6 +30,32 @@
           "lib/netstandard2.0/Alipay.AopSdk.Core.dll": {}
         }
       },
+      "Essensoft.AspNetCore.Payment.Security/2.4.2": {
+        "type": "package",
+        "dependencies": {
+          "Portable.BouncyCastle": "1.8.5"
+        },
+        "compile": {
+          "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.dll": {}
+        }
+      },
+      "Essensoft.AspNetCore.Payment.WeChatPay/2.4.2": {
+        "type": "package",
+        "dependencies": {
+          "Essensoft.AspNetCore.Payment.Security": "2.4.2",
+          "Microsoft.AspNetCore.Mvc": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.dll": {}
+        }
+      },
       "Fleck/1.1.0": {
         "type": "package",
         "compile": {
@@ -2821,7 +2847,7 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/11.0.2": {
+      "Newtonsoft.Json/12.0.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -2956,6 +2982,15 @@
         },
         "runtime": {
           "lib/netstandard2.0/OptimizedDataReader.dll": {}
+        }
+      },
+      "Portable.BouncyCastle/1.8.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
       },
       "Remotion.Linq/2.2.0": {
@@ -3218,6 +3253,135 @@
         },
         "runtime": {
           "lib/netstandard2.0/Savage.Data.dll": {}
+        }
+      },
+      "Senparc.CO2NET/1.0.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "2.2.0",
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
+          "Microsoft.Extensions.DependencyInjection": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "2.2.0",
+          "Newtonsoft.Json": "12.0.1",
+          "System.Diagnostics.TraceSource": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Xml.XmlSerializer": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.CO2NET.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.CO2NET.dll": {}
+        }
+      },
+      "Senparc.CO2NET.APM/0.6.102": {
+        "type": "package",
+        "dependencies": {
+          "Senparc.CO2NET": "1.0.102"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.CO2NET.APM.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.CO2NET.APM.dll": {}
+        }
+      },
+      "Senparc.NeuChar/1.0.102": {
+        "type": "package",
+        "dependencies": {
+          "Senparc.CO2NET": "1.0.102",
+          "Senparc.CO2NET.APM": "0.6.102"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.NeuChar.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.NeuChar.dll": {}
+        }
+      },
+      "Senparc.NeuChar.App/0.6.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "2.2.0",
+          "Senparc.NeuChar": "1.0.102"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.NeuChar.App.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.NeuChar.App.dll": {}
+        }
+      },
+      "Senparc.Weixin/6.6.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Options": "2.2.0",
+          "Newtonsoft.Json": "12.0.1",
+          "Senparc.CO2NET": "1.0.102",
+          "Senparc.NeuChar": "1.0.102",
+          "System.Diagnostics.TraceSource": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Xml.XmlSerializer": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.dll": {}
+        }
+      },
+      "Senparc.Weixin.MP/16.9.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Senparc.CO2NET.APM": "0.6.102",
+          "Senparc.NeuChar": "1.0.102",
+          "Senparc.NeuChar.App": "0.6.102",
+          "Senparc.Weixin": "6.6.102",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.MP.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.MP.dll": {}
+        }
+      },
+      "Senparc.Weixin.Open/4.7.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Senparc.NeuChar": "1.0.102",
+          "Senparc.Weixin": "6.6.102",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.Open.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.Open.dll": {}
+        }
+      },
+      "Senparc.Weixin.TenPay/1.5.102": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0",
+          "Senparc.Weixin": "6.6.102"
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.TenPay.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.TenPay.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -3561,6 +3725,33 @@
         },
         "compile": {
           "ref/netstandard1.0/System.Diagnostics.Tools.dll": {}
+        }
+      },
+      "System.Diagnostics.TraceSource/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "runtime.native.System": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Diagnostics.TraceSource.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
         }
       },
       "System.Diagnostics.Tracing/4.3.0": {
@@ -4867,7 +5058,7 @@
           "System.Xml.XmlDocument": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
@@ -4887,7 +5078,7 @@
           "System.Xml.ReaderWriter": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Xml.XPath.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.dll": {}
@@ -4911,6 +5102,39 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
+        }
+      },
+      "System.Xml.XPath.XmlDocument/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        }
+      },
+      "Yunpian.Sdk/0.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/yunpian-csharp-sdk.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/yunpian-csharp-sdk.dll": {}
         }
       },
       "ZKWeb.System.Drawing/4.0.1": {
@@ -4955,6 +5179,34 @@
         "alipay.aopsdk.core.2.4.3.nupkg.sha512",
         "alipay.aopsdk.core.nuspec",
         "lib/netstandard2.0/Alipay.AopSdk.Core.dll"
+      ]
+    },
+    "Essensoft.AspNetCore.Payment.Security/2.4.2": {
+      "sha512": "Hw0iZL2bNKQsxyCfoOierHHie6KT/KJO8O9DcXyc/NUzqs/2qY6nLNVRQWI09NCr4VIShHw930ogsbLk9c993w==",
+      "type": "package",
+      "path": "essensoft.aspnetcore.payment.security/2.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "essensoft.aspnetcore.payment.security.2.4.2.nupkg.sha512",
+        "essensoft.aspnetcore.payment.security.nuspec",
+        "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.dll",
+        "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.xml"
+      ]
+    },
+    "Essensoft.AspNetCore.Payment.WeChatPay/2.4.2": {
+      "sha512": "sOezBh5BL71W78FEzIBgyP9lEwfoCNRSbUULRjRIsTOdg9QBffWhEcr13YPXSYF6LTgvQPm+Fm7YzqJQ6OPEsw==",
+      "type": "package",
+      "path": "essensoft.aspnetcore.payment.wechatpay/2.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "essensoft.aspnetcore.payment.wechatpay.2.4.2.nupkg.sha512",
+        "essensoft.aspnetcore.payment.wechatpay.nuspec",
+        "lib/netcoreapp2.1/Essensoft.AspNetCore.Payment.WeChatPay.dll",
+        "lib/netcoreapp2.1/Essensoft.AspNetCore.Payment.WeChatPay.xml",
+        "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.dll",
+        "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.xml"
       ]
     },
     "Fleck/1.1.0": {
@@ -7948,32 +8200,42 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+    "Newtonsoft.Json/12.0.1": {
+      "sha512": "pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
       "type": "package",
-      "path": "newtonsoft.json/11.0.2",
+      "path": "newtonsoft.json/12.0.1",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.pdb",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.pdb",
         "lib/net35/Newtonsoft.Json.xml",
         "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.pdb",
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.pdb",
         "lib/net45/Newtonsoft.Json.xml",
         "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.pdb",
         "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.pdb",
         "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.pdb",
         "lib/netstandard2.0/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.pdb",
         "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.pdb",
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.12.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec"
       ]
     },
@@ -8135,6 +8397,25 @@
         "lib/netstandard2.0/OptimizedDataReader.dll",
         "optimizeddatareader.1.1.0.nupkg.sha512",
         "optimizeddatareader.nuspec"
+      ]
+    },
+    "Portable.BouncyCastle/1.8.5": {
+      "sha512": "3/G1lF+m9HHqKFSjd/Hy1z3h00vzHQybiZHzK9gH2SxK6BOCQjOnjC97qt4kla7u5rrsf/kukWzUogywKp2ECg==",
+      "type": "package",
+      "path": "portable.bouncycastle/1.8.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/BouncyCastle.Crypto.dll",
+        "lib/net40/BouncyCastle.Crypto.xml",
+        "lib/netstandard1.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard1.0/BouncyCastle.Crypto.xml",
+        "lib/netstandard1.3/BouncyCastle.Crypto.dll",
+        "lib/netstandard1.3/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "portable.bouncycastle.1.8.5.nupkg.sha512",
+        "portable.bouncycastle.nuspec"
       ]
     },
     "Remotion.Linq/2.2.0": {
@@ -8463,6 +8744,138 @@
         "lib/netstandard2.0/Savage.Data.dll",
         "savage.data.5.4.2.nupkg.sha512",
         "savage.data.nuspec"
+      ]
+    },
+    "Senparc.CO2NET/1.0.102": {
+      "sha512": "lvpUkSpJSCdmRiTq0yeBl0Qtnx6b94z2X0p8gdkVuNPnYl95kzvGFiLC9JAOBO+9Blo+ayDmTT4hX6hX7WRxxQ==",
+      "type": "package",
+      "path": "senparc.co2net/1.0.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.CO2NET.dll",
+        "lib/net45/Senparc.CO2NET.xml",
+        "lib/netcoreapp3.0/Senparc.CO2NET.dll",
+        "lib/netcoreapp3.0/Senparc.CO2NET.xml",
+        "lib/netstandard2.0/Senparc.CO2NET.dll",
+        "lib/netstandard2.0/Senparc.CO2NET.xml",
+        "senparc.co2net.1.0.102.nupkg.sha512",
+        "senparc.co2net.nuspec"
+      ]
+    },
+    "Senparc.CO2NET.APM/0.6.102": {
+      "sha512": "dtHmvNUA1XZu1m9BQNgPDCIRpQ+w0k+p+p5aOLBf+/i05OGZY0mfjQvZ/ZOEeuhydeYeLC1ZcBr1Q1RKzNcORA==",
+      "type": "package",
+      "path": "senparc.co2net.apm/0.6.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.CO2NET.APM.dll",
+        "lib/net45/Senparc.CO2NET.APM.xml",
+        "lib/netstandard2.0/Senparc.CO2NET.APM.dll",
+        "lib/netstandard2.0/Senparc.CO2NET.APM.xml",
+        "senparc.co2net.apm.0.6.102.nupkg.sha512",
+        "senparc.co2net.apm.nuspec"
+      ]
+    },
+    "Senparc.NeuChar/1.0.102": {
+      "sha512": "Xue+YYiHO322QAitTuc0iUeQMv/PXG60voH2alUWDRZLn4LCwsOoLSE5WwFsX79Iz0YCGizJvQ6mMzBjGWsNIg==",
+      "type": "package",
+      "path": "senparc.neuchar/1.0.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.NeuChar.dll",
+        "lib/net45/Senparc.NeuChar.xml",
+        "lib/netstandard2.0/Senparc.NeuChar.dll",
+        "lib/netstandard2.0/Senparc.NeuChar.xml",
+        "senparc.neuchar.1.0.102.nupkg.sha512",
+        "senparc.neuchar.nuspec"
+      ]
+    },
+    "Senparc.NeuChar.App/0.6.102": {
+      "sha512": "FlZHYt+ZnzFah6LWkr0RjJ1IvfYoHSEUQRHm/7u9B81hEbv9XlEUQZ/hyndhSVSjYKAMoPBDf62meP41mbjTYw==",
+      "type": "package",
+      "path": "senparc.neuchar.app/0.6.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.NeuChar.App.dll",
+        "lib/net45/Senparc.NeuChar.App.xml",
+        "lib/netcoreapp3.0/Senparc.NeuChar.App.dll",
+        "lib/netcoreapp3.0/Senparc.NeuChar.App.xml",
+        "lib/netstandard2.0/Senparc.NeuChar.App.dll",
+        "lib/netstandard2.0/Senparc.NeuChar.App.xml",
+        "senparc.neuchar.app.0.6.102.nupkg.sha512",
+        "senparc.neuchar.app.nuspec"
+      ]
+    },
+    "Senparc.Weixin/6.6.102": {
+      "sha512": "Ut7Wwg4tDwnTb8Q2uQWHAeOZi/IP5j1W1KRSPvYMrBRW14iWNyiZ+/Akel1pRFx1v7OI5y/Jk0j8a8D8W0ihoQ==",
+      "type": "package",
+      "path": "senparc.weixin/6.6.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.Weixin.dll",
+        "lib/net45/Senparc.Weixin.xml",
+        "lib/netcoreapp3.0/Senparc.Weixin.dll",
+        "lib/netcoreapp3.0/Senparc.Weixin.xml",
+        "lib/netstandard2.0/Senparc.Weixin.dll",
+        "lib/netstandard2.0/Senparc.Weixin.xml",
+        "senparc.weixin.6.6.102.nupkg.sha512",
+        "senparc.weixin.nuspec"
+      ]
+    },
+    "Senparc.Weixin.MP/16.9.102": {
+      "sha512": "VgzWtvHq0KCCpZPCNdtw/BkAcD73evKcQbKjgMm7j63rd/acdWpsZmyN9uen7N6X7rCPaX1BlmMXvItCoFJm2w==",
+      "type": "package",
+      "path": "senparc.weixin.mp/16.9.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.Weixin.MP.dll",
+        "lib/net45/Senparc.Weixin.MP.xml",
+        "lib/netcoreapp3.0/Senparc.Weixin.MP.dll",
+        "lib/netcoreapp3.0/Senparc.Weixin.MP.xml",
+        "lib/netstandard2.0/Senparc.Weixin.MP.dll",
+        "lib/netstandard2.0/Senparc.Weixin.MP.xml",
+        "senparc.weixin.mp.16.9.102.nupkg.sha512",
+        "senparc.weixin.mp.nuspec"
+      ]
+    },
+    "Senparc.Weixin.Open/4.7.102": {
+      "sha512": "ya5l12ti0q8dRDEQqeSz0uXeVtLrfLsqUd9qQoSets+wKyaNUVaMT6kAagx0Om0muY3Aypwgy53iJL5A5W+Q9A==",
+      "type": "package",
+      "path": "senparc.weixin.open/4.7.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.Weixin.Open.dll",
+        "lib/net45/Senparc.Weixin.Open.xml",
+        "lib/netcoreapp3.0/Senparc.Weixin.Open.dll",
+        "lib/netcoreapp3.0/Senparc.Weixin.Open.xml",
+        "lib/netstandard2.0/Senparc.Weixin.Open.dll",
+        "lib/netstandard2.0/Senparc.Weixin.Open.xml",
+        "senparc.weixin.open.4.7.102.nupkg.sha512",
+        "senparc.weixin.open.nuspec"
+      ]
+    },
+    "Senparc.Weixin.TenPay/1.5.102": {
+      "sha512": "LtjZaqprhqJYG4QSXgeTyLMP0m6fNx49IDkISl4M0rAGFNP1RfLoIl1bn9I9QAMNNqhZhBf0m6XXupdS7K14sQ==",
+      "type": "package",
+      "path": "senparc.weixin.tenpay/1.5.102",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Senparc.Weixin.TenPay.dll",
+        "lib/net45/Senparc.Weixin.TenPay.xml",
+        "lib/netcoreapp3.0/Senparc.Weixin.Open.xml",
+        "lib/netcoreapp3.0/Senparc.Weixin.TenPay.dll",
+        "lib/netstandard2.0/Senparc.Weixin.TenPay.dll",
+        "lib/netstandard2.0/Senparc.Weixin.TenPay.xml",
+        "senparc.weixin.tenpay.1.5.102.nupkg.sha512",
+        "senparc.weixin.tenpay.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -9524,6 +9937,47 @@
         "ref/xamarinwatchos10/_._",
         "system.diagnostics.tools.4.3.0.nupkg.sha512",
         "system.diagnostics.tools.nuspec"
+      ]
+    },
+    "System.Diagnostics.TraceSource/4.3.0": {
+      "sha512": "BlWWL9q/HKM0KBzuOSOqchFga5MqnvkK5mb+IU7f4ecInSyghlswR3ib3nww1ruBmLrtdI5coCBB2H2AltTFyA==",
+      "type": "package",
+      "path": "system.diagnostics.tracesource/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Diagnostics.TraceSource.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Diagnostics.TraceSource.dll",
+        "ref/netstandard1.3/System.Diagnostics.TraceSource.dll",
+        "ref/netstandard1.3/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/de/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/es/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/fr/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/it/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/ja/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/ko/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/ru/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/zh-hans/System.Diagnostics.TraceSource.xml",
+        "ref/netstandard1.3/zh-hant/System.Diagnostics.TraceSource.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netstandard1.3/System.Diagnostics.TraceSource.dll",
+        "runtimes/win/lib/net46/System.Diagnostics.TraceSource.dll",
+        "runtimes/win/lib/netstandard1.3/System.Diagnostics.TraceSource.dll",
+        "system.diagnostics.tracesource.4.3.0.nupkg.sha512",
+        "system.diagnostics.tracesource.nuspec"
       ]
     },
     "System.Diagnostics.Tracing/4.3.0": {
@@ -13276,6 +13730,56 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "System.Xml.XPath.XmlDocument/4.3.0": {
+      "sha512": "91tvfHWHSrYFPolCwWYqbpo1YaoBUCQ3uNZ/O/zr0ev5BnkoATJoie16ywlMVUaXZtfSfNELxhtG3aqpTfwR4w==",
+      "type": "package",
+      "path": "system.xml.xpath.xmldocument/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Xml.XPath.XmlDocument.dll",
+        "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll",
+        "ref/netstandard1.3/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/de/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/es/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/fr/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/it/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ja/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ko/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/ru/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/zh-hans/System.Xml.XPath.XmlDocument.xml",
+        "ref/netstandard1.3/zh-hant/System.Xml.XPath.XmlDocument.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
+        "system.xml.xpath.xmldocument.nuspec"
+      ]
+    },
+    "Yunpian.Sdk/0.0.2": {
+      "sha512": "cYULmk6srCAP7mLjgYGVJA5/rRcQDJYCXmPgJ05Tw7C/h1Ck73jHANBAkcdLdPOHoKDebw8XuunV206QpZU/5w==",
+      "type": "package",
+      "path": "yunpian.sdk/0.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/yunpian-csharp-sdk.dll",
+        "yunpian.sdk.0.0.2.nupkg.sha512",
+        "yunpian.sdk.nuspec"
+      ]
+    },
     "ZKWeb.System.Drawing/4.0.1": {
       "sha512": "psyHM3aKiT2z9iaTGSeldZnt0KOsFSBz9JB8jrLpmYSyGCx3Sp2VD9rclfcZCyFhP70dwmT2KEjCCb6DiKhOZA==",
       "type": "package",
@@ -13294,12 +13798,18 @@
     ".NETCoreApp,Version=v2.2": [
       "Alipay.AopSdk.AspnetCore >= 2.4.3",
       "Alipay.AopSdk.Core >= 2.4.3",
+      "Essensoft.AspNetCore.Payment.WeChatPay >= 2.4.2",
       "Fleck >= 1.1.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
       "MySqlClient >= 5.4.2",
+      "Senparc.Weixin >= 6.6.102",
+      "Senparc.Weixin.MP >= 16.9.102",
+      "Senparc.Weixin.Open >= 4.7.102",
+      "Senparc.Weixin.TenPay >= 1.5.102",
+      "Yunpian.Sdk >= 0.0.2",
       "ZKWeb.System.Drawing >= 4.0.1",
       "runtime.linux.CoreCompat.System.Drawing >= 1.0.0-beta001",
       "system.drawing.common >= 4.5.1"
@@ -13352,6 +13862,10 @@
             "target": "Package",
             "version": "[2.4.3, )"
           },
+          "Essensoft.AspNetCore.Payment.WeChatPay": {
+            "target": "Package",
+            "version": "[2.4.2, )"
+          },
           "Fleck": {
             "target": "Package",
             "version": "[1.1.0, )"
@@ -13380,6 +13894,26 @@
           "MySqlClient": {
             "target": "Package",
             "version": "[5.4.2, )"
+          },
+          "Senparc.Weixin": {
+            "target": "Package",
+            "version": "[6.6.102, )"
+          },
+          "Senparc.Weixin.MP": {
+            "target": "Package",
+            "version": "[16.9.102, )"
+          },
+          "Senparc.Weixin.Open": {
+            "target": "Package",
+            "version": "[4.7.102, )"
+          },
+          "Senparc.Weixin.TenPay": {
+            "target": "Package",
+            "version": "[1.5.102, )"
+          },
+          "Yunpian.Sdk": {
+            "target": "Package",
+            "version": "[0.0.2, )"
           },
           "ZKWeb.System.Drawing": {
             "target": "Package",

@@ -14,16 +14,27 @@ using Fleck;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using Alipay.AopSdk.Core;
-using Alipay.AopSdk.Core.Response;
 using Alipay.AopSdk.Core.Request;
 using Alipay.AopSdk.Core.Domain;
 using System.Net.Http;
-using System.Net;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Builder;
 using System.Security.Cryptography;
 using System.DrawingCore;
-// ZKWeb.System.Drawing
+using Yunpian.Sdk;
+using Yunpian.Sdk.Model;
+using Essensoft.AspNetCore.Payment.WeChatPay;
+using Essensoft.AspNetCore.Payment.WeChatPay.Request;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Senparc.Weixin.Open.Helpers;
+using Senparc.Weixin.Helpers;
+using Senparc;
+using Senparc.Weixin;
+using Senparc.Weixin.MP.CommonAPIs;
+using Senparc.Weixin.Open;
+//WeChatPayAppPayViewModel
 
 
 
@@ -891,7 +902,11 @@ namespace TodoApi
                 {
                     return letter.addNotesUnReadCount(tou);
                 }
-                //addNotesUnReadCount
+                else if (type == "admin_add_sysAccets")
+                {
+                    return admin.admin_add_sysAccets(tou);
+                }
+                //admin_add_sysAccets
 
 
 
@@ -1509,15 +1524,12 @@ namespace TodoApi
                 }
 
                 string mess = "";
-                string 发送的验证码 = "0000";//此处应该随机生成
+                string 发送的验证码 = "0000";// tool.GetCode();
                 Boolean isok = true;
                 //发送语句
+                // tool.sendCode(手机号, "【塔罗馆】您的验证码是" + 发送的验证码);
                 try
                 {
-
-
-
-
 
 
                     using (var ch = MemoryCache.CreateEntry(手机号))
@@ -1773,17 +1785,26 @@ namespace TodoApi
 
 
 
-                if (VerificationCode == MemoryCache.Get(phonenumber).ToString())
+                try
                 {
-                    ret.Add("userid", 手机号to用户ID(phonenumber));
-                    ret.Add("phonenumber", (phonenumber));
-                    ret.Add("code", "200");
-                    ret.Add("VerificationCode", VerificationCode);
-                    MemoryCache.Remove(phonenumber);
+                    if (VerificationCode == MemoryCache.Get(phonenumber).ToString())
+                    {
+                        ret.Add("userid", 手机号to用户ID(phonenumber));
+                        ret.Add("phonenumber", (phonenumber));
+                        ret.Add("code", "200");
+                        ret.Add("VerificationCode", VerificationCode);
+                        MemoryCache.Remove(phonenumber);
+                    }
+                    else
+                    {
+                        ret.Add("error", "验证码错误");
+                        ret.Add("code", "400");
+                    }
                 }
-                else
+                catch
                 {
-                    ret.Add("error", "验证码错误");
+                    ret.Add("error", "可能未发送验证码");
+                    ret.Add("code", "400");
                 }
 
 
@@ -4792,7 +4813,10 @@ namespace TodoApi
                 string userSex = 请求参数["userSex"].ToString();
                 string userAge = 请求参数["userAge"].ToString();
                 string orderTxt = 请求参数["orderText"].ToString();//订单留言
-
+                string payType = 请求参数["payType"].ToString(); //支付方式 alipay or wechar
+                string addres = 请求参数["addres"].ToString(); //客户端ip 由入口处添加
+                //
+                ret.Add("payType", payType);
                 string 订单号 = new tool.RandomNumber().GetRandom1();//生成订单号
                 string title = "";
                 string txt = "";
@@ -4843,7 +4867,19 @@ namespace TodoApi
 
                 }
                 //生成请求订单数据
-                string orderString = pay(title, txt, money, 订单号, serviceId);
+                string orderString = "";
+                if (payType == "alipay")
+                {
+                    orderString = pay(title, txt, money, 订单号, serviceId);
+                }
+                else
+                {
+                     orderString =new JSONObject(weixin.GetWxAppPayInfo(订单号, title, money.ToString(), addres)).ToString();
+                         
+                    // orderString = weixin.GetWxAppPayInfo(订单号, title, money.ToString(), addres).ToString();
+                    // orderString = weixin.AppPay(title, txt, money, 订单号, serviceId, addres).ToString();
+                }
+
                 ret.Add("orderString", orderString);
                 ret.Add("orderId", 订单号);
                 return ret;
@@ -4961,7 +4997,7 @@ namespace TodoApi
 
 
 
-                bool isTransactionOk = false;
+
 
 
                 MySqlConnection conn = new MySqlConnection();
@@ -4994,7 +5030,7 @@ namespace TodoApi
 
                     transaction.Commit();
 
-                    isTransactionOk = true;
+
 
                     conn.Close();
                     ret = "Y";
@@ -5007,7 +5043,7 @@ namespace TodoApi
                 {
                     transaction.Rollback();
                     conn.Close();
-                    isTransactionOk = false;
+
                     ret = "N";
                 }
 
@@ -7632,6 +7668,50 @@ namespace TodoApi
 
                 return sendOk;
             }
+            public static string GetCode()
+            {
+                //Random r = new Random();
+                //label1.Text = r.Next(1000,10000).ToString();
+
+                string vc = "";
+                Random r = new Random();
+                int num1 = r.Next(0, 9);
+                int num2 = r.Next(0, 9);
+                int num3 = r.Next(0, 9);
+                int num4 = r.Next(0, 9);
+
+                int[] numbers = new int[4] { num1, num2, num3, num4 };
+                for (int i = 0; i < numbers.Length; i++)
+                {
+                    vc += numbers[i].ToString();
+                }
+                return vc;
+            }
+
+            public static bool sendCode(string Mobile, string Text)
+            {
+                bool sendOk = false;
+
+                //初始化clnt,使用单例方式
+                var clnt = new YunpianClient("da9cfdda80cf174b44a66b2fc40b5073").Init();
+
+                //发送短信API
+                var param = new Dictionary<string, string>
+                {
+                    [Const.Mobile] = Mobile,
+                    [Const.Text] = Text
+                };
+                var r = clnt.Sms().SingleSend(param);
+                //获取返回结果, 返回码:r.Code, 返回码描述:r.Msg, API结果:r.Data, 其他说明:r.Detail, 调用异常:r.E
+
+                //账户:clnt.User().* 签名:clnt.Sign().* 模版:clnt.Tpl().* 短信:clnt.Sms().* 视频短信:clnt.VideoSms().* 语音:clnt.Voice().* 短链接:clnt.ShortUrl().*
+
+                //释放clnt
+                clnt.Dispose();
+
+
+                return sendOk;
+            }
             public static void 定时遍历清除掉线()
             {
 
@@ -8830,7 +8910,41 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                 return ret;
             }
 
+            public static JSONObject admin_add_sysAccets(JSONObject h)
+            {
+                JSONObject ret = new JSONObject();
+                ret.Add("type", "admin_add_sysAccets_ret");
 
+
+                string sql = @"select  turnover,profit from  sysAssets where  id=1;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+
+
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        ret.Add("turnover", sdr["turnover"].ToString());
+                        ret.Add("profit", sdr["profit"].ToString());
+
+                    }
+
+
+                }
+                con.Close();
+
+                return ret;
+            }
             public static JSONObject admin_set_Disabled(JSONObject h)
             {
                 //冻结用户和取消
@@ -9677,9 +9791,181 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
         }
 
 
-        public class weixin
+        public static class weixin
         {
 
+
+            public class WxPayConfig
+            {
+                public static WxPayConfig Instance = new WxPayConfig();
+
+                public string appid = "";//APPID
+
+                public string mchid = "";//商户号
+
+                public string key = "";//商户API密钥
+
+                public string appSecret = "";//公众号支付和app支付时候将用到
+
+                public string notify_url = "http://www.baidu.com/Pay/WxNotify";//回调页地址
+
+                public string api_url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信支付调用接口地址
+            }
+            public class WxPayModel
+            {
+                /// <summary>
+                /// 应用ID
+                /// </summary>
+                public string appid { set; get; } = "";
+                /// <summary>
+                /// 商户号
+                /// </summary>
+                public string partnerid { set; get; } = "";
+                /// <summary>
+                /// 预支付交易会话ID
+                /// </summary>
+                public string prepayid { set; get; } = "";
+                /// <summary>
+                /// 扩展字段
+                /// </summary>
+                public string package { set; get; } = "Sign=WXPay";
+                /// <summary>
+                /// 随机字符串
+                /// </summary>
+                public string noncestr { set; get; } = "";
+                /// <summary>
+                /// 时间戳
+                /// </summary>
+                public string timestamp { set; get; } = "";
+
+                /// <summary>
+                /// 签名
+                /// </summary>
+                public string sign { set; get; } = "";
+            }
+
+            /// <summary>
+            /// 获取微信APP支付需要的信息
+            /// </summary>
+            /// <param name="out_trade_no">订单号</param>
+            /// <param name="body">描述</param>
+            /// <param name="total_fee">总价</param>
+            /// <param name="ip">客户IP</param>
+            /// <returns></returns>
+            public static JSONObject GetWxAppPayInfo(string out_trade_no, string body, string total_fee, string ip)
+            {
+                WxPayConfig payConfigModel = new WxPayConfig();
+                payConfigModel.appid = "wxd4c2bf842c6e6c19";
+                payConfigModel.mchid = "1559675321"; //商户号
+                payConfigModel.appSecret = "d14ef8e234bcd2c60a67e4d97fb1a6e5";//AppSecret
+                payConfigModel.notify_url = "http://taluoguan.com/api/wechatpay"; //回调地址
+                payConfigModel.key = @"z76h28p279z76h28p279kidjs7dh82k1";
+                //构造返回内容，缺少prepayid和sign需要去微信服务器获取
+                WxPayModel wxPayModel = new WxPayModel()
+                {
+                    appid = payConfigModel.appid,
+                    partnerid = payConfigModel.mchid,
+
+                    timestamp = Senparc.CO2NET.Helpers.DateTimeHelper.GetUnixDateTime(DateTime.Now) + "",
+                    noncestr = Senparc.Weixin.TenPay.V3.TenPayV3Util.GetNoncestr(),
+
+                };
+
+                //构造请求参数
+                Senparc.Weixin.TenPay.V3.RequestHandler packageReqHandler = new Senparc.Weixin.TenPay.V3.RequestHandler();
+
+                #region 构造请求参数
+                packageReqHandler.SetParameter("appid", payConfigModel.appid);//APPID
+                packageReqHandler.SetParameter("mch_id", payConfigModel.mchid);//商户号
+                packageReqHandler.SetParameter("nonce_str", Senparc.Weixin.TenPay.V3.TenPayV3Util.GetNoncestr());//随机串
+                packageReqHandler.SetParameter("body", body);
+                packageReqHandler.SetParameter("out_trade_no", out_trade_no);//订单号
+                packageReqHandler.SetParameter("total_fee", (int)(Convert.ToDecimal(total_fee) * 100) + ""); //金额,以分为单位
+                packageReqHandler.SetParameter("spbill_create_ip", ip);//IP
+                packageReqHandler.SetParameter("notify_url", payConfigModel.notify_url); //回调地址
+                packageReqHandler.SetParameter("trade_type", "APP");//APP支付
+
+                packageReqHandler.SetParameter("sign", packageReqHandler.CreateMd5Sign("key", payConfigModel.key));//商户API密钥（签名） 
+                #endregion
+
+                //将参数转为xml字符串
+                string data = packageReqHandler.ParseXML();
+                //发起post异步请求，获取返回的内容
+                var result = PostWithStringFile(payConfigModel.api_url, data);
+
+                tool.输出log记录("【GetWxAppPayInfo】订单：" + out_trade_no + ",请求得到的xml：" + result);
+
+
+                var res = System.Xml.Linq.XDocument.Parse(result);//解析xml，为了填充prepay_id参数和_paySign参数。
+                try
+                {
+                    //填充prepay_id参数
+                    wxPayModel.prepayid = res.Element("xml").Element("prepay_id").Value;
+
+                    SortedDictionary<string, object> sParams = new SortedDictionary<string, object>();
+                    sParams.Add("appid", wxPayModel.appid);
+                    sParams.Add("noncestr", wxPayModel.noncestr);
+                    sParams.Add("package", "Sign=WXPay");
+                    sParams.Add("partnerid", wxPayModel.partnerid);
+                    sParams.Add("prepayid", wxPayModel.prepayid);
+                    sParams.Add("timestamp", wxPayModel.timestamp);
+                  
+
+                    //填充sign参数 
+                    wxPayModel.sign = GetSign(sParams, payConfigModel.key);
+                }
+                catch (Exception ex)
+                {
+                    tool.输出log记录("【GetWxAppPayInfo】订单：{out_trade_no },异常:{" + ex.ToString() + "}");
+                }
+
+                JSONObject ret = new JSONObject();
+                ret.Add("appid", wxPayModel.appid);
+                ret.Add("noncestr", wxPayModel.noncestr);
+                ret.Add("package", wxPayModel.package);
+                ret.Add("partnerid", wxPayModel.partnerid);
+                ret.Add("prepayid", wxPayModel.prepayid);
+                ret.Add("sign", wxPayModel.sign);
+                ret.Add("timestamp", wxPayModel.timestamp);
+                 ret.Add("mchid", payConfigModel.mchid);
+ 
+                return ret;
+            }
+            /// <summary>
+            /// post请求，将字符串转为流上传到url中
+            /// </summary>
+            /// <param name="url"></param>
+            /// <param name="file"></param>
+            /// <returns></returns>
+            public static string PostWithStringFile(string url, string file)
+            {
+                WxPayConfig payConfigModel = new WxPayConfig();
+
+                var formDataBytes = file == null ? new byte[0] : Encoding.UTF8.GetBytes(file);//将xml字符串转为字节流
+                MemoryStream ms = new MemoryStream(formDataBytes);//将字节流转为内存流
+                StreamContent streamContent = new StreamContent(ms);//封装为StreamContent对象
+                                                                    //发起post异步请求，获取返回的内容
+                HttpClient httpClient = new HttpClient();
+                var result = httpClient.PostAsync(payConfigModel.api_url, streamContent).Result.Content.ReadAsStringAsync().Result;
+                return result;
+            }
+            public static string GetSign(SortedDictionary<string, object> sParams, string key)
+            {
+                string sign = string.Empty;
+                StringBuilder sb = new StringBuilder();
+                foreach (KeyValuePair<string, object> temp in sParams)
+                {
+                    if (string.IsNullOrEmpty(temp.Value + "") || temp.Key.ToLower() == "sign")
+                    {
+                        continue;
+                    }
+                    sb.Append(temp.Key.Trim() + "=" + temp.Value.ToString() + "&");
+                }
+                sb.Append("key=" + key.Trim() + "");
+                string signkey = sb.ToString();
+                sign = Senparc.CO2NET.Helpers.EncryptHelper.GetMD5(signkey);
+                return sign;
+            }
             public static async void access_token()
             {
                 if (MemoryCache.Get("access_token") == null)

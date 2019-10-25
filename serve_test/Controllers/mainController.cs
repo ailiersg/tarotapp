@@ -13,6 +13,10 @@ namespace TodoApi.Controllers
     public class mainController : ControllerBase
     {
         static JSONObject tou;
+ 
+
+
+
         [HttpGet]
         public string get(string data)
         {
@@ -41,7 +45,8 @@ namespace TodoApi.Controllers
                 return a1;
             }
 
-            tou.Add("islogin", false);
+
+
 
             if (Request.Headers["token"].ToString().Trim() != "")
             {
@@ -61,7 +66,20 @@ namespace TodoApi.Controllers
                     tou.Add("crrloginuserid", obj["userid"].ToString());
 
                 }
+                else
+                {
+                    tou.Add("islogin", false);
+                }
 
+            }
+            else
+            {
+                if(tou["islogin"]!=null){
+
+                }else{
+ tou.Add("islogin", false);
+                }
+               
             }
 
             return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
@@ -88,6 +106,7 @@ namespace TodoApi.Controllers
         [HttpPost]
         public string post(string data_)
         {
+           
 
             // Console.WriteLine("cookie-------=" + Request.Cookies["cookie"]);
             // Response.Cookies.Append("cookie", "ok",new CookieOptions(){IsEssential=true,HttpOnly=true,SameSite=Microsoft.AspNetCore.Http.SameSiteMode.None,Domain="localhost"});
@@ -130,6 +149,16 @@ namespace TodoApi.Controllers
                         return a1;
                     }
 
+
+                    if (tou["type"] != null)
+                    {
+                        //对于创建订单支付接口添加请求方ip
+                        if (tou["type"].ToString() == "generateOrder")
+                        {
+                            Console.WriteLine("当前获取的客户端ip为====" + HttpContext.Connection.RemoteIpAddress.ToString());
+                            tou.Add("addres",HttpContext.Connection.RemoteIpAddress.ToString());
+                        }
+                    }
                     return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
 
                 }

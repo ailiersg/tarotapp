@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "27eb3cc282cf74907e157a5373c3ce9eab77174b"
+    "signature": "0881fb9009fb4e6b230f9d346b46439279dd958f"
   },
   "compilationOptions": {
     "defines": [
@@ -26,12 +26,18 @@
         "dependencies": {
           "Alipay.AopSdk.AspnetCore": "2.4.3",
           "Alipay.AopSdk.Core": "2.4.3",
+          "Essensoft.AspNetCore.Payment.WeChatPay": "2.4.2",
           "Fleck": "1.1.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "MySqlClient": "5.4.2",
+          "Senparc.Weixin": "6.6.102",
+          "Senparc.Weixin.MP": "16.9.102",
+          "Senparc.Weixin.Open": "4.7.102",
+          "Senparc.Weixin.TenPay": "1.5.102",
+          "Yunpian.Sdk": "0.0.2",
           "ZKWeb.System.Drawing": "4.0.1",
           "runtime.linux.CoreCompat.System.Drawing": "1.0.0-beta001",
           "System.Drawing.Common": "4.5.1"
@@ -62,7 +68,7 @@
       },
       "Alipay.AopSdk.Core/2.4.3": {
         "dependencies": {
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "Nito.AsyncEx": "5.0.0-pre-05"
         },
         "runtime": {
@@ -73,6 +79,36 @@
         },
         "compile": {
           "lib/netstandard2.0/Alipay.AopSdk.Core.dll": {}
+        }
+      },
+      "Essensoft.AspNetCore.Payment.Security/2.4.2": {
+        "dependencies": {
+          "Portable.BouncyCastle": "1.8.5"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.dll": {
+            "assemblyVersion": "2.4.2.0",
+            "fileVersion": "2.4.2.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Essensoft.AspNetCore.Payment.Security.dll": {}
+        }
+      },
+      "Essensoft.AspNetCore.Payment.WeChatPay/2.4.2": {
+        "dependencies": {
+          "Essensoft.AspNetCore.Payment.Security": "2.4.2",
+          "Microsoft.AspNetCore.Mvc": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0"
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.dll": {
+            "assemblyVersion": "2.4.2.0",
+            "fileVersion": "2.4.2.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp2.2/Essensoft.AspNetCore.Payment.WeChatPay.dll": {}
         }
       },
       "Fleck/1.1.0": {
@@ -318,6 +354,17 @@
           "Microsoft.NETCore.Platforms": "2.2.0"
         }
       },
+      "Newtonsoft.Json/12.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "Nito.AsyncEx/5.0.0-pre-05": {
         "dependencies": {
           "Nito.AsyncEx.Context": "5.0.0-pre-05",
@@ -450,6 +497,17 @@
           "lib/netstandard2.0/OptimizedDataReader.dll": {}
         }
       },
+      "Portable.BouncyCastle/1.8.5": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.8.5.0",
+            "fileVersion": "1.8.5.50"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "runtime.linux.CoreCompat.System.Drawing/1.0.0-beta001": {
         "runtimeTargets": {
           "runtimes/debian.8-x64/native/libgdiplus.so": {
@@ -477,6 +535,151 @@
         },
         "compile": {
           "lib/netstandard2.0/Savage.Data.dll": {}
+        }
+      },
+      "Senparc.CO2NET/1.0.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting": "2.2.0",
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
+          "Microsoft.Extensions.DependencyInjection": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "2.2.0",
+          "Newtonsoft.Json": "12.0.1",
+          "System.Diagnostics.TraceSource": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Xml.XmlSerializer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.CO2NET.dll": {
+            "assemblyVersion": "1.0.102.0",
+            "fileVersion": "1.0.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.CO2NET.dll": {}
+        }
+      },
+      "Senparc.CO2NET.APM/0.6.102": {
+        "dependencies": {
+          "Senparc.CO2NET": "1.0.102"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.CO2NET.APM.dll": {
+            "assemblyVersion": "0.6.102.0",
+            "fileVersion": "0.6.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.CO2NET.APM.dll": {}
+        }
+      },
+      "Senparc.NeuChar/1.0.102": {
+        "dependencies": {
+          "Senparc.CO2NET": "1.0.102",
+          "Senparc.CO2NET.APM": "0.6.102"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.NeuChar.dll": {
+            "assemblyVersion": "1.0.102.0",
+            "fileVersion": "1.0.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.NeuChar.dll": {}
+        }
+      },
+      "Senparc.NeuChar.App/0.6.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc": "2.2.0",
+          "Senparc.NeuChar": "1.0.102"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.NeuChar.App.dll": {
+            "assemblyVersion": "0.6.102.0",
+            "fileVersion": "0.6.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.NeuChar.App.dll": {}
+        }
+      },
+      "Senparc.Weixin/6.6.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Options": "2.2.0",
+          "Newtonsoft.Json": "12.0.1",
+          "Senparc.CO2NET": "1.0.102",
+          "Senparc.NeuChar": "1.0.102",
+          "System.Diagnostics.TraceSource": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Threading.Thread": "4.3.0",
+          "System.Xml.XmlSerializer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.dll": {
+            "assemblyVersion": "6.6.102.0",
+            "fileVersion": "6.6.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.dll": {}
+        }
+      },
+      "Senparc.Weixin.MP/16.9.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Senparc.CO2NET.APM": "0.6.102",
+          "Senparc.NeuChar": "1.0.102",
+          "Senparc.NeuChar.App": "0.6.102",
+          "Senparc.Weixin": "6.6.102",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.MP.dll": {
+            "assemblyVersion": "16.9.102.0",
+            "fileVersion": "16.9.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.MP.dll": {}
+        }
+      },
+      "Senparc.Weixin.Open/4.7.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Senparc.NeuChar": "1.0.102",
+          "Senparc.Weixin": "6.6.102",
+          "System.Xml.XPath.XmlDocument": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.Open.dll": {
+            "assemblyVersion": "4.7.102.0",
+            "fileVersion": "4.7.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.Open.dll": {}
+        }
+      },
+      "Senparc.Weixin.TenPay/1.5.102": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http": "2.2.0",
+          "Microsoft.Extensions.Http": "2.2.0",
+          "Senparc.Weixin": "6.6.102"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Senparc.Weixin.TenPay.dll": {
+            "assemblyVersion": "1.5.102.0",
+            "fileVersion": "1.5.102.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Senparc.Weixin.TenPay.dll": {}
         }
       },
       "System.ComponentModel/4.3.0": {
@@ -553,6 +756,29 @@
           },
           "runtime/osx/lib/_._": {
             "rid": "osx",
+            "assetType": "runtime"
+          },
+          "runtime/win/lib/_._": {
+            "rid": "win",
+            "assetType": "runtime"
+          }
+        }
+      },
+      "System.Diagnostics.TraceSource/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.2.0",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "runtime.native.System": "4.3.0"
+        },
+        "runtimeTargets": {
+          "runtime/unix/lib/_._": {
+            "rid": "unix",
             "assetType": "runtime"
           },
           "runtime/win/lib/_._": {
@@ -666,6 +892,43 @@
           "System.Runtime.Handles": "4.3.0"
         }
       },
+      "System.Xml.XPath.XmlDocument/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Xml.ReaderWriter": "4.3.0",
+          "System.Xml.XPath": "4.3.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.24705.1"
+          }
+        },
+        "compile": {
+          "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
+        }
+      },
+      "Yunpian.Sdk/0.0.2": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/yunpian-csharp-sdk.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/yunpian-csharp-sdk.dll": {}
+        }
+      },
       "ZKWeb.System.Drawing/4.0.1": {
         "dependencies": {
           "System.Collections.NonGeneric": "4.3.0",
@@ -687,7 +950,7 @@
       },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "dependencies": {
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "Newtonsoft.Json.Bson": "1.0.1"
         },
         "compile": {
@@ -975,7 +1238,7 @@
       "Microsoft.AspNetCore.Authentication.OAuth/2.2.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication": "2.2.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Authentication.OAuth.dll": {}
@@ -1253,7 +1516,7 @@
           "Microsoft.AspNetCore.Http.Connections.Common": "1.1.0",
           "Microsoft.AspNetCore.Routing": "2.2.0",
           "Microsoft.AspNetCore.WebSockets": "2.2.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Security.Principal.Windows": "4.5.0"
         },
         "compile": {
@@ -1264,7 +1527,7 @@
       "Microsoft.AspNetCore.Http.Connections.Common/1.1.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "2.2.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Buffers": "4.5.0"
         },
         "compile": {
@@ -1358,7 +1621,7 @@
       "Microsoft.AspNetCore.JsonPatch/2.2.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.5.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.JsonPatch.dll": {}
@@ -1591,7 +1854,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
           "Microsoft.Extensions.Logging.Console": "2.2.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.NodeServices.dll": {}
@@ -1841,7 +2104,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "2.2.0",
           "Microsoft.Extensions.Options": "2.2.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Buffers": "4.5.0"
         },
         "compile": {
@@ -1867,7 +2130,7 @@
       "Microsoft.AspNetCore.SignalR.Protocols.Json/1.1.0": {
         "dependencies": {
           "Microsoft.AspNetCore.SignalR.Common": "1.1.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.SignalR.Protocols.Json.dll": {}
@@ -2192,7 +2455,7 @@
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "2.2.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Configuration.Json.dll": {}
@@ -2247,7 +2510,7 @@
       "Microsoft.Extensions.DependencyModel/2.1.0": {
         "dependencies": {
           "Microsoft.DotNet.PlatformAbstractions": "2.1.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Dynamic.Runtime": "4.3.0",
           "System.Linq": "4.3.0"
@@ -2454,7 +2717,7 @@
       "Microsoft.Extensions.Logging.EventSource/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Logging": "2.2.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.EventSource.dll": {}
@@ -2534,7 +2797,7 @@
       "Microsoft.IdentityModel.JsonWebTokens/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "5.3.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.IdentityModel.JsonWebTokens.dll": {}
@@ -2569,7 +2832,7 @@
       "Microsoft.IdentityModel.Protocols.OpenIdConnect/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Protocols": "5.3.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Dynamic.Runtime": "4.3.0",
           "System.IdentityModel.Tokens.Jwt": "5.3.0"
         },
@@ -2593,7 +2856,7 @@
       "Microsoft.IdentityModel.Tokens/5.3.0": {
         "dependencies": {
           "Microsoft.IdentityModel.Logging": "5.3.0",
-          "Newtonsoft.Json": "11.0.2",
+          "Newtonsoft.Json": "12.0.1",
           "System.Collections": "4.3.0",
           "System.Diagnostics.Tools": "4.3.0",
           "System.Reflection": "4.3.0",
@@ -2652,16 +2915,10 @@
         },
         "compileOnly": true
       },
-      "Newtonsoft.Json/11.0.2": {
-        "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
-        },
-        "compileOnly": true
-      },
       "Newtonsoft.Json.Bson/1.0.1": {
         "dependencies": {
           "NETStandard.Library": "2.0.3",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
@@ -2969,7 +3226,7 @@
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "5.3.0",
           "Microsoft.IdentityModel.Tokens": "5.3.0",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
           "lib/netstandard2.0/System.IdentityModel.Tokens.Jwt.dll": {}
@@ -3720,6 +3977,20 @@
       "path": "alipay.aopsdk.core/2.4.3",
       "hashPath": "alipay.aopsdk.core.2.4.3.nupkg.sha512"
     },
+    "Essensoft.AspNetCore.Payment.Security/2.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Hw0iZL2bNKQsxyCfoOierHHie6KT/KJO8O9DcXyc/NUzqs/2qY6nLNVRQWI09NCr4VIShHw930ogsbLk9c993w==",
+      "path": "essensoft.aspnetcore.payment.security/2.4.2",
+      "hashPath": "essensoft.aspnetcore.payment.security.2.4.2.nupkg.sha512"
+    },
+    "Essensoft.AspNetCore.Payment.WeChatPay/2.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sOezBh5BL71W78FEzIBgyP9lEwfoCNRSbUULRjRIsTOdg9QBffWhEcr13YPXSYF6LTgvQPm+Fm7YzqJQ6OPEsw==",
+      "path": "essensoft.aspnetcore.payment.wechatpay/2.4.2",
+      "hashPath": "essensoft.aspnetcore.payment.wechatpay.2.4.2.nupkg.sha512"
+    },
     "Fleck/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -3804,6 +4075,13 @@
       "path": "netstandard.library/2.0.3",
       "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
     },
+    "Newtonsoft.Json/12.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+      "path": "newtonsoft.json/12.0.1",
+      "hashPath": "newtonsoft.json.12.0.1.nupkg.sha512"
+    },
     "Nito.AsyncEx/5.0.0-pre-05": {
       "type": "package",
       "serviceable": true,
@@ -3874,6 +4152,13 @@
       "path": "optimizeddatareader/1.1.0",
       "hashPath": "optimizeddatareader.1.1.0.nupkg.sha512"
     },
+    "Portable.BouncyCastle/1.8.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3/G1lF+m9HHqKFSjd/Hy1z3h00vzHQybiZHzK9gH2SxK6BOCQjOnjC97qt4kla7u5rrsf/kukWzUogywKp2ECg==",
+      "path": "portable.bouncycastle/1.8.5",
+      "hashPath": "portable.bouncycastle.1.8.5.nupkg.sha512"
+    },
     "runtime.linux.CoreCompat.System.Drawing/1.0.0-beta001": {
       "type": "package",
       "serviceable": true,
@@ -3894,6 +4179,62 @@
       "sha512": "sha512-+BLcosRayryC7RO+bahEyAQ9xylO4R7czORgD8pxft+D5niUZQ6Am2bOvA3DqvPXbO9DZDL2C9AQpGhizWia6w==",
       "path": "savage.data/5.4.2",
       "hashPath": "savage.data.5.4.2.nupkg.sha512"
+    },
+    "Senparc.CO2NET/1.0.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lvpUkSpJSCdmRiTq0yeBl0Qtnx6b94z2X0p8gdkVuNPnYl95kzvGFiLC9JAOBO+9Blo+ayDmTT4hX6hX7WRxxQ==",
+      "path": "senparc.co2net/1.0.102",
+      "hashPath": "senparc.co2net.1.0.102.nupkg.sha512"
+    },
+    "Senparc.CO2NET.APM/0.6.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dtHmvNUA1XZu1m9BQNgPDCIRpQ+w0k+p+p5aOLBf+/i05OGZY0mfjQvZ/ZOEeuhydeYeLC1ZcBr1Q1RKzNcORA==",
+      "path": "senparc.co2net.apm/0.6.102",
+      "hashPath": "senparc.co2net.apm.0.6.102.nupkg.sha512"
+    },
+    "Senparc.NeuChar/1.0.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Xue+YYiHO322QAitTuc0iUeQMv/PXG60voH2alUWDRZLn4LCwsOoLSE5WwFsX79Iz0YCGizJvQ6mMzBjGWsNIg==",
+      "path": "senparc.neuchar/1.0.102",
+      "hashPath": "senparc.neuchar.1.0.102.nupkg.sha512"
+    },
+    "Senparc.NeuChar.App/0.6.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FlZHYt+ZnzFah6LWkr0RjJ1IvfYoHSEUQRHm/7u9B81hEbv9XlEUQZ/hyndhSVSjYKAMoPBDf62meP41mbjTYw==",
+      "path": "senparc.neuchar.app/0.6.102",
+      "hashPath": "senparc.neuchar.app.0.6.102.nupkg.sha512"
+    },
+    "Senparc.Weixin/6.6.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ut7Wwg4tDwnTb8Q2uQWHAeOZi/IP5j1W1KRSPvYMrBRW14iWNyiZ+/Akel1pRFx1v7OI5y/Jk0j8a8D8W0ihoQ==",
+      "path": "senparc.weixin/6.6.102",
+      "hashPath": "senparc.weixin.6.6.102.nupkg.sha512"
+    },
+    "Senparc.Weixin.MP/16.9.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VgzWtvHq0KCCpZPCNdtw/BkAcD73evKcQbKjgMm7j63rd/acdWpsZmyN9uen7N6X7rCPaX1BlmMXvItCoFJm2w==",
+      "path": "senparc.weixin.mp/16.9.102",
+      "hashPath": "senparc.weixin.mp.16.9.102.nupkg.sha512"
+    },
+    "Senparc.Weixin.Open/4.7.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ya5l12ti0q8dRDEQqeSz0uXeVtLrfLsqUd9qQoSets+wKyaNUVaMT6kAagx0Om0muY3Aypwgy53iJL5A5W+Q9A==",
+      "path": "senparc.weixin.open/4.7.102",
+      "hashPath": "senparc.weixin.open.4.7.102.nupkg.sha512"
+    },
+    "Senparc.Weixin.TenPay/1.5.102": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LtjZaqprhqJYG4QSXgeTyLMP0m6fNx49IDkISl4M0rAGFNP1RfLoIl1bn9I9QAMNNqhZhBf0m6XXupdS7K14sQ==",
+      "path": "senparc.weixin.tenpay/1.5.102",
+      "hashPath": "senparc.weixin.tenpay.1.5.102.nupkg.sha512"
     },
     "System.ComponentModel/4.3.0": {
       "type": "package",
@@ -3930,6 +4271,13 @@
       "path": "system.diagnostics.process/4.3.0",
       "hashPath": "system.diagnostics.process.4.3.0.nupkg.sha512"
     },
+    "System.Diagnostics.TraceSource/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BlWWL9q/HKM0KBzuOSOqchFga5MqnvkK5mb+IU7f4ecInSyghlswR3ib3nww1ruBmLrtdI5coCBB2H2AltTFyA==",
+      "path": "system.diagnostics.tracesource/4.3.0",
+      "hashPath": "system.diagnostics.tracesource.4.3.0.nupkg.sha512"
+    },
     "System.Drawing.Common/4.5.1": {
       "type": "package",
       "serviceable": true,
@@ -3957,6 +4305,20 @@
       "sha512": "sha512-k/+g4b7vjdd4aix83sTgC9VG6oXYKAktSfNIJUNGxPEj7ryEOfzHHhfnmsZvjxawwcD9HyWXKCXmPjX8U4zeSw==",
       "path": "system.threading.threadpool/4.3.0",
       "hashPath": "system.threading.threadpool.4.3.0.nupkg.sha512"
+    },
+    "System.Xml.XPath.XmlDocument/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-91tvfHWHSrYFPolCwWYqbpo1YaoBUCQ3uNZ/O/zr0ev5BnkoATJoie16ywlMVUaXZtfSfNELxhtG3aqpTfwR4w==",
+      "path": "system.xml.xpath.xmldocument/4.3.0",
+      "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "Yunpian.Sdk/0.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cYULmk6srCAP7mLjgYGVJA5/rRcQDJYCXmPgJ05Tw7C/h1Ck73jHANBAkcdLdPOHoKDebw8XuunV206QpZU/5w==",
+      "path": "yunpian.sdk/0.0.2",
+      "hashPath": "yunpian.sdk.0.0.2.nupkg.sha512"
     },
     "ZKWeb.System.Drawing/4.0.1": {
       "type": "package",
@@ -5119,13 +5481,6 @@
       "sha512": "sha512-vduxuHEqRgRrTE8wYG8Wxj/+6wwzddOmZzjKZx6rFMc/91aUBxI5etAFYxesoNaIja5NpgSTcnk6cN8BeYXf9A==",
       "path": "microsoft.win32.registry/4.5.0",
       "hashPath": "microsoft.win32.registry.4.5.0.nupkg.sha512"
-    },
-    "Newtonsoft.Json/11.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
-      "path": "newtonsoft.json/11.0.2",
-      "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
     },
     "Newtonsoft.Json.Bson/1.0.1": {
       "type": "package",

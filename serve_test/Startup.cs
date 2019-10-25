@@ -31,7 +31,7 @@ namespace TodoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+services.AddHttpClient();
             services.AddDistributedMemoryCache();//启用session之前必须先添加内存
             services.AddSession(opt =>
                {
@@ -79,6 +79,7 @@ namespace TodoApi
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+              services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
 
