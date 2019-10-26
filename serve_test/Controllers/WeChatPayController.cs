@@ -9,6 +9,8 @@ using Senparc.Weixin.TenPay.V3;
 
 namespace TodoApi.Controllers
 {
+     [Route("api/[controller]")]
+    [ApiController]
     public class weCharPayController : ControllerBase
     {
         ///<summary>
@@ -18,6 +20,7 @@ namespace TodoApi.Controllers
         [HttpPost("PayNotifyUrl")]
         public ActionResult PayNotifyUrl()
         {
+            Console.WriteLine("---------PayNotifyUrl!-----------");
             // ResponseResult result = new ResponseResult();
             ResponseHandler resHandler = new ResponseHandler(HttpContext);
             string return_code = resHandler.GetParameter("return_code");
@@ -83,6 +86,10 @@ namespace TodoApi.Controllers
             }
 
             return Content("fail", "text/xml");
+        }
+        [HttpGet]
+        public string get1(){
+            return "error";
         }
         //         [HttpPost]
         //         public string WxNotify()
