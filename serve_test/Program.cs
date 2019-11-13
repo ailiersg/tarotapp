@@ -4811,7 +4811,7 @@ namespace TodoApi
             {
 
                 string ret = "";
-                string sql = "select  user.手机号 from user inner join 订单 on user.id=订单.下单用户id where  订单.订单号=@orderid;";
+                string sql = "select  user.手机号 from user inner join 订单 on user.id=订单.咨询师id where  订单.订单号=@orderid;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
@@ -5008,7 +5008,7 @@ namespace TodoApi
                 model.TimeoutExpress = "30m";//交易最晚时间 
 
                 request.SetBizModel(model);
-                request.SetNotifyUrl("http://api/taluoguan.com/api/alipay");
+                request.SetNotifyUrl("http://api.taluoguan.com/api/alipay");
                 //这里和普通的接口调用不同，使用的是sdkExecute
                 Alipay.AopSdk.Core.Response.AlipayTradeAppPayResponse response = client.SdkExecute(request);
                 //HttpUtility.HtmlEncode是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
