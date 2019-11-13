@@ -5008,7 +5008,7 @@ namespace TodoApi
                 model.TimeoutExpress = "30m";//交易最晚时间 
 
                 request.SetBizModel(model);
-                request.SetNotifyUrl("http://taluoguan.com/api/alipay");
+                request.SetNotifyUrl("http://api/taluoguan.com/api/alipay");
                 //这里和普通的接口调用不同，使用的是sdkExecute
                 Alipay.AopSdk.Core.Response.AlipayTradeAppPayResponse response = client.SdkExecute(request);
                 //HttpUtility.HtmlEncode是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
@@ -9900,7 +9900,7 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                 payConfigModel.appid = "wxd4c2bf842c6e6c19";
                 payConfigModel.mchid = "1559675321"; //商户号
                 payConfigModel.appSecret = "d14ef8e234bcd2c60a67e4d97fb1a6e5";//AppSecret
-                payConfigModel.notify_url = "http://taluoguan.com/api/weCharPay"; //回调地址
+                payConfigModel.notify_url = "http://api.taluoguan.com/api/weCharPay"; //回调地址
                 payConfigModel.key = @"z76h28p279z76h28p279kidjs7dh82k1";
                 //构造返回内容，缺少prepayid和sign需要去微信服务器获取
                 WxPayModel wxPayModel = new WxPayModel()
