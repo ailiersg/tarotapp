@@ -17,8 +17,8 @@ namespace TodoApi.Controllers
         /// 微信支付回调地址
         /// </summary>
         /// <returns></returns>
-        [HttpPost("PayNotifyUrl")]
-        public ActionResult PayNotifyUrl()
+        [HttpPost]
+        public string PayNotifyUrl()
         {
             Console.WriteLine("---------PayNotifyUrl!-----------");
             // ResponseResult result = new ResponseResult();
@@ -66,7 +66,7 @@ namespace TodoApi.Controllers
        <return_msg><![CDATA[{1}]]></return_msg>
        </xml>", return_code, return_msg);
 
-                    return Content(xml, "text/xml");
+                    return xml;
 
                 }
                 else
@@ -85,7 +85,7 @@ namespace TodoApi.Controllers
                 //   Logger.Error(string.Format("支付回调异常：Message={0}，StackTrace={1}", ex.Message, ex.StackTrace));
             }
 
-            return Content("fail", "text/xml");
+            return "fail";
         }
         [HttpGet]
         public string get1(){

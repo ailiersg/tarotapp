@@ -45,9 +45,6 @@ namespace TodoApi.Controllers
                 return a1;
             }
 
-
-
-
             if (Request.Headers["token"].ToString().Trim() != "")
             {
                 string retxt = Program.tool.AES.Decode(Request.Headers["token"].ToString(), "jsd7yfjysd98f7");
@@ -74,11 +71,15 @@ namespace TodoApi.Controllers
             }
             else
             {
-                if(tou["islogin"]!=null){
-
-                }else{
- tou.Add("islogin", false);
-                }
+              
+               try
+               {
+                   tou.Add("islogin", false);
+               }
+               finally
+               {
+                   
+               }
                
             }
 

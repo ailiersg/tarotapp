@@ -23,17 +23,17 @@ using System.Security.Cryptography;
 using System.DrawingCore;
 using Yunpian.Sdk;
 using Yunpian.Sdk.Model;
-using Essensoft.AspNetCore.Payment.WeChatPay;
-using Essensoft.AspNetCore.Payment.WeChatPay.Request;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Senparc.Weixin.Open.Helpers;
-using Senparc.Weixin.Helpers;
-using Senparc;
-using Senparc.Weixin;
-using Senparc.Weixin.MP.CommonAPIs;
-using Senparc.Weixin.Open;
+// using Essensoft.AspNetCore.Payment.WeChatPay;
+// using Essensoft.AspNetCore.Payment.WeChatPay.Request;
+// using System.Threading.Tasks;
+// using Microsoft.Extensions.Options;
+// using Newtonsoft.Json;
+// using Senparc.Weixin.Open.Helpers;
+// using Senparc.Weixin.Helpers;
+// using Senparc;
+// using Senparc.Weixin;
+// using Senparc.Weixin.MP.CommonAPIs;
+// using Senparc.Weixin.Open;
 //WeChatPayAppPayViewModel
 
 
@@ -63,8 +63,9 @@ namespace TodoApi
         static JSONObject tou;
         static Hashtable xint_ = new Hashtable();//保存心跳线， 键为userId,key为datatime
 
-        //  static string 图片服务器ip = "https://taluoguan.com";
-        static string 图片服务器ip = "http://192.168.0.121:5001"; //192.168.0.121
+        //  static string 图片服务器ip = "http://www.taluoguan.com";
+        // static string 图片服务器ip = "http://192.168.0.121:8174"; 
+         static string 图片服务器ip = "http://39.105.198.109:8174"; 
 
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;
@@ -4757,7 +4758,11 @@ namespace TodoApi
                 sendData.Add("type", "receivedNewService");
 
 
-                tool.向对端推送数据(sendData);
+                //在此处发送短信
+
+                tool.sendCode(getPhone(订单号), "【塔罗馆】你好 "+a["name"].ToString()+" 你有新的占卜订单 ，请及时登录塔罗馆APP查看。");
+
+                tool.向对端推送数据(sendData); //以后改成推送内容
 
 
                 return ok;
@@ -4799,6 +4804,43 @@ namespace TodoApi
                 return ok;
 
 
+
+
+            }
+            public static string getPhone(string orderid)
+            {
+
+                string ret = "";
+                string sql = "select  user.手机号 from user inner join 订单 on user.id=订单.下单用户id where  订单.订单号=@orderid;";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = 连接字符串;
+                MySqlCommand cmd = new MySqlCommand();
+
+                cmd.Parameters.AddWithValue("@orderid", orderid);
+
+
+
+                cmd.CommandText = sql;
+                MySqlDataReader sdr = null;
+                cmd.Connection = con;
+                con.Open();
+
+
+                ArrayList LetterList = new ArrayList();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    sdr = cmd.ExecuteReader();
+                    while (sdr.Read())
+                    {
+                        ret = sdr["手机号"].ToString();
+
+                    }
+
+                }
+                con.Close();
+
+                return ret;
 
 
             }
@@ -4874,8 +4916,8 @@ namespace TodoApi
                 }
                 else
                 {
-                     orderString =new JSONObject(weixin.GetWxAppPayInfo(订单号, title, money.ToString(), addres)).ToString();
-                         
+                    orderString = new JSONObject(weixin.GetWxAppPayInfo(订单号, title, money.ToString(), addres)).ToString();
+
                     // orderString = weixin.GetWxAppPayInfo(订单号, title, money.ToString(), addres).ToString();
                     // orderString = weixin.AppPay(title, txt, money, 订单号, serviceId, addres).ToString();
                 }
@@ -9858,7 +9900,7 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                 payConfigModel.appid = "wxd4c2bf842c6e6c19";
                 payConfigModel.mchid = "1559675321"; //商户号
                 payConfigModel.appSecret = "d14ef8e234bcd2c60a67e4d97fb1a6e5";//AppSecret
-                payConfigModel.notify_url = "http://taluoguan.com/api/wechatpay"; //回调地址
+                payConfigModel.notify_url = "http://taluoguan.com/api/weCharPay"; //回调地址
                 payConfigModel.key = @"z76h28p279z76h28p279kidjs7dh82k1";
                 //构造返回内容，缺少prepayid和sign需要去微信服务器获取
                 WxPayModel wxPayModel = new WxPayModel()
@@ -9909,7 +9951,7 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                     sParams.Add("partnerid", wxPayModel.partnerid);
                     sParams.Add("prepayid", wxPayModel.prepayid);
                     sParams.Add("timestamp", wxPayModel.timestamp);
-                  
+
 
                     //填充sign参数 
                     wxPayModel.sign = GetSign(sParams, payConfigModel.key);
@@ -9927,8 +9969,8 @@ from ((举报 inner join 订单 on 举报.orderId = 订单.订单号) inner join
                 ret.Add("prepayid", wxPayModel.prepayid);
                 ret.Add("sign", wxPayModel.sign);
                 ret.Add("timestamp", wxPayModel.timestamp);
-                 ret.Add("mchid", payConfigModel.mchid);
- 
+                ret.Add("mchid", payConfigModel.mchid);
+
                 return ret;
             }
             /// <summary>
