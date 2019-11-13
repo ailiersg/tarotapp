@@ -64,8 +64,8 @@ namespace TodoApi
         static Hashtable xint_ = new Hashtable();//保存心跳线， 键为userId,key为datatime
 
         //  static string 图片服务器ip = "http://www.taluoguan.com";
-        // static string 图片服务器ip = "http://192.168.0.121:8174"; 
-         static string 图片服务器ip = "http://39.105.198.109:8174"; 
+        static string 图片服务器ip = "http://192.168.0.121:8174"; 
+        //  static string 图片服务器ip = "http://39.105.198.109:8174"; 
 
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;

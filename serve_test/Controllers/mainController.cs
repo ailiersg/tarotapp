@@ -13,7 +13,7 @@ namespace TodoApi.Controllers
     public class mainController : ControllerBase
     {
         static JSONObject tou;
- 
+
 
 
 
@@ -71,30 +71,20 @@ namespace TodoApi.Controllers
             }
             else
             {
-              
-               try
-               {
-                   tou.Add("islogin", false);
-               }
-               finally
-               {
-                   
-               }
-               
+
+                try
+                {
+                    tou.Add("islogin", false);
+                }
+                finally
+                {
+
+                }
+
             }
 
             return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
 
-            //     return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
-            // }
-            // catch (Exception)
-            // {
-            //     Console.WriteLine("token=" + HttpContext.Session.GetString("token"));
-
-            //     string a1 = "{'type':'error','message':'string change JSONObject Error'}";
-            //     a1 = a1.Replace("\'", "\"");
-            //     return a1;
-            // }
 
 
 
@@ -107,20 +97,23 @@ namespace TodoApi.Controllers
         [HttpPost]
         public string post(string data_)
         {
-           
 
-            // Console.WriteLine("cookie-------=" + Request.Cookies["cookie"]);
-            // Response.Cookies.Append("cookie", "ok",new CookieOptions(){IsEssential=true,HttpOnly=true,SameSite=Microsoft.AspNetCore.Http.SameSiteMode.None,Domain="localhost"});
-            // Console.WriteLine("cookie-------=" + Request.Cookies["cookie"]);
+            string data = Request.Form["data"];
 
-            // Console.WriteLine("session-------=" + HttpContext.Session.GetString("cookie"));
-            // HttpContext.Session.SetString("cookie", "ok");
-            // Console.WriteLine("session-------=" + HttpContext.Session.GetString("cookie"));
-            //  Console.WriteLine("请求token=" + Request.HttpContext.Session.GetString("token"));
+            try
+            {
+                tou = JSONObject.Parse(data);
+
+            }
+            catch (Exception)
+            {
+                string a1 = "{'type':'error','message':'string change JSONObject Error'}";
+                a1 = a1.Replace("\'", "\"");
+                return a1;
+            }
 
 
-            // Console.WriteLine("加密=" + ciphertext);
-            // Console.WriteLine("解密=" + );
+
             if (Request.Headers["token"].ToString().Trim() != null)
             {
                 string retxt = Program.tool.AES.Decode(Request.Headers["token"].ToString(), "jsd7yfjysd98f7");
@@ -136,20 +129,18 @@ namespace TodoApi.Controllers
                 {
                     //有效
 
-                    string data = Request.Form["data"];
 
-                    try
+                    if (tou["type"] != null)
                     {
-                        tou = JSONObject.Parse(data);
+                        if (tou["type"].ToString() == "checkLogin")
+                        {
+                            //这个请求是判断是否登录
+                            JSONObject ret = new JSONObject();
+                            ret.Add("type", "checkLogin");
+                            ret.Add("islogin", 0);
 
+                        }
                     }
-                    catch (Exception)
-                    {
-                        string a1 = "{'type':'error','message':'string change JSONObject Error'}";
-                        a1 = a1.Replace("\'", "\"");
-                        return a1;
-                    }
-
 
                     if (tou["type"] != null)
                     {
@@ -157,7 +148,7 @@ namespace TodoApi.Controllers
                         if (tou["type"].ToString() == "generateOrder")
                         {
                             Console.WriteLine("当前获取的客户端ip为====" + HttpContext.Connection.RemoteIpAddress.ToString());
-                            tou.Add("addres",HttpContext.Connection.RemoteIpAddress.ToString());
+                            tou.Add("addres", HttpContext.Connection.RemoteIpAddress.ToString());
                         }
                     }
                     return TodoApi.Program.请求接口.请求处理(tou.ToString()).ToString();
@@ -167,8 +158,22 @@ namespace TodoApi.Controllers
                 {
                     //过期
                     JSONObject ret = new JSONObject();
-                    ret.Add("tyoe", "error");
+                    ret.Add("type", "error");
                     ret.Add("msg", "date  expire");
+
+
+                    //这个请求是判断是否登录
+                    if (tou["type"] != null)
+                    {
+                        if (tou["type"].ToString() == "checkLogin")
+                        {
+
+                            ret["type"] = "type";
+                            ret.Add("islogin", 0);
+
+                        }
+                    }
+
                     return ret.ToString();
 
                 }
@@ -178,13 +183,25 @@ namespace TodoApi.Controllers
             else
             {
                 JSONObject ret = new JSONObject();
-                ret.Add("tyoe", "error");
+                ret.Add("type", "error");
                 ret.Add("msg", "token is null");
+
+
+                //这个请求是判断是否登录
+                if (tou["type"] != null)
+                {
+                    if (tou["type"].ToString() == "checkLogin")
+                    {
+
+                        ret["type"] = "type";
+                        ret.Add("islogin", 0);
+
+                    }
+                }
+
                 return ret.ToString();
             }
 
-            // string token = Request.Headers["token"];
-            // Console.WriteLine("token=" + token);
 
 
         }
