@@ -4811,7 +4811,7 @@ namespace TodoApi
             {
 
                 string ret = "";
-                string sql = "select  user.手机号 from user inner join 订单 on user.id=订单.咨询师id where  订单.订单号=@orderid;";
+                string sql = "select  user.手机号 from user inner join 订单 on user.id=订单.下单用户id where  订单.订单号=@orderid;";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
