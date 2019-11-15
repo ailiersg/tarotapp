@@ -59,13 +59,14 @@ namespace TodoApi
 
         //订单状态 说明 0=未付款(过期会被清楚) 1=已付款 咨询中(过期会被设置成2) 2=已过期 没评价 但是正常打款 3=正常评价 打款 4已退款
         //Boolean 测试模式 = true;
-        static string 连接字符串 = "server=39.105.198.109;database=tarotapp;uid=feiye;pwd=5jq]sS-j;CharSet=utf8";
+        static string 连接字符串 = "server=39.105.198.109;database=test_tarotapp;uid=feiye;pwd=5jq]sS-j;CharSet=utf8";
         static JSONObject tou;
         static Hashtable xint_ = new Hashtable();//保存心跳线， 键为userId,key为datatime
 
-        //  static string 图片服务器ip = "http://www.taluoguan.com";
-        static string 图片服务器ip = "http://192.168.0.121:8174"; 
-        //  static string 图片服务器ip = "http://39.105.198.109:8174"; 
+
+        // static string 图片服务器ip = "http://192.168.0.121:8174"; 
+        // static string 图片服务器ip = "http://api.taluoguan.com";
+          static string 图片服务器ip = "http://39.105.198.109:8174";
 
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;
@@ -1525,7 +1526,7 @@ namespace TodoApi
                 }
 
                 string mess = "";
-                string 发送的验证码 = "0000";// tool.GetCode();
+                string 发送的验证码 ="0000" ;//tool.GetCode();
                 Boolean isok = true;
                 //发送语句
                 // tool.sendCode(手机号, "【塔罗馆】您的验证码是" + 发送的验证码);
@@ -4760,7 +4761,7 @@ namespace TodoApi
 
                 //在此处发送短信
 
-                tool.sendCode(getPhone(订单号), "【塔罗馆】你好 "+a["name"].ToString()+" 你有新的占卜订单 ，请及时登录塔罗馆APP查看。");
+                tool.sendCode(getPhone(订单号), "【塔罗馆】你好 " + a["name"].ToString() + " 你有新的占卜订单 ，请及时登录塔罗馆APP查看。");
 
                 tool.向对端推送数据(sendData); //以后改成推送内容
 
@@ -5378,7 +5379,7 @@ namespace TodoApi
                 string userId = 请求参数["toUserId"].ToString();
 
 
-                string sql = @"select (select count(*) from  messages where toUserId=@userid and messages.isred=0)  as sysNotes  , (select  sum(isredletter.isRed) from isredletter where isredletter.getUserId=@userid) as userMsgs";
+                string sql = @"select (select count(*) from  messages where toUserId=@userid and messages.isred=0)  as sysNotes  , (select  IFNULL(sum(isredletter.isRed),0) from isredletter where isredletter.getUserId=@userid) as userMsgs";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = 连接字符串;
                 MySqlCommand cmd = new MySqlCommand();
