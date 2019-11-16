@@ -162,7 +162,7 @@ var ObjOrderListShowPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             console.log("判断为安卓系统 设置状态栏样式");
         }
         // this.orderId = this.navParams.get('orderId');
@@ -267,7 +267,8 @@ var ObjOrderListShowPage = /** @class */ (function () {
                         return [4 /*yield*/, this.toastCtrl.create({
                                 message: "评价成功！",
                                 duration: 2000,
-                                position: 'top'
+                                position: 'top',
+                                cssClass: "md-toast",
                             })];
                     case 1:
                         toast = _a.sent();
@@ -412,7 +413,8 @@ var ObjOrderListShowPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.toastCtrl.create({
                             message: text,
                             duration: 3000,
-                            position: 'top'
+                            position: 'top',
+                            cssClass: "md-toast",
                         })];
                     case 1:
                         toast = _a.sent();

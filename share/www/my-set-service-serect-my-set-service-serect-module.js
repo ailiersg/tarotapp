@@ -149,13 +149,13 @@ var MySetServiceSerectPage = /** @class */ (function () {
         this.appMin = appMin;
         this.loadingCtrl = loadingCtrl;
         this.alertCtrl = alertCtrl;
-        // if (this.appMin.GetPhoneMode() == "ios") {
-        //   this.header_class = "header_class";
-        // }
-        // else {
-        //   this.header_class = "header_class";
-        //   console.log("判断为安卓系统 设置状态栏样式")
-        // }
+        if (this.appMin.GetPhoneMode() == "ios") {
+            this.header_class = "header_class";
+        }
+        else {
+            this.header_class = "header_class_md";
+            console.log("判断为安卓系统 设置状态栏样式");
+        }
         // MySetServiceSerectPage_message = function (event) {
         //   let meg = JSON.parse(event.data);
         //   if (meg.type == "error") {

@@ -65,7 +65,7 @@ var MywalletCashPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"start\">\n          <ion-back-button text=''></ion-back-button>\n        </ion-buttons>\n        <ion-title>提现</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n\n\n\n</ion-header>\n\n<ion-content padding>\n  <ion-item>\n    <ion-label>提现金额：</ion-label>\n    <ion-input type=\"number\" [(ngModel)]=\"money\" type=\"number\" [placeholder]=\"'当前最多'+mymoney\"></ion-input>\n\n  </ion-item>\n\n\n  <ion-item>\n    <ion-label>手机号：</ion-label>\n    <ion-input disabled=\"true\" [(ngModel)]=\"phone\" type=\"number\"></ion-input>\n    <ion-button [disabled]=\"isDisabled\" slot=\"end\" (click)=\"send_phone_code()\" >\n      {{smitBtnTxt}}\n    </ion-button>\n  </ion-item>\n\n  <ion-item>\n    <ion-label>验证码：</ion-label>\n    <ion-input [(ngModel)]=\"code\"></ion-input>\n  </ion-item>\n\n\n  <div class=\"myfroms\">\n\n    <ion-button ion-button block (click)=\"subm()\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px;height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\">\n      提现</ion-button>\n  </div>\n</ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" >\n        <ion-buttons slot=\"start\">\n          <ion-back-button text=''></ion-back-button>\n        </ion-buttons>\n        <ion-title>提现</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n\n\n\n</ion-header>\n\n<ion-content padding>\n  <ion-item>\n    <ion-label>提现金额：</ion-label>\n    <ion-input type=\"number\" [(ngModel)]=\"money\" type=\"number\" [placeholder]=\"'当前最多'+mymoney\"></ion-input>\n\n  </ion-item>\n\n\n  <ion-item>\n    <ion-label>手机号：</ion-label>\n    <ion-input disabled=\"true\" [(ngModel)]=\"phone\" type=\"number\"></ion-input>\n    <ion-button [disabled]=\"isDisabled\" slot=\"end\" (click)=\"send_phone_code()\">\n      {{smitBtnTxt}}\n    </ion-button>\n  </ion-item>\n\n  <ion-item>\n    <ion-label>验证码：</ion-label>\n    <ion-input [(ngModel)]=\"code\"></ion-input>\n  </ion-item>\n\n\n  <div class=\"myfroms\">\n\n\n\n    <div style=\"width: 80%;margin: 0px auto;\">\n      <ion-button (click)=\"subm()\" color=\"secondary\" style=\"color:#FFFFFF;width: 100%;margin-bottom:15px\">提现\n      </ion-button>\n\n    </div>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -152,6 +152,13 @@ var MywalletCashPage = /** @class */ (function () {
         this.phone = this.AppMin.getUserPhoneNumber();
         this.mymoney = this.ActivatedRoute.snapshot.queryParams['mymoney'];
         // console.log('mymoney='+this.mymoney);
+        if (this.AppMin.GetPhoneMode() == "ios") {
+            this.header_class = "header_class";
+        }
+        else {
+            this.header_class = "header_class_md";
+            console.log("判断为安卓系统 设置状态栏样式");
+        }
     }
     MywalletCashPage.prototype.ngOnInit = function () {
     };
@@ -195,7 +202,8 @@ var MywalletCashPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.ToastController.create({
                             message: msg,
                             duration: 1500,
-                            position: 'top'
+                            position: 'top',
+                            cssClass: "md-toast",
                         })];
                     case 1:
                         toast = _a.sent();

@@ -62,7 +62,7 @@ var HomePinglunPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-title>最新动态</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-refresher (ionRefresh)=\"doRefresh($event)\" #mybox  id=\"myionRefresh\">\n    <ion-refresher-content pullingIcon=\"Crescent\"  refreshingSpinner=\"circles\"></ion-refresher-content>\n  </ion-refresher>\n\n  <div style=\"text-align: center;\">\n      <ion-spinner *ngIf=\"pinglList.length == 0\" name=\"circles\"></ion-spinner>\n  </div>\n\n  <div class=\"list_f\">\n    <div class=\"item\" *ngFor=\"let item of pinglList\" (click)=\"toObjpage(item.ObjUserId)\">\n      <div class=\"left_img\"><img src='{{item.user_img}}'></div>\n      <div class=\"item_right\">\n        <div class=\"top cl\">\n          <div class=\"fll\"><span style=\"font-size: 1.3rem;\"> {{item.user_cname}}</span></div>\n          <div class=\"flr\"> <span> {{item.date}}</span></div>\n        </div>\n        <div class=\"mide\">\n          <span style=\"font-size: 1.35rem;\">\n            {{item.plTxt}}\n          </span>\n        </div>\n        <div class=\"bottom\">\n\n          <div class=\"fuwu\">\n            <div class=\"cl\">\n              <div class=\"left fl\">\n                <img src=\"{{item.obj_img}}\">\n              </div>\n              <div class=\"right fl\">\n\n                <div class=\"name\">\n                  <span style=\"font-size: 1.3rem;\">{{item.serviceName}}</span>\n                </div>\n                <div class=\"money\">\n                  <span style=\"font-size: 1.2rem;\">{{item.service_money}}元/问</span>\n                </div>\n              </div>\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n    </div>\n\n\n\n\n\n\n  </div>\n\n  <div style=\"padding-top: 1rem;\">\n    <ion-infinite-scroll immediate-check=\"false\" (ionInfinite)=\"doInfinite($event)\">\n      <ion-infinite-scroll-content loadingSpinner=\"bubbles\" loadingText=\"加载中...\">\n      </ion-infinite-scroll-content>\n    </ion-infinite-scroll>\n  </div>\n</ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" >\n        <ion-title>最新动态</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n\n<ion-content padding>\n\n  <ion-refresher (ionRefresh)=\"doRefresh($event)\" #mybox  id=\"myionRefresh\">\n    <ion-refresher-content pullingIcon=\"Crescent\"  refreshingSpinner=\"circles\"></ion-refresher-content>\n  </ion-refresher>\n\n  <div style=\"text-align: center;\">\n      <ion-spinner *ngIf=\"pinglList.length == 0\" name=\"circles\"></ion-spinner>\n  </div>\n\n  <div class=\"list_f\">\n    <div class=\"item\" *ngFor=\"let item of pinglList\" (click)=\"toObjpage(item.ObjUserId)\">\n      <div class=\"left_img\"><img src='{{item.user_img}}'></div>\n      <div class=\"item_right\">\n        <div class=\"top cl\">\n          <div class=\"fll\"><span style=\"font-size: 1.3rem;\"> {{item.user_cname}}</span></div>\n          <div class=\"flr\"> <span> {{item.date}}</span></div>\n        </div>\n        <div class=\"mide\">\n          <span style=\"font-size: 1.35rem;\">\n            {{item.plTxt}}\n          </span>\n        </div>\n        <div class=\"bottom\">\n\n          <div class=\"fuwu\">\n            <div class=\"cl\">\n              <div class=\"left fl\">\n                <img src=\"{{item.obj_img}}\">\n              </div>\n              <div class=\"right fl\">\n\n                <div class=\"name\">\n                  <span style=\"font-size: 1.3rem;\">{{item.serviceName}}</span>\n                </div>\n                <div class=\"money\">\n                  <span style=\"font-size: 1.2rem;\">{{item.service_money}}元/问</span>\n                </div>\n              </div>\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n    </div>\n\n\n\n\n\n\n  </div>\n\n  <div style=\"padding-top: 1rem;\">\n    <ion-infinite-scroll immediate-check=\"false\" (ionInfinite)=\"doInfinite($event)\">\n      <ion-infinite-scroll-content loadingSpinner=\"bubbles\" loadingText=\"加载中...\">\n      </ion-infinite-scroll-content>\n    </ion-infinite-scroll>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -90,8 +90,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core */ "./src/app/core.ts");
-/* harmony import */ var _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/toast/ngx */ "./node_modules/@ionic-native/toast/ngx/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -105,15 +104,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var HomePinglunPage = /** @class */ (function () {
-    function HomePinglunPage(navCtrl, nav, router, events, appMin, toast, appmin) {
+    function HomePinglunPage(navCtrl, nav, router, events, appMin, appmin) {
         this.navCtrl = navCtrl;
         this.nav = nav;
         this.router = router;
         this.events = events;
         this.appMin = appMin;
-        this.toast = toast;
         this.appmin = appmin;
         this.addSum = 0; //加载次数 
         this.pinglList = []; //数据列表
@@ -122,7 +119,7 @@ var HomePinglunPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             //   console.log("判断为安卓系统 设置状态栏样式")
         }
     }
@@ -216,7 +213,7 @@ var HomePinglunPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./home-pinglun.page.html */ "./src/app/home-pinglun/home-pinglun.page.html"),
             styles: [__webpack_require__(/*! ./home-pinglun.page.scss */ "./src/app/home-pinglun/home-pinglun.page.scss")]
         }),
-        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Events"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"], _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_3__["Toast"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"]])
+        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Events"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"]])
     ], HomePinglunPage);
     return HomePinglunPage;
 }());

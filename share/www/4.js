@@ -1,8 +1,8 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
 
-/***/ "./node_modules/@ionic/core/dist/esm-es5/index-f98adfdd.js":
+/***/ "./node_modules/@ionic/core/dist/esm-es5/index-69c37885.js":
 /*!*****************************************************************!*\
-  !*** ./node_modules/@ionic/core/dist/esm-es5/index-f98adfdd.js ***!
+  !*** ./node_modules/@ionic/core/dist/esm-es5/index-69c37885.js ***!
   \*****************************************************************/
 /*! exports provided: create */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1160,7 +1160,7 @@ var Animator = /** @class */ (function () {
 }());
 var create = function (animationBuilder, baseEl, opts) {
     if (animationBuilder) {
-        return animationBuilder(baseEl, opts);
+        return animationBuilder(Animator, baseEl, opts);
     }
     return Promise.resolve(new Animator());
 };

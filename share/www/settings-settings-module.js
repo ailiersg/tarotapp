@@ -62,7 +62,7 @@ var SettingsPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"secondary\">\n          <ion-back-button text=\"\"></ion-back-button>\n        </ion-buttons>\n        <ion-title>系统设置</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content>\n  <ion-list style=\"margin-top: 1rem;\">\n    <ion-item (click)=\"outLogin()\" detail>\n      <ion-label>\n        退出登录\n      </ion-label>\n    </ion-item>\n    <ion-item detail>\n      <ion-label>\n        关于\n      </ion-label>\n    </ion-item>\n\n    <ion-item (click)=\"delete()\" detail>\n      <ion-label>\n        删除cookie\n      </ion-label>\n    </ion-item>\n    <ion-item (click)=\"get()\" detail>\n      <ion-label>\n        获取cookie\n      </ion-label>\n    </ion-item>\n\n  </ion-list>\n\n  <p style=\"text-align: center;\n  color: #848484;\">Copyright © 2018-2019 <br>\n    青岛洞悉网络服务有限公司版权所有\n  </p>\n\n</ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"secondary\">\n          <ion-back-button text=\"\"></ion-back-button>\n        </ion-buttons>\n        <ion-title>系统设置</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content>\n  <ion-list style=\"margin-top: 1rem;\">\n    <ion-item (click)=\"outLogin()\" detail>\n      <ion-label>\n        退出登录\n      </ion-label>\n    </ion-item>\n    <ion-item detail>\n      <ion-label>\n        关于\n      </ion-label>\n    </ion-item>\n\n    <ion-item (click)=\"delete()\" detail>\n      <ion-label>\n       清除缓存\n      </ion-label>\n    </ion-item>\n    <!-- <ion-item (click)=\"get()\" detail>\n      <ion-label>\n        获取cookie\n      </ion-label>\n    </ion-item> -->\n\n  </ion-list>\n\n  <p style=\"text-align: center;\n  color: #848484;\">Copyright © 2018-2019 <br>\n    青岛洞悉网络服务有限公司版权所有\n  </p>\n\n</ion-content>"
 
 /***/ }),
 
@@ -113,7 +113,7 @@ var SettingsPage = /** @class */ (function () {
         this.router = router;
         this.storage = storage;
         if (this.appmin.GetPhoneMode() != "ios") {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
         }
         else {
             this.header_class = "header_class";

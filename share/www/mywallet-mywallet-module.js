@@ -62,7 +62,7 @@ var MywalletPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"start\">\n          <ion-back-button text=''></ion-back-button>\n        </ion-buttons>\n        <ion-title>我的钱包</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <ion-row class=\"mone_f\">\n      <ion-col>\n        <span>\n          {{mymoney}}\n        </span>\n        <span>\n          ¥\n        </span>\n      </ion-col>\n    </ion-row>\n    <ion-row class=\"ianjtihi\">\n      <ion-col style=\"font-size: 1.4rem;\">当前可提取账户余额 {{mymoney}}元 <span></span></ion-col>\n\n    </ion-row>\n\n  </div>\n  <div style=\"margin: 0px auto; width: 80%\">\n    <ion-button (click)='tixian()' color=\"secondary\" style=\"color:#FFFFFF;width: 100%;\">提现</ion-button>\n    <ion-row>\n      <ion-col col-2></ion-col>\n      <ion-col col-8> </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n  </div>\n  <style>\n\n\n  </style>\n  <div class=\"tikshuom\">\n    <ion-row>\n      <ion-col>\n        <p>1、到账日期为1-3个工作日，具体视支付平台状况而定。</p>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col (click)=\"moer()\">\n        <p>2、往期提款记录请<a><span>点此查询</span></a>。</p>\n      </ion-col>\n\n    </ion-row>\n  </div>\n</ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" >\n        <ion-buttons slot=\"start\">\n          <ion-back-button text=''></ion-back-button>\n        </ion-buttons>\n        <ion-title>我的钱包</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content padding>\n  <div>\n    <ion-row class=\"mone_f\">\n      <ion-col>\n        <span>\n          {{mymoney}}\n        </span>\n        <span>\n          ¥\n        </span>\n      </ion-col>\n    </ion-row>\n    <ion-row class=\"ianjtihi\">\n      <ion-col style=\"font-size: 1.4rem;\">当前可提取账户余额 {{mymoney}}元 <span></span></ion-col>\n\n    </ion-row>\n\n  </div>\n  <div style=\"margin: 0px auto; width: 80%\">\n    <ion-button (click)='tixian()' color=\"secondary\" style=\"color:#FFFFFF;width: 100%;\">提现</ion-button>\n    <ion-row>\n      <ion-col col-2></ion-col>\n      <ion-col col-8> </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n  </div>\n  <style>\n\n\n  </style>\n  <div class=\"tikshuom\">\n    <ion-row>\n      <ion-col>\n        <p>1、到账日期为1-3个工作日，具体视支付平台状况而定。</p>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col (click)=\"moer()\">\n        <p>2、往期提款记录请<a><span>点此查询</span></a>。</p>\n      </ion-col>\n\n    </ion-row>\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -155,7 +155,7 @@ var MywalletPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             console.log("判断为安卓系统 设置状态栏样式");
         }
     }

@@ -158,7 +158,7 @@ var ApplicationConsultant1Page = /** @class */ (function () {
         this.input_otherPlatforms = ""; //其他平台
         this.checkGender = false;
         if (this.appMin.GetPhoneMode() != "ios") {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
         }
         else {
             this.header_class = "header_class";

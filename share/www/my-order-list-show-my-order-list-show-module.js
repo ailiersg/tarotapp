@@ -170,7 +170,7 @@ var MyOrderListShowPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             //  console.log("判断为安卓系统 设置状态栏样式");
         }
         this.orderId = this.ActivatedRoute.snapshot.queryParams['orderId'];
@@ -447,7 +447,8 @@ var MyOrderListShowPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.toastCtrl.create({
                             message: text,
                             duration: 1500,
-                            position: 'top'
+                            position: 'top',
+                            cssClass: "md-toast",
                         })];
                     case 1:
                         toast = _a.sent();

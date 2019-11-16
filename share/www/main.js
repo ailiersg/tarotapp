@@ -67,12 +67,10 @@ var map = {
 	],
 	"./ion-backdrop-ios.entry.js": [
 		"./node_modules/@ionic/core/dist/esm-es5/ion-backdrop-ios.entry.js",
-		"common",
 		23
 	],
 	"./ion-backdrop-md.entry.js": [
 		"./node_modules/@ionic/core/dist/esm-es5/ion-backdrop-md.entry.js",
-		"common",
 		24
 	],
 	"./ion-button_2-ios.entry.js": [
@@ -215,8 +213,8 @@ var map = {
 		"common",
 		52
 	],
-	"./ion-nav_4.entry.js": [
-		"./node_modules/@ionic/core/dist/esm-es5/ion-nav_4.entry.js",
+	"./ion-nav_5.entry.js": [
+		"./node_modules/@ionic/core/dist/esm-es5/ion-nav_5.entry.js",
 		0,
 		"common",
 		53
@@ -324,12 +322,10 @@ var map = {
 	],
 	"./ion-slide_2-ios.entry.js": [
 		"./node_modules/@ionic/core/dist/esm-es5/ion-slide_2-ios.entry.js",
-		"common",
 		74
 	],
 	"./ion-slide_2-md.entry.js": [
 		"./node_modules/@ionic/core/dist/esm-es5/ion-slide_2-md.entry.js",
-		"common",
 		75
 	],
 	"./ion-spinner.entry.js": [
@@ -886,7 +882,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-//import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 var AppComponent = /** @class */ (function () {
     function AppComponent(platform, splashScreen, statusBar, CookieService, localNotifications, toastCtrl, appmin, storage) {
@@ -919,69 +914,65 @@ var AppComponent = /** @class */ (function () {
         this.phonenumber = _app_core__WEBPACK_IMPORTED_MODULE_7__["myLocalStorage"].getItem("phonenumber");
         console.log("this.UserId=" + this.UserId);
         if (this.UserId != null && this.UserId != '') {
-            if (true) {
-                if (this.phonenumber != null && this.phonenumber != '') {
-                    //用户已经登录 设置初始变量
-                    //    WitePrompt("app页面:用户存在登录")
-                    this.appmin.setLogin(true);
-                    this.appmin.setUserId(this.UserId);
-                    this.appmin.setUserPhoneNumber(this.phonenumber);
-                    if (this.userimg != null) {
-                        this.appmin.setUserImg(this.userimg);
+            if (this.phonenumber != null && this.phonenumber != '') {
+                //用户已经登录 设置初始变量
+                //    WitePrompt("app页面:用户存在登录")
+                //判断登录是否过期
+                this.appmin.post({
+                    type: "checkLogin",
+                }).subscribe(function (data) {
+                    if (data["islogin"] == 0) {
+                        console.log("登录过期");
+                        _this.appmin.setLogin(false);
                     }
-                    //  console.log("this.userimg="+this.userimg);
-                    // this.appmin.ret_login();
-                    //this.TabsPage1.setTabs(true);
-                }
-                else {
-                    this.clearLogin();
-                }
+                    else {
+                        console.log("登录有效");
+                        _this.appmin.setLogin(true);
+                        _this.appmin.setUserId(_this.UserId);
+                        _this.appmin.setUserPhoneNumber(_this.phonenumber);
+                        if (_this.userimg != null) {
+                            _this.appmin.setUserImg(_this.userimg);
+                        }
+                    }
+                });
             }
-            else {}
+            else {
+                this.clearLogin();
+            }
         }
         else {
             this.clearLogin();
         }
-        //////////设置初始登录变量↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        //////////设置初始登录变量end↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        // let device: any;
+        // document.addEventListener("deviceready", onDeviceReady, false);
+        // function onDeviceReady() {
+        //   alert(device.cordova);
+        // }
         platform.ready().then(function () {
-            Object(_app_core__WEBPACK_IMPORTED_MODULE_7__["WitePrompt"])(" platform.ready()就绪");
-            // this.backButtonService.registerBackButtonAction(this.tabs1);
-            // this.registerBackButtonAction();//注册返回按键事件  
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            //statusBar.styleDefault();
-            // statusBar.backgroundColorByHexString("#8fa6c6");
+            _this.statusBar.overlaysWebView(true);
+            _this.statusBar.styleBlackTranslucent();
+            //  alert(" platform.ready()就绪")
+            _this.splashScreen.hide(); //加载完毕关闭过度窗口
             var modelName = _this.device.model; //获取设备名
-            // alert("设备名="+modelName);
             if (modelName != null) {
-                // alert(modelName);
                 if (modelName.indexOf("iPhone") >= 0) {
                     //苹果手机设置
-                    // alert("当前为苹果手机" + modelName);
                     _this.appmin.SetPhoneMode("ios");
-                    //statusBar.styleBlackTranslucent();
-                    //statusBar.backgroundColorByHexString('#000000');
                     statusBar.show();
                     statusBar.overlaysWebView(true);
                     statusBar.styleBlackTranslucent();
-                    //  statusBar.styleLightContent();
                 }
                 else {
                     //安卓手机设置
                     _this.appmin.SetPhoneMode("android");
-                    //alert("当前为安卓手机" + modelName);
+                    // alert("当前为安卓手机" + modelName);
                     //设置导航栏样式
+                    statusBar.overlaysWebView(true);
+                    statusBar.styleDefault();
+                    statusBar.styleBlackTranslucent();
                 }
             }
-            // this.appmin.SetPhoneMode("ios");
-            //////////////开关后台运行
-            // this.backgroundMode.enable();//启用背景模式
-            // if (this.backgroundMode.isEnabled()) {
-            //   WitePrompt('背景模式已经启动')
-            // } else {
-            //   WitePrompt('无法启动背景模式');
-            //   // alert('无法启动背景模式');
-            // }
             //////////////////本地通知测试
             // this.localNotifications.schedule({
             //   title: '私信通知',
@@ -989,16 +980,12 @@ var AppComponent = /** @class */ (function () {
             // });
         });
         splashScreen.hide(); //加载完毕关闭过度窗口
-        setTimeout(function () {
-            splashScreen.hide();
-            console.log("splashScreen.hide()!");
-        }, 1000);
         //警告 如果发现任何插件不起作用 则需要重新安装插件 安装之前不需要删除插件
     }
     AppComponent.prototype.initializeApp = function () {
         var _this = this;
         this.platform.ready().then(function () {
-            _this.statusBar.styleDefault();
+            // this.statusBar.styleDefault();
             _this.splashScreen.hide();
         });
     };
@@ -1087,33 +1074,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _ionic_native_file_transfer_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/file-transfer/ngx */ "./node_modules/@ionic-native/file-transfer/ngx/index.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
-/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
-/* harmony import */ var _ionic_native_photo_viewer_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic-native/photo-viewer/ngx */ "./node_modules/@ionic-native/photo-viewer/ngx/index.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic-native/toast/ngx */ "./node_modules/@ionic-native/toast/ngx/index.js");
-/* harmony import */ var _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ionic-native/local-notifications/ngx */ "./node_modules/@ionic-native/local-notifications/ngx/index.js");
-/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
-/* harmony import */ var _app_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../app/core */ "./src/app/core.ts");
-/* harmony import */ var _LoginGuard__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./LoginGuard */ "./src/app/LoginGuard.ts");
-/* harmony import */ var ngx_clipboard__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-clipboard */ "./node_modules/ngx-clipboard/fesm5/ngx-clipboard.js");
-/* harmony import */ var _ionic_native_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/native-keyboard/ngx */ "./node_modules/@ionic-native/native-keyboard/ngx/index.js");
-/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ionic-native/file/ngx */ "./node_modules/@ionic-native/file/ngx/index.js");
-/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic-native/camera/ngx */ "./node_modules/@ionic-native/camera/ngx/index.js");
-/* harmony import */ var _ionic_native_media_ngx__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ionic-native/media/ngx */ "./node_modules/@ionic-native/media/ngx/index.js");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.es5.js");
-/* harmony import */ var _app_login_login_page__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../app/login/login.page */ "./src/app/login/login.page.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @ionic-native/ionic-webview/ngx */ "./node_modules/@ionic-native/ionic-webview/ngx/index.js");
-/* harmony import */ var ng_zorro_antd_mobile__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ng-zorro-antd-mobile */ "./node_modules/ng-zorro-antd-mobile/fesm5/ng-zorro-antd-mobile.js");
-/* harmony import */ var _ionic_native_wechat_ngx__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @ionic-native/wechat/ngx */ "./node_modules/@ionic-native/wechat/ngx/index.js");
-/* harmony import */ var _ionic_native_qqsdk_ngx__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @ionic-native/qqsdk/ngx */ "./node_modules/@ionic-native/qqsdk/ngx/index.js");
-/* harmony import */ var _tabs_tabs_page__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./tabs/tabs.page */ "./src/app/tabs/tabs.page.ts");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
+/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
+/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+/* harmony import */ var _ionic_native_photo_viewer_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/photo-viewer/ngx */ "./node_modules/@ionic-native/photo-viewer/ngx/index.js");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic-native/local-notifications/ngx */ "./node_modules/@ionic-native/local-notifications/ngx/index.js");
+/* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
+/* harmony import */ var _app_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../app/core */ "./src/app/core.ts");
+/* harmony import */ var _LoginGuard__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./LoginGuard */ "./src/app/LoginGuard.ts");
+/* harmony import */ var ngx_clipboard__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-clipboard */ "./node_modules/ngx-clipboard/fesm5/ngx-clipboard.js");
+/* harmony import */ var _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic-native/file/ngx */ "./node_modules/@ionic-native/file/ngx/index.js");
+/* harmony import */ var _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic-native/camera/ngx */ "./node_modules/@ionic-native/camera/ngx/index.js");
+/* harmony import */ var _ionic_native_media_ngx__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ionic-native/media/ngx */ "./node_modules/@ionic-native/media/ngx/index.js");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.es5.js");
+/* harmony import */ var _app_login_login_page__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../app/login/login.page */ "./src/app/login/login.page.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @ionic-native/ionic-webview/ngx */ "./node_modules/@ionic-native/ionic-webview/ngx/index.js");
+/* harmony import */ var ng_zorro_antd_mobile__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-zorro-antd-mobile */ "./node_modules/ng-zorro-antd-mobile/fesm5/ng-zorro-antd-mobile.js");
+/* harmony import */ var _ionic_native_wechat_ngx__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @ionic-native/wechat/ngx */ "./node_modules/@ionic-native/wechat/ngx/index.js");
+/* harmony import */ var _tabs_tabs_page__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./tabs/tabs.page */ "./src/app/tabs/tabs.page.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1134,12 +1117,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-//import { BackgroundMode } from '@ionic-native/background-mode/ngx';
-// import { BackgroundMode } from '@ionic-native/background-mode/ngx';
-
-
-
-// import { Alipay } from '@ionic-native/alipay/ngx';
 
 
 
@@ -1151,39 +1128,36 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
+// import { QQSDK } from '@ionic-native/qqsdk/ngx';
 
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"], _app_login_login_page__WEBPACK_IMPORTED_MODULE_21__["LoginPage"]],
-            entryComponents: [_app_login_login_page__WEBPACK_IMPORTED_MODULE_21__["LoginPage"]],
-            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_22__["HttpClientModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"].forRoot(), ngx_clipboard__WEBPACK_IMPORTED_MODULE_15__["ClipboardModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_12__["IonicStorageModule"].forRoot(), _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_23__["BrowserAnimationsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_24__["FormsModule"], ng_zorro_antd_mobile__WEBPACK_IMPORTED_MODULE_26__["NgZorroAntdMobileModule"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"], _app_login_login_page__WEBPACK_IMPORTED_MODULE_18__["LoginPage"]],
+            entryComponents: [_app_login_login_page__WEBPACK_IMPORTED_MODULE_18__["LoginPage"]],
+            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_19__["HttpClientModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"].forRoot(), ngx_clipboard__WEBPACK_IMPORTED_MODULE_13__["ClipboardModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"], _ionic_storage__WEBPACK_IMPORTED_MODULE_10__["IonicStorageModule"].forRoot(), _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_20__["BrowserAnimationsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_21__["FormsModule"], ng_zorro_antd_mobile__WEBPACK_IMPORTED_MODULE_23__["NgZorroAntdMobileModule"]],
             providers: [
-                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_20__["CookieService"],
-                _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_6__["StatusBar"],
-                _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_5__["SplashScreen"],
-                _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_10__["Toast"],
-                _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_11__["LocalNotifications"],
+                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_17__["CookieService"],
+                _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_5__["StatusBar"],
+                _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_4__["SplashScreen"],
+                _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_9__["LocalNotifications"],
                 // Alipay,
-                _app_core__WEBPACK_IMPORTED_MODULE_13__["AppMin"],
-                _ionic_native_native_keyboard_ngx__WEBPACK_IMPORTED_MODULE_16__["NativeKeyboard"],
-                _ionic_native_photo_viewer_ngx__WEBPACK_IMPORTED_MODULE_7__["PhotoViewer"],
-                _ionic_native_file_transfer_ngx__WEBPACK_IMPORTED_MODULE_3__["FileTransfer"],
-                _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_18__["Camera"],
-                _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_17__["File"],
-                _LoginGuard__WEBPACK_IMPORTED_MODULE_14__["LoginGuard"],
-                _app_login_login_page__WEBPACK_IMPORTED_MODULE_21__["LoginPage"],
-                _ionic_native_media_ngx__WEBPACK_IMPORTED_MODULE_19__["Media"],
-                _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_25__["WebView"],
-                _ionic_native_wechat_ngx__WEBPACK_IMPORTED_MODULE_27__["Wechat"],
-                _ionic_native_qqsdk_ngx__WEBPACK_IMPORTED_MODULE_28__["QQSDK"],
-                _tabs_tabs_page__WEBPACK_IMPORTED_MODULE_29__["TabsPage"],
-                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicRouteStrategy"] }
+                _app_core__WEBPACK_IMPORTED_MODULE_11__["AppMin"],
+                _ionic_native_photo_viewer_ngx__WEBPACK_IMPORTED_MODULE_6__["PhotoViewer"],
+                _ionic_native_camera_ngx__WEBPACK_IMPORTED_MODULE_15__["Camera"],
+                _ionic_native_file_ngx__WEBPACK_IMPORTED_MODULE_14__["File"],
+                _LoginGuard__WEBPACK_IMPORTED_MODULE_12__["LoginGuard"],
+                _app_login_login_page__WEBPACK_IMPORTED_MODULE_18__["LoginPage"],
+                _ionic_native_media_ngx__WEBPACK_IMPORTED_MODULE_16__["Media"],
+                _ionic_native_ionic_webview_ngx__WEBPACK_IMPORTED_MODULE_22__["WebView"],
+                _ionic_native_wechat_ngx__WEBPACK_IMPORTED_MODULE_24__["Wechat"],
+                // QQSDK,
+                _tabs_tabs_page__WEBPACK_IMPORTED_MODULE_25__["TabsPage"],
+                { provide: _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouteReuseStrategy"], useClass: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicRouteStrategy"] }
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_9__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -1197,12 +1171,11 @@ var AppModule = /** @class */ (function () {
 /*!*************************!*\
   !*** ./src/app/core.ts ***!
   \*************************/
-/*! exports provided: ws, user_data_userImg, WitePrompt, myLocalStorage, cache, AppMin */
+/*! exports provided: user_data_userImg, WitePrompt, myLocalStorage, cache, AppMin */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ws", function() { return ws; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "user_data_userImg", function() { return user_data_userImg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WitePrompt", function() { return WitePrompt; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "myLocalStorage", function() { return myLocalStorage; });
@@ -1212,8 +1185,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _ionic_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/storage */ "./node_modules/@ionic/storage/fesm5/ionic-storage.js");
 /* harmony import */ var _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/local-notifications/ngx */ "./node_modules/@ionic-native/local-notifications/ngx/index.js");
-/* harmony import */ var _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/toast/ngx */ "./node_modules/@ionic-native/toast/ngx/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1229,14 +1201,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 //import { BackgroundMode } from '@ionic-native/background-mode';
 
-
-var ws = "ws://39.105.109.109:8174";
 // 主要配置项
-var isShareWebPage = false; //是不是分享页面用的web版
+var isShareWebPage = true; //是不是分享页面用的web版
 var IsWritePrompt = true; //是否允许输出错误提示
 var isTry = true; //是否测试模式，如果是测试模式 不真的进行付款 直接跳转
-var Httpaddres = "http://192.168.0.121:5001";
-// let Httpaddres="http://39.105.198.109:5000";
+// let Httpaddres = "http://192.168.0.121:8174"; //本地环境
+var Httpaddres = "http://api.taluoguan.com"; //生产环境
+// let Httpaddres = "http://39.105.198.109:8174";//测试环境
 var isLogin = false; //是否登陆
 var modelName = "";
 var userid = '';
@@ -1311,31 +1282,15 @@ function getYearDays() {
 var cache;
 //组件交互服务
 var AppMin = /** @class */ (function () {
-    function AppMin(events, HttpClient, storage, toast, localNotifications) {
+    function AppMin(events, HttpClient, storage, localNotifications) {
         this.events = events;
         this.HttpClient = HttpClient;
         this.storage = storage;
-        this.toast = toast;
         this.localNotifications = localNotifications;
         document.addEventListener("deviceready", function () {
             devicereadyOK = true;
         }, false);
     }
-    AppMin.prototype.sendFailShowError = function () {
-        //!!!如果在该页面调用吐司 则‘’我的‘’页面无法打开 而且该吐司无法显示 ！！！！！
-        //提示无法连接服务器
-        if (this.getDevicereadyOK()) {
-            this.toast.hide();
-            this.toast.showWithOptions({
-                message: "无法连接到服务器",
-                duration: 1500,
-                position: "top",
-                addPixelsY: 45
-            }).subscribe(function (toast) {
-                console.log(toast);
-            });
-        }
-    };
     AppMin.prototype.receivedNewService = function (meg) {
         //收到新的服务订单
         this.localNotifications.schedule({
@@ -1481,7 +1436,7 @@ var AppMin = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Events"], _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"], _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"], _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_4__["Toast"], _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_3__["LocalNotifications"]])
+        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Events"], _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"], _ionic_storage__WEBPACK_IMPORTED_MODULE_2__["Storage"], _ionic_native_local_notifications_ngx__WEBPACK_IMPORTED_MODULE_3__["LocalNotifications"]])
     ], AppMin);
     return AppMin;
 }());
@@ -1497,7 +1452,7 @@ var AppMin = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"secondary\">\n          <ion-button text=\"\" (click)=\"back()\">\n            <ion-icon name=\"arrow-back\"></ion-icon>\n          </ion-button>\n        </ion-buttons>\n        <ion-title>登陆&注册</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content padding class=\"getting-started\">\n\n  <div style=\"text-align:center;margin-top:4%\">\n    <img src=\"{{UserImg}}\" style=\" border-radius:50%;box-shadow: 1px 2px 1px #eee;\" width=\"150\" height=\"150\" />\n\n  </div>\n  <ion-list>\n\n    <ion-item style=\"margin-bottom: 2rem;\">\n      <ion-label style=\"color:#666666\" floating>手机号</ion-label>\n      <ion-input style=\"color:#666666\" #phonenumber1 id=\"iogin_input_phonenumber1\"\n        (keyup)=\"phonenumberok(phonenumber1.value)\" (keyup.enter)=\"phoneNabKeyUpeEnter()\" type=\"Number\"\n        style=\"color:#5f5f5f\"></ion-input>\n    </ion-item>\n\n    <ion-item *ngIf=\"ishowVCodeIput\">\n      <ion-label style=\"color:#666666\" floating>验证码</ion-label>\n      <ion-input style=\"color:#666666\" #VerificationCode (keyup)=\"VerificationCodeok(VerificationCode.value)\"\n        type=\"Number\" style=\"color:#5f5f5f\"></ion-input>\n\n    </ion-item>\n\n    <ion-item style=\"display:none\">\n\n    </ion-item>\n\n  </ion-list>\n  <div style=\"padding-bottom:20px;padding-left:20px;\">\n    <ion-checkbox disabled (ionChange)=\"updateCucumber()\" color=\"secondary\" checked=\"true\"\n      style=\"margin-right:20px;color:#fff;margin-right:15px;vertical-align: middle;\"></ion-checkbox>\n    <ion-label (click)=\"Agreement()\"\n      style=\"color:#4571ad;font-size:0.9em;display:inline-block;margin-bottom:0px;border-bottom:1px dashed #4571ad\">使用协议\n    </ion-label>\n  </div>\n  <div>\n\n  </div>\n  <div class=\"btn_f\">\n\n    <ion-button *ngIf=\"SendButton\" [disabled]=\"!onUpButton_display\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px; height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\"\n      (click)=\"onUpButton()\">{{onUpButton_txt}}</ion-button>\n\n\n    <ion-button *ngIf=\"RegisterButton\" ion-button block (click)=\"onRegisterButton()\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px;height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\">\n      注册</ion-button>\n    <ion-button *ngIf=\"LoginButton\" ion-button block (click)=\"onLoginButton()\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px;height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\">\n      登陆</ion-button>\n\n  </div>\n</ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"ios\">\n        <ion-buttons slot=\"secondary\">\n          <ion-button text=\"\" (click)=\"back()\">\n            <ion-icon name=\"arrow-back\"></ion-icon>\n          </ion-button>\n        </ion-buttons>\n        <ion-title>登陆&注册</ion-title>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n<ion-content padding class=\"getting-started\">\n\n  <div style=\"text-align:center;margin-top:4%\">\n    <img src=\"{{UserImg}}\" style=\" border-radius:50%;box-shadow: 1px 2px 1px #eee;\" width=\"150\" height=\"150\" />\n\n  </div>\n  <ion-list>\n\n    <ion-item style=\"margin-bottom: 2rem;\">\n      <ion-label style=\"color:#666666\" floating>手机号</ion-label>\n      <ion-input style=\"color:#666666\" #phonenumber1 id=\"iogin_input_phonenumber1\"\n        (keyup)=\"phonenumberok(phonenumber1.value)\" (keyup.enter)=\"phoneNabKeyUpeEnter()\" type=\"Number\"\n        style=\"color:#5f5f5f\"></ion-input>\n    </ion-item>\n\n    <ion-item *ngIf=\"ishowVCodeIput\">\n      <ion-label style=\"color:#666666\" floating>验证码</ion-label>\n      <ion-input style=\"color:#666666\" #VerificationCode (keyup)=\"VerificationCodeok(VerificationCode.value)\"\n        type=\"Number\" style=\"color:#5f5f5f\"></ion-input>\n\n    </ion-item>\n\n    <ion-item style=\"display:none\">\n\n    </ion-item>\n\n  </ion-list>\n  <div style=\"padding-bottom:20px;padding-left:20px;\">\n    <ion-checkbox disabled (ionChange)=\"updateCucumber()\" color=\"secondary\" checked=\"true\"\n      style=\"margin-right:20px;color:#fff;margin-right:15px;vertical-align: middle;\"></ion-checkbox>\n    <ion-label (click)=\"Agreement()\"\n      style=\"color:#4571ad;font-size:0.9em;display:inline-block;margin-bottom:0px;border-bottom:1px dashed #4571ad\">使用协议\n    </ion-label>\n  </div>\n  <div>\n\n  </div>\n  <div class=\"btn_f\">\n\n    <ion-button *ngIf=\"SendButton\" [disabled]=\"!onUpButton_display\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px; height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\"\n      (click)=\"onUpButton()\">{{onUpButton_txt}}</ion-button>\n\n\n    <ion-button *ngIf=\"RegisterButton\" ion-button block (click)=\"onRegisterButton()\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px;height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\">\n      注册</ion-button>\n    <ion-button *ngIf=\"LoginButton\" ion-button block (click)=\"onLoginButton()\" color=\"secondary\"\n      style=\"color:#fff;box-shadow:0px 0px #fff;margin-bottom:15px;height:46px;font-size:1.15em;border-radius:5px;    width: 100%;\">\n      登陆</ion-button>\n\n  </div>\n</ion-content>"
 
 /***/ }),
 
@@ -1612,11 +1567,11 @@ var LoginPage = /** @class */ (function () {
         this.ispop = false;
         this.isCenSubm = false; //标识是否已经返回用户信息 来确定可以提交
         // this.Start()
-        if (this.appMin.GetPhoneMode() != "ios") {
+        if (this.appMin.GetPhoneMode() == "ios") {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
         }
         //  this.ispop = this.navParams.get('ispop');
         this.UserImg = "../../assets/img/头像.png";
@@ -1775,7 +1730,8 @@ var LoginPage = /** @class */ (function () {
                         return [4 /*yield*/, this.toastCtrl.create({
                                 message: '请输入正确的手机号',
                                 duration: 2000,
-                                position: 'top'
+                                position: 'top',
+                                cssClass: "md-toast",
                             })];
                     case 2:
                         toast_1 = _a.sent();
@@ -1784,7 +1740,8 @@ var LoginPage = /** @class */ (function () {
                     case 3: return [4 /*yield*/, this.toastCtrl.create({
                             message: '已发送验证码',
                             duration: 1500,
-                            position: 'top'
+                            position: 'top',
+                            cssClass: "md-toast",
                         })];
                     case 4:
                         toast = _a.sent();
@@ -1990,7 +1947,7 @@ var LoginPage = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-tabs (ionTabsDidChange)=\"ionTabsDidChange($event)\">\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"palace\">\n      <ion-icon name=\"a2\" style=\"width: 2.5rem;\"></ion-icon>\n      <ion-label>咨询</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"home-pinglun\">\n      <ion-icon name=\"a3\" style=\"width: 2.5rem;\"></ion-icon>\n      <ion-label>动态</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"myletter\">\n      <ion-icon name=\"a1\" style=\"width: 2.05rem;\"></ion-icon>\n      <ion-label>消息</ion-label>\n      <ion-badge *ngIf=\"sumNote>0\" color=\"secondary\">{{sumNote}}</ion-badge>\n    </ion-tab-button>\n    <ion-tab-button [tab]=\"mycontact\">\n      <ion-icon name=\"a4\" style=\"width: 2.1rem;\"></ion-icon>\n      <ion-label>我的</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n\n</ion-tabs>"
+module.exports = "<ion-tabs (ionTabsDidChange)=\"ionTabsDidChange($event)\">\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"palace\">\n      <ion-icon name=\"ios-tab1\" style=\"font-size: 2rem;\"></ion-icon>\n      <ion-label style=\"font-size: 1.1rem;    margin-top: 0.15rem;\">咨询</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"home-pinglun\">\n      <ion-icon name=\"tab2\" style=\"font-size: 2rem;\"></ion-icon>\n      <ion-label style=\"font-size: 1.1rem;    margin-top: 0.15rem;\">动态</ion-label>\n    </ion-tab-button>\n    <ion-tab-button tab=\"myletter\">\n      <ion-icon name=\"tab3\" style=\"font-size: 2rem;\"></ion-icon>\n      <ion-label style=\"font-size: 1.1rem;    margin-top: 0.15rem;\">消息</ion-label>\n      <ion-badge *ngIf=\"sumNote>0\" color=\"secondary\">{{sumNote}}</ion-badge>\n    </ion-tab-button>\n    <ion-tab-button [tab]=\"mycontact\">\n      <ion-icon name=\"tab4\" style=\"font-size: 2rem;\"></ion-icon>\n      <ion-label style=\"font-size: 1.1rem;    margin-top: 0.15rem;\">我的</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n</ion-tabs>"
 
 /***/ }),
 
@@ -2046,10 +2003,6 @@ var TabsPage = /** @class */ (function () {
         this.sysNotes = 0;
         this.userMsgs = 0;
         this.sumNote = 0;
-        // console.log(ngEvents);
-        // ngEvents.on('eventName', function (item) {
-        //   console.log(item.name + ' was selected!');
-        // });
         window.addEventListener("addNotesUnReadCount", function () {
             _this.addNotesUnReadCount();
         });

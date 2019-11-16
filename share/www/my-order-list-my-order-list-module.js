@@ -90,8 +90,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
 /* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core */ "./src/app/core.ts");
-/* harmony import */ var _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/toast/ngx */ "./node_modules/@ionic-native/toast/ngx/index.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -142,12 +141,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 // import { MyOrderListShowPage } from '../my-order-list-show/my-order-list-show';
 // import { ConsultTimePage } from '../consult-time/consult-time';
 
-
 var MyOrderListPage = /** @class */ (function () {
-    function MyOrderListPage(navCtrl, Router, toast, appCtrl, platform, toastCtrl, loadingCtrl, appMin, alertCtrl) {
+    function MyOrderListPage(navCtrl, Router, appCtrl, platform, toastCtrl, loadingCtrl, appMin, alertCtrl) {
         this.navCtrl = navCtrl;
         this.Router = Router;
-        this.toast = toast;
         this.appCtrl = appCtrl;
         this.platform = platform;
         this.toastCtrl = toastCtrl;
@@ -173,46 +170,9 @@ var MyOrderListPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             console.log("判断为安卓系统 设置状态栏样式");
         }
-        // socket1.removeEventListener('message', MyOrderListPage_message);
-        // let _this = this;
-        // MyOrderListPage_message = function (event) {
-        //   let meg = JSON.parse(event.data);
-        //   if (meg.type == "error") {
-        //     WitePrompt("MyOrderListPage页面监听消息===" + JSON.stringify(meg));
-        //   } else {
-        //     WitePrompt("MyOrderListPage页面监听消息===" + meg.type);
-        //   }
-        //   if (_this.loader) {
-        //     _this.loader.dismiss();
-        //     _this.loader = null;
-        //   }
-        //   //安全的删除加载框结束 --
-        //   if (meg.type == 'addMyOrderList_ret') {
-        //     _this.dataHandle(meg);
-        //   }
-        //   if (meg.type == 'addOrderServiceTxt_ret') {
-        //     _this.dataHandle(meg);
-        //   }
-        // }
-        // socket1.removeEventListener('close', MyOrderListPage_close);
-        // MyOrderListPage_close = function () {
-        //   WitePrompt('Consultant页面真听到close事件');
-        //   let c = setInterval(function () {
-        //     if (socket1.readyState == 1) {
-        //       socket1.removeEventListener('message', MyOrderListPage_message);
-        //       socket1.addEventListener('message', MyOrderListPage_message);
-        //       clearInterval(c);
-        //       WitePrompt('Consultant页面重新建立连接完成');
-        //       c = null;
-        //     }
-        //   }, 500)
-        // }
-        // socket1.addEventListener('close', MyOrderListPage_close);
-        // socket1.addEventListener('message', MyOrderListPage_message);
-        //----------------
         platform.ready().then(function () {
             document.addEventListener('backbutton', function (evt) {
                 if (cordova.platformId !== 'windows') {
@@ -466,7 +426,7 @@ var MyOrderListPage = /** @class */ (function () {
             template: __webpack_require__(/*! ./my-order-list.page.html */ "./src/app/my-order-list/my-order-list.page.html"),
             styles: [__webpack_require__(/*! ./my-order-list.page.scss */ "./src/app/my-order-list/my-order-list.page.scss")]
         }),
-        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _ionic_native_toast_ngx__WEBPACK_IMPORTED_MODULE_3__["Toast"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["IonApp"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Platform"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["ToastController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["LoadingController"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["AlertController"]])
+        __metadata("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_1__["NavController"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["IonApp"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["Platform"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["ToastController"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["LoadingController"], _core__WEBPACK_IMPORTED_MODULE_2__["AppMin"], _ionic_angular__WEBPACK_IMPORTED_MODULE_1__["AlertController"]])
     ], MyOrderListPage);
     return MyOrderListPage;
 }());

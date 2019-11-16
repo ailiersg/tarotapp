@@ -182,7 +182,7 @@ var MyExplainTxtSetPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             console.log("判断为安卓系统 设置状态栏样式");
         }
     }

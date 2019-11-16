@@ -110,7 +110,7 @@ var ApplicationConsultant2Page = /** @class */ (function () {
         this.appMin = appMin;
         this.Router = Router;
         if (this.appMin.GetPhoneMode() != "ios") {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
         }
         else {
             this.header_class = "header_class";

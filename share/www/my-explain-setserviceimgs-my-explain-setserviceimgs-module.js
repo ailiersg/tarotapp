@@ -62,7 +62,7 @@ var MyExplainSetserviceimgsPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header no-border>\n    <div class=\"header_class\">\n      <div class=\"head_berd\">\n          <ion-toolbar color=\"primary\" mode=\"ios\">\n              <ion-buttons slot=\"start\">\n                <ion-back-button text=\"\"></ion-back-button>\n              </ion-buttons>\n          <ion-title>设置封面</ion-title>\n          <ion-buttons slot='end'>\n            <ion-button ion-button icon-only (click)=\"add_img()\">\n              <ion-icon name=\"more\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n        </ion-toolbar>\n      </div>\n    </div>\n  </ion-header>\n  \n  \n  <ion-content  style=\"background: #000000;\">\n  \n    <div style=\"margin-top:1.5rem;\">\n      \n      <img src=\"{{showImg}}\" style=\"width:100%\">\n  \n    </div>\n    \n  \n  </ion-content>"
+module.exports = "<ion-header no-border>\n  <div class=\"{{header_class}}\">\n    <div class=\"head_berd\">\n      <ion-toolbar color=\"primary\" mode=\"md\">\n        <ion-buttons slot=\"start\">\n          <ion-back-button text=\"\"></ion-back-button>\n        </ion-buttons>\n        <ion-title>设置封面</ion-title>\n        <ion-buttons slot='end'>\n          <ion-button ion-button icon-only (click)=\"add_img()\">\n            <ion-icon name=\"more\"></ion-icon>\n          </ion-button>\n        </ion-buttons>\n      </ion-toolbar>\n    </div>\n  </div>\n</ion-header>\n\n\n<ion-content style=\"background: #000000;\">\n\n  <div style=\"margin-top:1.5rem;\">\n\n    <img src=\"{{showImg}}\" style=\"width:100%\">\n\n  </div>\n\n\n</ion-content>"
 
 /***/ }),
 
@@ -153,7 +153,7 @@ var MyExplainSetserviceimgsPage = /** @class */ (function () {
             this.header_class = "header_class";
         }
         else {
-            this.header_class = "header_class";
+            this.header_class = "header_class_md";
             console.log("判断为安卓系统 设置状态栏样式");
         }
         // socket1.removeEventListener('message', MyExplainSetserviceimgsPage_message);
