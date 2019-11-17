@@ -66,7 +66,7 @@ namespace TodoApi
 
         // static string 图片服务器ip = "http://192.168.0.121:8174"; 
         // static string 图片服务器ip = "http://api.taluoguan.com";
-        static string 图片服务器ip = "http://39.105.198.109:8174";
+         static string 图片服务器ip = "http://39.105.198.109:8174";
 
         static IWebSocketConnection socket1;
         static List<IWebSocketConnection> allSockets1;
@@ -1526,7 +1526,7 @@ namespace TodoApi
                 }
 
                 string mess = "";
-                string 发送的验证码 = "0000";//tool.GetCode();
+                string 发送的验证码 ="0000";// tool.GetCode();
                 Boolean isok = true;
                 //发送语句
                 // tool.sendCode(手机号, "【塔罗馆】您的验证码是" + 发送的验证码);
@@ -5399,11 +5399,19 @@ namespace TodoApi
                     sdr = cmd.ExecuteReader();
                     while (sdr.Read())
                     {
-                        if (sdr["sysNotes"] is not DBNull)
+                        if (sdr["sysNotes"] is DBNull)
+                        {
+
+                        }
+                        else
                         {
                             ret.Add("sysNotes", Convert.ToInt16(sdr["sysNotes"]));
                         }
-                        if (sdr["userMsgs"] is not DBNull)
+                        if (sdr["userMsgs"] is DBNull)
+                        {
+
+                        }
+                        else
                         {
                             ret.Add("userMsgs", Convert.ToInt16(sdr["userMsgs"]));
                         }
