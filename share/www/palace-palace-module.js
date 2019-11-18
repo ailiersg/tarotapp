@@ -196,10 +196,6 @@ var PalacePage = /** @class */ (function () {
         this.lastAddType = "local";
         //轮播选项
         this.slideOpts = {};
-        Object(_core__WEBPACK_IMPORTED_MODULE_3__["WitePrompt"])("PalacePage页面初始化");
-        var this1 = this;
-        this.imgitems.push({ url: '../../assets/img/IMG_A78068D01E0C-1.png', id: '1' });
-        this.imgitems.push({ url: '../../assets/img/IMG_7A1847FA2701-1.png', id: '2' });
         if (appMin.GetPhoneMode() == "ios") {
             this.header_class = "header_class";
         }
@@ -234,10 +230,6 @@ var PalacePage = /** @class */ (function () {
     };
     PalacePage.prototype.ionViewDidEnter = function () {
         //每次进入页面
-        // console.log('进入搜索页面');
-        // document.querySelector('#ion-segment-button1').shadowRoot.querySelector('.button-native').querySelector('ion-ripple-effect').shadowRoot.querySelector('style').innerHTML = ''
-        // document.querySelector('#ion-segment-button2').shadowRoot.querySelector('.button-native').querySelector('ion-ripple-effect').shadowRoot.querySelector('style').innerHTML = ''
-        // document.querySelector('#ion-segment-button3').shadowRoot.querySelector('.button-native').querySelector('ion-ripple-effect').shadowRoot.querySelector('style').innerHTML = ''
         //跳转分段按钮下方滑块宽度
         var style = document.createElement('style');
         style.textContent = '.segment-button-indicator {width: 30% !important;margin: 0px auto !important;}';
@@ -280,31 +272,25 @@ var PalacePage = /** @class */ (function () {
         });
     };
     PalacePage.prototype.SendGetObjList = function (obj) {
-        var ThisAppType = this.appMin.GetPhoneMode();
-        if (ThisAppType = "tarot") {
-            var objtype = 1;
-            if (ThisAppType == "tarot") {
-                objtype = 1;
-            }
-            var updataobj = {
-                type: "addobjislt",
-                sum: obj.sum,
-                addType: obj.addType
-            };
-            this.send(JSON.stringify(updataobj), obj.isShow);
-        }
+        var updataobj = {
+            type: "addobjislt",
+            sum: obj.sum,
+            addType: obj.addType
+        };
+        console.log("updataobj=" + JSON.stringify(updataobj));
+        this.send(JSON.stringify(updataobj), obj.isShow);
     };
     PalacePage.prototype.dataHandle = function (meg, isSave, islocal) {
-        //   console.log('addobjlist_ret=' + JSON.stringify(meg));
+        console.log('addobjlist_ret=' + JSON.stringify(meg));
         if (meg == null)
             return;
         //对收到的this_row_tuijian_listobj处理
         if (meg.type == "addobjlist_ret") {
             if (meg.addType == "tuijian") {
                 // debugger;
-                if (this.this_row_tuijian_sum == 0 || this.tuijian_add_count == 0) {
+                if (meg.yousum == 0) {
                     //第一次加载
-                    this.this_row_tuijian_sum += Number(meg.addsum);
+                    this.this_row_tuijian_sum = Number(meg.addsum);
                     if (islocal) {
                         this.this_row_tuijian_sum = 0;
                     }
@@ -324,7 +310,7 @@ var PalacePage = /** @class */ (function () {
                 else {
                     //没有更多数据
                 }
-                if (this.tuijian_add_count != 0 || 1 == 1) {
+                if (meg["rows"].length != 0) {
                     this.notMoer1 = false;
                 }
                 if (meg["rows"].length < 10) {
@@ -342,8 +328,8 @@ var PalacePage = /** @class */ (function () {
                 }
             }
             if (meg.addType == "koubei") {
-                if (this.this_row_koubei_sum == 0) {
-                    this.this_row_koubei_sum += Number(meg.addsum);
+                if (meg.yousum == 0) {
+                    this.this_row_koubei_sum = Number(meg.addsum);
                     this.this_row_koubei_listobj = (meg.rows);
                 }
                 else if (meg.addsum != 0) {
@@ -359,7 +345,7 @@ var PalacePage = /** @class */ (function () {
                 else {
                     //没有更多数据
                 }
-                if (this.this_row_koubei_listobj.length != 0) {
+                if (meg["rows"].length != 0) {
                     this.notMoer2 = false;
                 }
                 if (meg["rows"].length < 10) {
@@ -379,8 +365,8 @@ var PalacePage = /** @class */ (function () {
             if (meg.addType == "youhui") {
                 console.log("返回youhui类型的数据 内容为=" + JSON.stringify(meg));
                 //  WitePrompt('meg.addType=="youhui"');
-                if (this.this_row_youhui_sum == 0) {
-                    this.this_row_youhui_sum += Number(meg.addsum);
+                if (meg.yousum == 0) {
+                    this.this_row_youhui_sum = Number(meg.addsum);
                     //WitePrompt('this_row_youhui_sum == 0');
                     this.this_row_youhui_listobj = (meg.rows);
                 }
@@ -397,7 +383,7 @@ var PalacePage = /** @class */ (function () {
                 else {
                     //没有更多数据
                 }
-                if (this.this_row_youhui_listobj.length != 0) {
+                if (meg["rows"].length != 0) {
                     this.notMoer3 = false;
                 }
                 if (meg["rows"].length < 10) {
@@ -412,12 +398,12 @@ var PalacePage = /** @class */ (function () {
                 else {
                 }
             }
+            this.isGetDataStatus = false;
         }
         if (meg['type'] == 'addSpeciallist_ret') {
             console.log("addSpeciallist_ret=" + JSON.stringify(meg));
             this.Speciallist = meg['rows'];
         }
-        this.isGetDataStatus = false;
     };
     //搜索按钮被单击
     PalacePage.prototype.onClickSearch = function () {
@@ -425,22 +411,22 @@ var PalacePage = /** @class */ (function () {
     };
     PalacePage.prototype.segmentChanged = function (event) {
         // alert("segmentChanged");
-        console.log("koubei_add_count==" + this.koubei_add_count);
+        // console.log("koubei_add_count==" + this.koubei_add_count);
         if (this.pet == "tuijian") {
-            Object(_core__WEBPACK_IMPORTED_MODULE_3__["WitePrompt"])("推荐");
+            // WitePrompt("推荐")
             if (this.tuijian_add_count == 0) {
                 this.SendGetObjList({ sum: '0', addType: "tuijian", isShow: true });
             }
         }
         if (this.pet == "koubei") {
-            Object(_core__WEBPACK_IMPORTED_MODULE_3__["WitePrompt"])("口碑");
+            // WitePrompt("口碑");
             if (this.koubei_add_count == 0) {
-                console.log("koubei_add_count adding");
+                // console.log("koubei_add_count adding");
                 this.SendGetObjList({ sum: '0', addType: "koubei", isShow: true });
             }
         }
         if (this.pet == "youhui") {
-            Object(_core__WEBPACK_IMPORTED_MODULE_3__["WitePrompt"])("优惠");
+            // WitePrompt("优惠");
             if (this.youhui_add_count == 0) {
                 this.SendGetObjList({ sum: '0', addType: "youhui", isShow: true });
             }
@@ -469,7 +455,11 @@ var PalacePage = /** @class */ (function () {
         this.router.navigate(['/consultant'], { queryParams: data });
     };
     PalacePage.prototype.doInfinite = function (infiniteScroll) {
-        // console.log('下拉刷新doInfinite!');
+        console.log('下拉刷新doInfinite!');
+        if (this.isGetDataStatus) {
+            console.log("其他分类正在加载中 终止新的加载请求");
+            return;
+        }
         //  console.log('this.pet=="tuijian"')
         if (this.pet == "tuijian") {
             if (this.isadd_this_row_tuijian_listobj == false) {
