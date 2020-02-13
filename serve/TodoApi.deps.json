@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "0881fb9009fb4e6b230f9d346b46439279dd958f"
+    "signature": "811ad7a6af01f78c93070e0be8c701dd1de62499"
   },
   "compilationOptions": {
     "defines": [
@@ -32,6 +32,7 @@
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "MySqlClient": "5.4.2",
+          "RestSharp": "106.10.1",
           "Senparc.Weixin": "6.6.102",
           "Senparc.Weixin.MP": "16.9.102",
           "Senparc.Weixin.Open": "4.7.102",
@@ -505,6 +506,17 @@
         },
         "compile": {
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
+      "RestSharp/106.10.1": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.0.0.0",
+            "fileVersion": "106.10.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
         }
       },
       "runtime.linux.CoreCompat.System.Drawing/1.0.0-beta001": {
@@ -4152,6 +4164,13 @@
       "sha512": "sha512-3/G1lF+m9HHqKFSjd/Hy1z3h00vzHQybiZHzK9gH2SxK6BOCQjOnjC97qt4kla7u5rrsf/kukWzUogywKp2ECg==",
       "path": "portable.bouncycastle/1.8.5",
       "hashPath": "portable.bouncycastle.1.8.5.nupkg.sha512"
+    },
+    "RestSharp/106.10.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2c8sR5BBX9tGArT8e5McSdLXx6ApmSTcrdMeyGHNWMo8cTi2zfFVhSPoGjpUuz9Ki2RhP7EMURiHVgSHjtD/wA==",
+      "path": "restsharp/106.10.1",
+      "hashPath": "restsharp.106.10.1.nupkg.sha512"
     },
     "runtime.linux.CoreCompat.System.Drawing/1.0.0-beta001": {
       "type": "package",
